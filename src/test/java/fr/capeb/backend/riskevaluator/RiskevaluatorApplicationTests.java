@@ -1,4 +1,4 @@
-package com.capeb.backend.riskevaluator;
+package fr.capeb.backend.riskevaluator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

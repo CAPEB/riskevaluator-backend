@@ -1,4 +1,4 @@
-package com.capeb.backend.riskevaluator;
+package fr.capeb.backend.riskevaluator;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
