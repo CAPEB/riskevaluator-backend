@@ -4,9 +4,10 @@
 name: build workflow
 
 on:
-  push :
-     branches-ignore:
-       - master
+  push:
+    branches: [ dev_env ]
+  pull_request:
+    branches: [ dev_env ]
 
 jobs:
   build:
