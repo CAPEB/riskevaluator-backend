@@ -7,7 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 class RiskevaluatorApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void TestControllerStatus() {
+		TestController controller = new TestController();
+		assert(controller.getStatus().equals("CAPEB ENV status OK"));
 	}
 
 }
