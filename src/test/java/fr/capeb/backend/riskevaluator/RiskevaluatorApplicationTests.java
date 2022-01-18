@@ -11,8 +11,6 @@ class RiskevaluatorApplicationTests {
 		TestController controller = new TestController();
 		assert(controller.getStatus().equals("CAPEB ENV status OK"));
 
-
-
 	}
 
 }
