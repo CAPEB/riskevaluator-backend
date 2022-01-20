@@ -10,11 +10,12 @@
 	</parent>
 	<groupId>com.capeb</groupId>
 	<artifactId>riskevaluator-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${revision}</version>
 	<name>riskevaluator</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
+		<revision>1.0.0-SNAPSHOT</revision>
 	</properties>
 	<dependencies>
 		<dependency>
