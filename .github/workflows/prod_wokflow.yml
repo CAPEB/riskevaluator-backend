@@ -20,7 +20,7 @@ jobs:
     outputs:
       version_tag: ${{steps.versioning.outputs.version}}
       artifact_name: riskevaluator-backend-${{steps.versioning.outputs.version}}
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      upload_url: ${{ steps.create_release.step_upload_url.upload_url }}
 
     steps:
       - name: Checkout
@@ -68,6 +68,8 @@ jobs:
           tag_name: ${{ steps.versioning.outputs.version }}
           release_name: ${{ steps.versioning.outputs.version }}
           prerelease: true
+      - id: step_upload_url
+        run: echo "::set-output name=upload_url::${{ steps.create-release.outputs.upload_url }}"
 
   publish:
     needs: release
