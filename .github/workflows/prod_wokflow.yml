@@ -14,7 +14,6 @@ env:
 
 jobs:
   release:
-    needs: release
     environment: PROD
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -52,6 +51,7 @@ jobs:
           name: artifact
           path: target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
   publish:
+    needs: release
     environment: PROD
     runs-on: ubuntu-latest
     timeout-minutes: 15
