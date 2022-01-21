@@ -48,8 +48,20 @@ jobs:
       - name: Save Release Jar File for publish
         uses: actions/upload-artifact@v1
         with:
-          name: riskevaluator-backend-${{steps.versioning.outputs.version}}
+          name: release_url
           path: ./target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
+
+      - name: Load Release URL File from release job
+        uses: actions/download-artifact@v1
+        with:
+          name: release_url
+
+
+      - name: Get Release File Name & Upload URL
+        id: get_release_info
+        run: |
+          value=`cat release_url/target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar`
+          echo ::set-output name=upload_url::$value
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -57,7 +69,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.get_release_info.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           asset_path: ./target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
           asset_name: riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
           asset_content_type: application/java-archive
