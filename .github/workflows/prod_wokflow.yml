@@ -110,5 +110,27 @@ jobs:
           push: true
           tags: ${{ env.REPO }}:latest,${{ env.REPO }}:${{ needs.release.outputs.version_tag }}
 
+  deploy_heroku:
+    needs: publish_docker
+    environment: DEV
+    name: Deploy to Heroku
+    runs-on: ubuntu-latest
+    steps:
 
+      # Heroku login
+      - name: Heroku login
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+
+      # Push the Docker image to Heroku Container Registry
+      - name: Publish
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          APP_NAME: ${{ secrets.HEROKU_APP }}
+        run: |
+          heroku container:push web -a ${{ secrets.HEROKU_APP }}
+          heroku container:release web -a ${{ secrets.HEROKU_APP }}
+          docker tag ${{ env.REPO }} registry.heroku.com/${{ secrets.HEROKU_APP }}/web
+          docker push registry.heroku.com/${{ secrets.HEROKU_APP }}/web
 
