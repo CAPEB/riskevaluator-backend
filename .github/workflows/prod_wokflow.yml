@@ -71,7 +71,10 @@ jobs:
         with:
           files: ${{ needs.release.outputs.version_tag}}.jar
 
+      - name: Show PWD
+        run : ls | pwd
+
       - name: File exists
         if: steps.check_files.outputs.files_exists == 'true'
         # Only runs if all of the files exists
-        run: echo All files exists! | ls | pwd 
+        run: echo All files exists!"
