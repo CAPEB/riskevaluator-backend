@@ -55,7 +55,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: artifact
-          path: target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar, Dockerfile
+          path: |
+                target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
+                Dockerfile
 
 
   publish:
