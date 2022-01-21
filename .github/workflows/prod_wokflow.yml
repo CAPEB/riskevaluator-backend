@@ -51,7 +51,8 @@ jobs:
         with:
           name: artifact
           path: target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
-
+        outputs:
+          version_tag : ${{steps.versioning.outputs.version}}
 
   publish:
     needs: release
@@ -64,6 +65,5 @@ jobs:
         with:
           name: artifact
           path : target
-          
-      - name: Show ls
-        run : ls target
+
+        run: echo "I'm running on ${{ needs.release.outputs.version_tag }}"
