@@ -70,6 +70,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: artifact
+          path : target
+
+      - name: print file structure
+        run: |
+          sudo apt-get install tree
+          tree
+
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -92,6 +99,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: artifact
+          path: target
+      - name : print file structure
+        run: |
+          sudo apt-get install tree
+          tree
 
 
       - name: Set up Docker Buildx
