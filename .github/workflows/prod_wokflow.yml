@@ -50,15 +50,15 @@ jobs:
         with:
           name: artifact
           path: target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
-
   publish:
     environment: PROD
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
 
-  - name: Download a single artifact
+      - name: Download a single artifact
     uses: actions/download-artifact@v2
     with:
       name: artifact
+
 
