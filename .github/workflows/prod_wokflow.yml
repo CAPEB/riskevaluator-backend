@@ -14,6 +14,7 @@ env:
 
 jobs:
   release:
+    needs: release
     environment: PROD
     runs-on: ubuntu-latest
     timeout-minutes: 15
