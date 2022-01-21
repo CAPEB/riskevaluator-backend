@@ -17,6 +17,9 @@ jobs:
     environment: PROD
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    outputs:
+      version_tag: ${{steps.versioning.outputs.version}}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -51,8 +54,6 @@ jobs:
         with:
           name: artifact
           path: target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
-        outputs:
-          version_tag : ${{steps.versioning.outputs.version}}
 
   publish:
     needs: release
