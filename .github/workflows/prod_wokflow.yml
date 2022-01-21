@@ -112,7 +112,7 @@ jobs:
 
   deploy_heroku:
     needs: publish_docker
-    environment: DEV
+    environment: PROD
     name: Deploy to Heroku
     runs-on: ubuntu-latest
     steps:
