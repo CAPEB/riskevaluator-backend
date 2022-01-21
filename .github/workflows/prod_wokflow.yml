@@ -11,7 +11,7 @@ on:
 env:
   DOCKER_USERNAME: thedoorknobster
   REPO: capeb2/riskevaluator-backend
-
+  VERSION : "v1.0.0-prerelease0"
 jobs:
   release:
     environment: PROD
@@ -34,10 +34,9 @@ jobs:
           minor_pattern: "feat:"
           format: "v${major}.${minor}.${patch}-prerelease${increment}"
 
-      - id: identify
-          run: echo "::set-output name=version_number::${{steps.versioning.outputs.version}}"
-          outputs:
-            version_number: ${{ steps.identify.outputs.version_number }}
+      - name: Set tag var
+        id: vars
+        run: echo ::set-output name=version_tag::riskevaluator-backend-${{steps.versioning.outputs.version}}
 
       - name: Set up JDK 13
         uses: actions/setup-java@v1
@@ -54,6 +53,9 @@ jobs:
         with:
           name: artifact
           path: target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
+          version_tag: ${{ steps.identify.outputs.version_tag }}
+
+
   publish:
     needs: release
     environment: PROD
@@ -70,7 +72,7 @@ jobs:
         id: check_files
         uses: andstor/file-existence-action@v1
         with:
-          files: riskevaluator-backend-${{ needs.release.outputs.version_number}}.jar
+          files: ${{ needs.release.outputs.version_tag}}.jar
 
       - name: File exists
         if: steps.check_files.outputs.files_exists == 'true'
