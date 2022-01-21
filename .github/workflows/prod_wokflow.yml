@@ -129,8 +129,6 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           APP_NAME: ${{ secrets.HEROKU_APP }}
         run: |
-          heroku container:push web -a ${{ secrets.HEROKU_APP }}
-          heroku container:release web -a ${{ secrets.HEROKU_APP }}
           docker tag ${{ env.REPO }} registry.heroku.com/${{ secrets.HEROKU_APP }}/web
           docker push registry.heroku.com/${{ secrets.HEROKU_APP }}/web
 
