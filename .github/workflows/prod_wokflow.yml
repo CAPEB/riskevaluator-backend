@@ -4,9 +4,10 @@
 name: Prod workflow
 
 on:
-  push:
+  pull_request:
     branches:
       - master
+    types: [ closed ]
 
 env:
   DOCKER_USERNAME: thedoorknobster
@@ -60,7 +61,7 @@ jobs:
                 Dockerfile
 
 
-  publish:
+  publish_github:
     needs: release
     environment: PROD
     runs-on: ubuntu-latest
