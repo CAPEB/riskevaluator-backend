@@ -10,6 +10,6 @@ public class TestController {
 
     @GetMapping("api/status")
     public String getStatus() {
-        return "CAPEB ENV status OK";
+        return "CAPEB ENV status OK New";
     }
 }
