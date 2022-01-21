@@ -44,8 +44,6 @@ jobs:
         run: mvn -Drevision=${{steps.versioning.outputs.version}} clean package --batch-mode package --file pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        outputs:
-          version_tag: riskevaluator-backend-${{steps.versioning.outputs.version}}
 
 
       - name: Save Release Jar File for publish
@@ -76,4 +74,4 @@ jobs:
       - name: File exists
         if: steps.check_files.outputs.files_exists == 'true'
         # Only runs if all of the files exists
-        run: echo All files exists!
+        run: echo All files exists! | ls | pwd 
