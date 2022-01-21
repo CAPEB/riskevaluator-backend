@@ -69,8 +69,6 @@ jobs:
         with:
           name: artifact
           path : target
-      - name: show me version
-
 
       - name: Upload Release Asset
         id: upload-release-asset
