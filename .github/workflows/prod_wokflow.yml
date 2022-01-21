@@ -64,8 +64,6 @@ jobs:
         with:
           name: artifact
           path : target
-      - name: Show PWD
-        run : cd target
-
+          
       - name: Show ls
-        run : ls
+        run : ls target
