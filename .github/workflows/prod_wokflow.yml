@@ -80,6 +80,9 @@ jobs:
         with:
           name: artifact
           path : target
+     - name: show me version
+        run: echo "I'm running on ${{ needs.release.outputs.upload_url }}"
+
 
       - name: Upload Release Asset
         id: upload-release-asset
