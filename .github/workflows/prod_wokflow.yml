@@ -76,7 +76,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./target/${{ needs.release.outputs.artifact_name }}.jar
-          asset_name: ${{ needs.release.outputs.artifact_name }}
+          asset_name: ${{ needs.release.outputs.artifact_name }}.jar
           tag: ${{ needs.release.outputs.version_tag }}
           overwrite: true
           body: "This is my release text"
