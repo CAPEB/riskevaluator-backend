@@ -65,5 +65,5 @@ jobs:
         with:
           name: artifact
           path : target
-
+      -name: show me version
         run: echo "I'm running on ${{ needs.release.outputs.version_tag }}"
