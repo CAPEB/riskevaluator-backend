@@ -58,19 +58,6 @@ jobs:
           path: target/riskevaluator-backend-${{steps.versioning.outputs.version}}.jar
 
 
-      - name: Create Release
-        id : create-release
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
-        with:
-          tag_name: ${{ steps.versioning.outputs.version }}
-          release_name: ${{ steps.versioning.outputs.version }}
-          prerelease: true
-      - id: step_upload_url
-        run: echo "::set-output name=upload_url::${{ steps.create-release.outputs.upload_url }}"
-
   publish:
     needs: release
     environment: PROD
@@ -83,16 +70,15 @@ jobs:
           name: artifact
           path : target
       - name: show me version
-        run: echo "I'm running on ${{ needs.release.outputs.upload_url }}"
 
 
       - name: Upload Release Asset
         id: upload-release-asset
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: svenstaro/upload-release-action@v2
         with:
-          upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: ./target/${{ needs.release.outputs.artifact_name }}.jar
-          asset_name: ${{ needs.release.outputs.artifact_name }}.jar
-          asset_content_type: application/java-archive
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./target/${{ needs.release.outputs.artifact_name }}.jar
+          asset_name: ${{ needs.release.outputs.artifact_name }}
+          tag: ${{ needs.release.outputs.version_tag }}
+          overwrite: true
+          body: "This is my release text"
