@@ -72,7 +72,10 @@ jobs:
           files: ${{ needs.release.outputs.version_tag}}.jar
 
       - name: Show PWD
-        run : ls | pwd
+        run : pwd
+
+      - name: Show ls
+        run : ls
 
       - name: File exists
         if: steps.check_files.outputs.files_exists == 'true'
