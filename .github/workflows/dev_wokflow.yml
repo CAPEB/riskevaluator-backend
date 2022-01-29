@@ -42,6 +42,21 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           APP_NAME: ${{ secrets.HEROKU_APP }}
-        run: |
-          heroku container:push web -a ${{ secrets.HEROKU_APP }}
-          heroku container:release web -a ${{ secrets.HEROKU_APP }}
+          V_HOST: ${{ secrets.DB_HOST }}
+          V_PORT: ${{ secrets.DB_PORT }}
+          V_NAME: ${{ secrets.DB_NAME }}
+          V_USER: ${{ secrets.DB_USER }}
+          V_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          usedocker: true
+          docker_build_args: |
+            V_HOST
+            V_PORT
+            V_NAME
+            V_USER
+            V_PASSWORD
