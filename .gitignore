@@ -34,3 +34,4 @@ build/
 
 ### Local Setup ###
 *.bat
+RiskevaluatorApplicationTests.java
