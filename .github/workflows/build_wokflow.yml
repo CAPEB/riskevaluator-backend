@@ -11,6 +11,8 @@ on:
     branches:
       - "main"
       - "master"
+    types: [ opened ]
+
 jobs:
   build:
 
