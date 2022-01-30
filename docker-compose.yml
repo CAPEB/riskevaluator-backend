@@ -8,8 +8,13 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - A_HOST =   $DB_HOST
+        - A_HOST      =   $DB_HOST
+        - A_PORT      =   $DB_PORT
+        - A_NAME      =   $DB_NAME
+        - A_USER      =   $DB_USER
+        - A_PASSWORD  =   $DB_PASSWORD
     environment:
+      DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: ${DB_PASSWORD}

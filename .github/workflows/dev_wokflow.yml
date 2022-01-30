@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
@@ -23,6 +24,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - run: cat src/main/resources/application.properties
+
       #  Package jar
 
       - name: Set up JDK 13
@@ -38,27 +41,27 @@ jobs:
       - name: Heroku login
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          APP_NAME: ${{ secrets.HEROKU_APP }}
+
         run: heroku container:login
 
       # Push the Docker image to Heroku Container Registry
-      - name: Publish
-        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-          with:
-            heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-            heroku_app_name: ${{ secrets.HEROKU_APP }}
-            heroku_email: ${{ secrets.HEROKU_EMAIL }}
-            usedocker: true
-            docker_build_args: |
-              V_HOST
-              V_PORT
-              V_NAME
-              V_USER
-              V_PASSWORD
-          env:
-            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-            APP_NAME: ${{ secrets.HEROKU_APP }}
-            V_HOST: ${{ secrets.DB_HOST }}
-            V_PORT: ${{ secrets.DB_PORT }}
-            V_NAME: ${{ secrets.DB_NAME }}
-            V_USER: ${{ secrets.DB_USER }}
-            V_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      - name: Publish to Dev environment
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          APP_NAME: ${{ secrets.HEROKU_APP }}
+          V_HOST: ${{ secrets.DB_HOST }}
+          V_PORT: ${{ secrets.DB_PORT }}
+          V_NAME: ${{ secrets.DB_NAME }}
+          V_USER: ${{ secrets.DB_USER }}
+          V_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+        run: |
+          heroku config:set -a ${{ secrets.HEROKU_APP }} DB_HOST=${{ secrets.DB_HOST }}
+          heroku config:set -a ${{ secrets.HEROKU_APP }} DB_PORT=${{ secrets.DB_PORT }}
+          heroku config:set -a ${{ secrets.HEROKU_APP }} DB_NAME=${{ secrets.DB_NAME }}
+          heroku config:set -a ${{ secrets.HEROKU_APP }} DB_USER=${{ secrets.DB_USER }}
+          heroku config:set -a ${{ secrets.HEROKU_APP }} DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          heroku container:login
+          heroku container:push web -a ${{ secrets.HEROKU_APP }}
+          heroku container:release web -a ${{ secrets.HEROKU_APP }}
