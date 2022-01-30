@@ -47,16 +47,15 @@ jobs:
           V_NAME: ${{ secrets.DB_NAME }}
           V_USER: ${{ secrets.DB_USER }}
           V_PASSWORD: ${{ secrets.DB_PASSWORD }}
-
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP }}
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          usedocker: true
-          docker_build_args: |
-            V_HOST
-            V_PORT
-            V_NAME
-            V_USER
-            V_PASSWORD
+        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+          with:
+            heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+            heroku_app_name: ${{ secrets.HEROKU_APP }}
+            heroku_email: ${{ secrets.HEROKU_EMAIL }}
+            usedocker: true
+            docker_build_args: |
+              V_HOST
+              V_PORT
+              V_NAME
+              V_USER
+              V_PASSWORD
