@@ -42,12 +42,17 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           APP_NAME: ${{ secrets.HEROKU_APP }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          V_HOST: ${{ secrets.DB_HOST }}
+          V_PORT: ${{ secrets.DB_PORT }}
+          V_NAME: ${{ secrets.DB_NAME }}
+          V_USER: ${{ secrets.DB_USER }}
+          V_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
         run: |
-          heroku container:push web -a ${{ secrets.HEROKU_APP }}
+          heroku container:push web -a ${{ secrets.HEROKU_APP }} --arg \
+          A_HOST= $V_HOST \
+          A_PORT= $V_PORT \
+          A_NAME= $V_NAME \
+          A_USER= $V_USER \
+          A_PASSWORD= $V_PASSWORD
           heroku container:release web -a ${{ secrets.HEROKU_APP }}
