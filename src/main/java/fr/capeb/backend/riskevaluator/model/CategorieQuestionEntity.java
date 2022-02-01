@@ -14,6 +14,7 @@ import javax.persistence.*;
 
 public class CategorieQuestionEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categorie")
     public Integer idCategorie;
 

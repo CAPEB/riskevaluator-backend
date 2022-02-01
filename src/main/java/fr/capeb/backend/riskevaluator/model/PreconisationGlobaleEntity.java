@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class PreconisationGlobaleEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_preconisation_g")
     private Integer idPreconisationG;
 

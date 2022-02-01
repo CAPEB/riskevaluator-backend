@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 public class StatusEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  long id;
 
     @Column(name = "ok")

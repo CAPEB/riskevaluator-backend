@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class ScoreCategoryEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evaluation")
     private Integer idEvaluation;
 
