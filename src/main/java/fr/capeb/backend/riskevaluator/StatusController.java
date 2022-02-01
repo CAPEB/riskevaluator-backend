@@ -1,6 +1,6 @@
 package fr.capeb.backend.riskevaluator;
 
-import fr.capeb.backend.riskevaluator.model.Status;
+import fr.capeb.backend.riskevaluator.model.StatusEntity;
 import fr.capeb.backend.riskevaluator.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class StatusController {
     @GetMapping("api/status")
     public ResponseEntity<Object> getStatus() {
 
-        final Optional<Status> status = statusRepo.findById((long) 1);
+        final Optional<StatusEntity> status = statusRepo.findById((long) 1);
         if (status.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

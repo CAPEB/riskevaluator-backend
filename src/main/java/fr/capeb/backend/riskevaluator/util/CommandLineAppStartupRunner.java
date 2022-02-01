@@ -1,9 +1,9 @@
 package fr.capeb.backend.riskevaluator.util;
 
-import fr.capeb.backend.riskevaluator.model.ERole;
-import fr.capeb.backend.riskevaluator.model.Role;
-import fr.capeb.backend.riskevaluator.model.Status;
-import fr.capeb.backend.riskevaluator.model.User;
+import fr.capeb.backend.riskevaluator.model.RoleEntity;
+import fr.capeb.backend.riskevaluator.model.StatusEntity;
+import fr.capeb.backend.riskevaluator.model.UserEntity;
+import fr.capeb.backend.riskevaluator.model.enumeration.ERole;
 import fr.capeb.backend.riskevaluator.repository.RoleRepository;
 import fr.capeb.backend.riskevaluator.repository.StatusRepository;
 import fr.capeb.backend.riskevaluator.repository.UserRepository;
@@ -11,13 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 @Component
 @Slf4j
@@ -72,16 +67,16 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
         log.info("---"+devPass);
         log.info(" END DEV ENV VARIBALES ==================================== \n");
 
-        Status status = Status.builder().id(1).ok("CAPEB ENV status OK").build();
+        StatusEntity status = StatusEntity.builder().id(1).ok("CAPEB ENV status OK").build();
         statusRepo.save(status);
 
-        Role userR = new Role(ERole.ROLE_USER);
-        Role adminR = new Role(ERole.ROLE_ADMIN);
+        RoleEntity userR =  roleRepo.findByName(ERole.ROLE_USER).orElse(new RoleEntity(ERole.ROLE_USER));
+        RoleEntity adminR =  roleRepo.findByName(ERole.ROLE_ADMIN).orElse(new RoleEntity(ERole.ROLE_ADMIN));;
 
         roleRepo.save(userR);
         roleRepo.save(adminR);
 
-        User admin = new fr.capeb.backend.riskevaluator.model.User();
+        UserEntity admin = new UserEntity();
         admin.setUsername("admin");
         admin.setEmail("admin@gmail.com");
         admin.setId((long) 1);

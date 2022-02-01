@@ -1,8 +1,8 @@
 package fr.capeb.backend.riskevaluator.controller;
 
-import fr.capeb.backend.riskevaluator.model.ERole;
-import fr.capeb.backend.riskevaluator.model.Role;
-import fr.capeb.backend.riskevaluator.model.User;
+import fr.capeb.backend.riskevaluator.model.RoleEntity;
+import fr.capeb.backend.riskevaluator.model.UserEntity;
+import fr.capeb.backend.riskevaluator.model.enumeration.ERole;
 import fr.capeb.backend.riskevaluator.payload.request.LoginRequest;
 import fr.capeb.backend.riskevaluator.payload.request.SignupRequest;
 import fr.capeb.backend.riskevaluator.payload.response.JwtResponse;
@@ -80,28 +80,28 @@ public class AuthController {
 		}
 
 		// Create new user's account
-		User user = new User(signUpRequest.getUsername(),
+		UserEntity user = new UserEntity(signUpRequest.getUsername(),
 							 signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
 
 		Set<String> strRoles = signUpRequest.getRole();
-		Set<Role> roles = new HashSet<>();
+		Set<RoleEntity> roles = new HashSet<>();
 
 		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+			RoleEntity userRole = roleRepository.findByName(ERole.ROLE_USER)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(userRole);
 		} else {
 			strRoles.forEach(role -> {
 				switch (role) {
 				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+					RoleEntity adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					roles.add(adminRole);
 
 					break;
 				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+					RoleEntity userRole = roleRepository.findByName(ERole.ROLE_USER)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					roles.add(userRole);
 				}

@@ -12,7 +12,7 @@ import javax.persistence.*;
 @ToString
 @Getter
 @Setter
-public class Status {
+public class StatusEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  long id;

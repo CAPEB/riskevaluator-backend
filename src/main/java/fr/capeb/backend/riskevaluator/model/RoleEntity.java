@@ -1,23 +1,25 @@
 package fr.capeb.backend.riskevaluator.model;
 
+import fr.capeb.backend.riskevaluator.model.enumeration.ERole;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "role")
+public class RoleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 20)
+	@Column(length = 20, unique = true)
 	private ERole name;
 
-	public Role() {
+	public RoleEntity() {
 
 	}
 
-	public Role(ERole name) {
+	public RoleEntity(ERole name) {
 		this.name = name;
 	}
 

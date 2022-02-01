@@ -5,12 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(	name = "users", 
+@Table(	name = "user_entity",
 		uniqueConstraints = { 
 			@UniqueConstraint(columnNames = "username"),
 			@UniqueConstraint(columnNames = "email") 
 		})
-public class User {
+public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -25,12 +25,12 @@ public class User {
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+	private Set<RoleEntity> roles = new HashSet<>();
 
-	public User() {
+	public UserEntity() {
 	}
 
-	public User(String username, String email, String password) {
+	public UserEntity(String username, String email, String password) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -68,15 +68,15 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<Role> getRoles() {
+	public Set<RoleEntity> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(Set<RoleEntity> roles) {
 		this.roles = roles;
 	}
 
-	public void addRole(Role role) {
+	public void addRole(RoleEntity role) {
 		this.roles.add(role);
 	}
 }
