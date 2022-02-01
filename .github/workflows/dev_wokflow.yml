@@ -23,6 +23,8 @@ jobs:
       # Clone the repository
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: main
 
       - run: cat src/main/resources/application.properties
 

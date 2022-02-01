@@ -1,13 +1,23 @@
 package fr.capeb.backend.riskevaluator.util;
 
+import fr.capeb.backend.riskevaluator.model.ERole;
+import fr.capeb.backend.riskevaluator.model.Role;
 import fr.capeb.backend.riskevaluator.model.Status;
+import fr.capeb.backend.riskevaluator.model.User;
+import fr.capeb.backend.riskevaluator.repository.RoleRepository;
 import fr.capeb.backend.riskevaluator.repository.StatusRepository;
+import fr.capeb.backend.riskevaluator.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Component
 @Slf4j
@@ -15,6 +25,15 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
     @Autowired
     public StatusRepository statusRepo;
+
+    @Autowired
+    public RoleRepository roleRepo;
+
+    @Autowired
+    PasswordEncoder encoder;
+
+    @Autowired
+    public UserRepository userRepository;
 
     @Value("${test.env.variable.port}")
     private String port;
@@ -55,5 +74,21 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
 
         Status status = Status.builder().id(1).ok("CAPEB ENV status OK").build();
         statusRepo.save(status);
+
+        Role userR = roleRepo.getById((long) 1);
+        Role adminR = roleRepo.getById((long) 2);
+
+        roleRepo.save(userR);
+        roleRepo.save(adminR);
+
+        User admin = new fr.capeb.backend.riskevaluator.model.User();
+        admin.setUsername("admin");
+        admin.setEmail("admin@gmail.com");
+        admin.setId((long) 1);
+        final String adminPass = "admin@gmail.com";
+        admin.setPassword(encoder.encode(adminPass));
+
+        admin.addRole(adminR);
+        userRepository.save(admin);
     }
 }
