@@ -75,8 +75,8 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
         Status status = Status.builder().id(1).ok("CAPEB ENV status OK").build();
         statusRepo.save(status);
 
-        Role userR = roleRepo.getById((long) 1);
-        Role adminR = roleRepo.getById((long) 2);
+        Role userR = new Role(ERole.ROLE_USER);
+        Role adminR = new Role(ERole.ROLE_ADMIN);
 
         roleRepo.save(userR);
         roleRepo.save(adminR);
