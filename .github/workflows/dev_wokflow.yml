@@ -19,6 +19,8 @@ jobs:
     name: Deploy to Heroku
     runs-on: ubuntu-latest
     steps:
+      - name: Skip Duplicate Actions
+          uses: fkirc/skip-duplicate-actions@v3.4.1
 
       # Clone the repository
       - name: Checkout code

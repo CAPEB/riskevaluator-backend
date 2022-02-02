@@ -67,7 +67,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
         log.info("---"+devPass);
         log.info(" END DEV ENV VARIBALES ==================================== \n");
 
-        StatusEntity status = StatusEntity.builder().id(1).ok("CAPEB ENV status OK").build();
+        StatusEntity status = StatusEntity.builder().id((long) 1).ok("CAPEB ENV status OK").build();
         statusRepo.save(status);
 
         RoleEntity userR =  roleRepo.findByName(ERole.ROLE_USER).orElse(new RoleEntity(ERole.ROLE_USER));

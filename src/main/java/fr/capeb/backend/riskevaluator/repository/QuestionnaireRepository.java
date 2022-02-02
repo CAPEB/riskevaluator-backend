@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface QuestionnaireRepository extends JpaRepository<QuestionnaireEntity, Long> {
+public interface QuestionnaireRepository extends JpaRepository<QuestionnaireEntity, Integer> {
 
 }

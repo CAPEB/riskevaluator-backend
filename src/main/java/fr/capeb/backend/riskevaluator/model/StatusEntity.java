@@ -6,16 +6,17 @@ import javax.persistence.*;
 
 
 @Entity
+@Table(name = "status_entity")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Getter
 @Setter
 public class StatusEntity {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  long id;
+    private  Long id;
 
     @Column(name = "ok")
     private  String ok ;
