@@ -1,6 +1,6 @@
 package fr.capeb.backend.riskevaluator.security.jwt;
 
-import fr.capeb.backend.riskevaluator.service.UserDetailsServiceImpl;
+import fr.capeb.backend.riskevaluator.service.serviceimpl.authservice.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

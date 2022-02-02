@@ -1,4 +1,4 @@
-package fr.capeb.backend.riskevaluator.service;
+package fr.capeb.backend.riskevaluator.service.serviceimpl.authservice;
 
 import fr.capeb.backend.riskevaluator.model.UserEntity;
 import fr.capeb.backend.riskevaluator.repository.UserRepository;

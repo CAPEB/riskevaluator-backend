@@ -1,4 +1,4 @@
-package fr.capeb.backend.riskevaluator.controller;
+package fr.capeb.backend.riskevaluator.controller.authentication;
 
 import fr.capeb.backend.riskevaluator.model.RoleEntity;
 import fr.capeb.backend.riskevaluator.model.UserEntity;
@@ -10,7 +10,7 @@ import fr.capeb.backend.riskevaluator.payload.response.MessageResponse;
 import fr.capeb.backend.riskevaluator.repository.RoleRepository;
 import fr.capeb.backend.riskevaluator.repository.UserRepository;
 import fr.capeb.backend.riskevaluator.security.jwt.JwtUtils;
-import fr.capeb.backend.riskevaluator.service.UserDetailsImpl;
+import fr.capeb.backend.riskevaluator.service.serviceimpl.authservice.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

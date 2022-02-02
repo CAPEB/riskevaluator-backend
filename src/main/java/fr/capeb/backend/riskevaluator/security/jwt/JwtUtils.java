@@ -1,6 +1,6 @@
 package fr.capeb.backend.riskevaluator.security.jwt;
 
-import fr.capeb.backend.riskevaluator.service.UserDetailsImpl;
+import fr.capeb.backend.riskevaluator.service.serviceimpl.authservice.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

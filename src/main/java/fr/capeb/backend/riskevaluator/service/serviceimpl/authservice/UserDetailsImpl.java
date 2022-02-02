@@ -1,4 +1,4 @@
-package fr.capeb.backend.riskevaluator.service;
+package fr.capeb.backend.riskevaluator.service.serviceimpl.authservice;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.capeb.backend.riskevaluator.model.UserEntity;

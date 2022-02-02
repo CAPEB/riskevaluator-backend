@@ -1,4 +1,4 @@
-package fr.capeb.backend.riskevaluator.controller;
+package fr.capeb.backend.riskevaluator.controller.authentication;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
