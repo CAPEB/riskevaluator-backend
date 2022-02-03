@@ -1,8 +1,6 @@
 package fr.capeb.backend.riskevaluator.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,7 +8,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "questionnaire")
+@EqualsAndHashCode
+@Table(name = "questionnaire", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "thematique")
+})
 public class QuestionnaireEntity {
 
     @Id

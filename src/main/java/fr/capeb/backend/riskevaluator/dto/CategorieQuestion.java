@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 
 @Builder
 @Getter
@@ -14,9 +15,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Questionnaire {
-    private Integer idQuestionnaire;
-    private String thematique;
+public class CategorieQuestion {
+    public Integer idCategorie;
+    public Integer idQuestionnaire;
 }

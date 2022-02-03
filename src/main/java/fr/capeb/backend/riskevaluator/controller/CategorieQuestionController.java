@@ -1,32 +1,77 @@
 package fr.capeb.backend.riskevaluator.controller;
 
+import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
+import fr.capeb.backend.riskevaluator.dto.Questionnaire;
+import fr.capeb.backend.riskevaluator.exceptions.model.ConflictException;
 import fr.capeb.backend.riskevaluator.model.StatusEntity;
 import fr.capeb.backend.riskevaluator.repository.StatusRepository;
+import fr.capeb.backend.riskevaluator.service.interfaces.CategorieQuestionService;
+import fr.capeb.backend.riskevaluator.service.interfaces.QuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/Questionnaires/")
+@RequestMapping("/api/categoriesQuestion")
 public class CategorieQuestionController {
 
     @Autowired
-    public StatusRepository statusRepo;
+    CategorieQuestionService categorieQuestionService;
 
-    @GetMapping("/api/Questionnaires/{idQuestionnaire}/categoriesQuestion")
-    public ResponseEntity<Object> getStatus() {
+    @Autowired
+    QuestionnaireService questionnairesService ;
 
-        final Optional<StatusEntity> status = statusRepo.findById((long) 1);
-        if (status.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(status.get());
+    @GetMapping("/")
+    public ResponseEntity<Object> getAll() {
 
+        return ResponseEntity.ok(categorieQuestionService.getAllCategorieQuestion());
     }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity getQuestionnaireById(@PathVariable Integer id) {
+
+        var catQue = categorieQuestionService.categorieQuestionById(id);
+
+        if(catQue.isPresent())
+            return ResponseEntity.ok(catQue.get());
+
+        return ResponseEntity.notFound().build();
+    }
+
+
+
+
+
+    @DeleteMapping("/{id}")
+    ResponseEntity deleteCategorieQuestion(@PathVariable Integer id)  {
+
+        var questionnaire = categorieQuestionService.categorieQuestionById(id);
+        if(questionnaire.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(categorieQuestionService.deleteCategorieQuestion(id));
+    }
+
+    @PutMapping("/")
+    ResponseEntity replaceCategorieQuestion(@RequestBody CategorieQuestion catQues)  {
+        var ques = categorieQuestionService.categorieQuestionById(catQues.getIdCategorie());
+        if(ques.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(categorieQuestionService.updateCategorieQuestion(catQues));
+    }
+
+    @PostMapping("/")
+    ResponseEntity createCategorieQuestion(@RequestBody CategorieQuestion catQues)  {
+        var isConflict = categorieQuestionService.categorieQuestionById(catQues.getIdCategorie()).isPresent();
+        if(isConflict) throw new ConflictException();
+
+        return ResponseEntity.of(categorieQuestionService.updateCategorieQuestion(catQues));
+    }
+
 
 }
