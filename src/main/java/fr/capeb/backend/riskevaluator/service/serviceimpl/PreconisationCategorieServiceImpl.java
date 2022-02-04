@@ -51,8 +51,6 @@ public class PreconisationCategorieServiceImpl implements PreconisationCategorie
 
     @Override
     public Optional<PreconisationCategorie> createOrUpdatePreconisationCategorie(PreconisationCategorie obj) {
-        questionCategorieRepo.findById(obj.getIdCategorie()).orElseThrow(()-> new CustomException("The categorie" + ExceptionMsg.ID_NOT_FOUND.value));
-
         var prec = Optional.of(modelMapper.map(obj, PreconisationCategorieEntity.class)).orElseThrow(MappingDataException::new);
         var updated = Optional.of(preCatRepo.save(prec)).orElseThrow(CreateOrUpdateException::new);
         return Optional.of(modelMapper.map(updated, PreconisationCategorie.class));

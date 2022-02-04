@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,7 +20,15 @@ public class CategorieQuestionEntity {
     public Integer idCategorie;
 
 
-    @Basic
-    @Column(name = "id_questionnaire")
-    public Integer idQuestionnaire;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_questionnaire", nullable=false)
+    public QuestionnaireEntity idQuestionnaire;
+
+    @Column(name = "libelle", nullable=false)
+    public String libelle;
+
+    @OneToMany(mappedBy = "idCategorie")
+    private List<ScoreCategoryEntity> scoreCategories;
+
 }

@@ -1,5 +1,6 @@
 package fr.capeb.backend.riskevaluator.model;
 
+import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,20 +12,24 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "score_category")
-@IdClass(ScoreCategoryEntityPK.class)
 public class ScoreCategoryEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_evaluation")
-    private Integer idEvaluation;
+    @EmbeddedId
+    private ScoreCategoryEntityPK key;
 
-    @Id
-    @Column(name = "id_categorie")
-    private Integer idCategorie;
+
+    @MapsId(value = "id_evaluation")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_evaluation", referencedColumnName = "id_evaluation")
+    private EvaluationEntity idEvaluation;
+
+
+    @MapsId(value = "id_categorie")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_categorie", referencedColumnName = "id_categorie")
+    private CategorieQuestionEntity idCategorie;
 
     @Column(name = "nb_points")
-
     private Integer nbPoints;
 
 }

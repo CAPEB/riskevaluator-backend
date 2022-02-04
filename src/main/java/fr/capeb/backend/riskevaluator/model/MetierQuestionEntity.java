@@ -11,14 +11,19 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "metier_question")
-@IdClass(MetierQuestionEntityPK.class)
 public class MetierQuestionEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_question")
-    private Integer idQuestion;
 
-    @Id
-    @Column(name = "id_metier")
-    private Integer idMetier;
+    @EmbeddedId
+    private MetierQuestionEntityPK key;
+
+    @MapsId(value = "id_question")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_question", referencedColumnName = "id_question")
+    private QuestionEntity idQuestion;
+
+
+    @MapsId(value = "id_metier")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_metier", referencedColumnName = "id_metier")
+    private MetierEntity idMetier;
 }

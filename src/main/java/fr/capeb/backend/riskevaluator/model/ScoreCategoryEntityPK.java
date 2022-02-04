@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -14,12 +15,11 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@Embeddable
 public class ScoreCategoryEntityPK implements Serializable {
     @Column(name = "id_evaluation")
-    @Id
     private Integer idEvaluation;
 
     @Column(name = "id_categorie")
-    @Id
     private Integer idCategorie;
 }

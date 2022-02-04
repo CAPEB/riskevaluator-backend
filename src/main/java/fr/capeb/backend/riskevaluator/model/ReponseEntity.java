@@ -17,13 +17,15 @@ public class ReponseEntity {
     @Column(name = "id_reponse")
     private Integer idReponse;
 
-    @Column(name = "id_question")
-    private Integer idQuestion;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_question", nullable=false)
+    private QuestionEntity idQuestion;
+
 
     @Column(name = "nb_points")
     private Integer nbPoints;
 
-    @Column(name = "contenu")
+    @Column(name = "contenu", columnDefinition="TEXT")
     private String contenu;
 
 }

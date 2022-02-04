@@ -1,5 +1,6 @@
 package fr.capeb.backend.riskevaluator.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,9 +19,10 @@ public class CompteEntity {
     @Column(name = "id_compte")
     private Integer idCompte;
 
-    @Basic
-    @Column(name = "noentreprise")
-    private Integer noEntreprise;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="noentreprise", nullable=false)
+    private EntrepriseEntity noEntreprise;
 
     @Column(name = "is_admin")
     private Boolean isAdmin;

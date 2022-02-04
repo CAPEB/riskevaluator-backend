@@ -19,15 +19,14 @@ public class PreconisationCategorieEntity {
     @Column(name = "id_preconisation")
     private Integer idPreconisation;
 
-    @Column(name = "id_categorie")
-    private Integer idCategorie;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_categorie", nullable=false)
+    private CategorieQuestionEntity idCategorie;
 
-    @Column(name = "scope")
-    private String scope;
 
-    @Column(name = "score_min_glob")
-    private Integer scoreMinGlob;
+    @Column(name = "contenu",  columnDefinition="TEXT")
+    private String contenu;
 
-    @Column(name = "score_max_glob")
-    private Integer scoreMaxGlob;
+    @Column(name = "viewIfPourcentageScoreLessThan")
+    private Integer viewIfPourcentageScoreLessThan;
 }

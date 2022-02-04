@@ -53,10 +53,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Override
     public Optional<Questionnaire> createOrUpdateQuestionnaire(Questionnaire questionnaire) {
 
-
-        var isConflict = questionnairesRepo.findByThematique(questionnaire.getThematique()).isPresent();
-        if(isConflict) throw new ConflictException();
-
         var ques = Optional.of(modelMapper.map(questionnaire, QuestionnaireEntity.class)).orElseThrow(MappingDataException::new);
         var updated = Optional.of(questionnairesRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
         return Optional.of(modelMapper.map(updated,Questionnaire.class));

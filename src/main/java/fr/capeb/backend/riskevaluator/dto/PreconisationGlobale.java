@@ -16,6 +16,5 @@ public class PreconisationGlobale {
     @NotNull
     private Integer idQuestionnaire;
     private String contenu;
-    private Integer scoreMinGlob;
-    private Integer scoreMaxGlob;
+    private Integer viewIfPourcentageScoreLessThan;
 }

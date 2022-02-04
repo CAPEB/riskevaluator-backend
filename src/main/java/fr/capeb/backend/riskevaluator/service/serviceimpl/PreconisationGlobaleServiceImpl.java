@@ -54,8 +54,6 @@ public class PreconisationGlobaleServiceImpl implements PreconisationGlobaleServ
 
     @Override
     public Optional<PreconisationGlobale> createOrUpdatePreconisationGlobale(PreconisationGlobale obj) {
-        questionnaireRepo.findById(obj.getIdQuestionnaire()).orElseThrow(()-> new CustomException("The questionnaire" + ExceptionMsg.ID_NOT_FOUND.value));
-
         var prec = Optional.of(modelMapper.map(obj, PreconisationGlobaleEntity.class)).orElseThrow(MappingDataException::new);
         var updated = Optional.of(preGlobRepo.save(prec)).orElseThrow(CreateOrUpdateException::new);
         return Optional.of(modelMapper.map(updated, PreconisationGlobale.class));

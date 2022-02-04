@@ -63,13 +63,7 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
     @Override
     public Optional<CategorieQuestion> updateCategorieQuestion(CategorieQuestion obj) {
 
-        questionnaireRepo.findById(obj.getIdQuestionnaire()).orElseThrow(()-> new CustomException("questionnaire"+ ExceptionMsg.ID_NOT_FOUND.value));
         CategorieQuestionEntity catQues = Optional.of(modelMapper.map(obj, CategorieQuestionEntity.class)).orElseThrow(MappingDataException::new);
-
-
-        var res=  questionCategorieRepo.findByQuestionaire(catQues.idQuestionnaire,catQues.idCategorie);
-        if(res.isPresent()) throw new ConflictException();
-
         var updated = Optional.of(questionCategorieRepo.save(catQues)).orElseThrow(CreateOrUpdateException::new);
         return Optional.of(modelMapper.map(updated,CategorieQuestion.class));
 

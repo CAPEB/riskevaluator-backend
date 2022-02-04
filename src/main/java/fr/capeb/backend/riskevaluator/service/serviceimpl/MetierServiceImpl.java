@@ -1,13 +1,15 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
-import fr.capeb.backend.riskevaluator.exceptions.ExceptionMsg;
+import fr.capeb.backend.riskevaluator.dto.Metier;
 import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
-import fr.capeb.backend.riskevaluator.exceptions.model.CustomException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
+import fr.capeb.backend.riskevaluator.model.MetierEntity;
 import fr.capeb.backend.riskevaluator.model.QuestionEntity;
+import fr.capeb.backend.riskevaluator.repository.MetierRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionRepository;
+import fr.capeb.backend.riskevaluator.service.interfaces.MetierService;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,51 +22,44 @@ import java.util.stream.Collectors;
 
 @Component
 @Transactional
-public class QuestionServiceImpl implements QuestionService {
+public class MetierServiceImpl implements MetierService {
 
     @Autowired
-    private QuestionRepository questionRepo ;
-    @Autowired
-    private QuestionCategorieRepository questionCategorieRepo;
+    private MetierRepository metierRepo ;
 
     @Autowired
     private ModelMapper modelMapper;
 
-
-
     @Override
-    public Set<Question> getAllQuestion() {
-        return questionRepo.findAll()
+    public Set<Metier> getAllMetier() {
+        return metierRepo.findAll()
                 .stream()
-                .map(stop -> modelMapper.map(stop, Question.class))
+                .map(stop -> modelMapper.map(stop, Metier.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Optional<Question> getQuestionById(Integer quesId) {
-
+    public Optional<Metier> getMetierById(Integer quesId) {
         if(quesId == null) return Optional.empty();
 
 
-        Optional<QuestionEntity> questionnaire = questionRepo.findById(quesId);
-        if (questionnaire.isPresent()) {
-            return Optional.of(modelMapper.map(questionnaire.get(),Question.class));
+        Optional<MetierEntity> metier = metierRepo.findById(quesId);
+        if (metier.isPresent()) {
+            return Optional.of(modelMapper.map(metier.get(),Metier.class));
         }
         return Optional.empty();
     }
 
-
     @Override
-    public Optional<Question> createOrUpdateQuestion(Question question) {
-
-        var ques = Optional.of(modelMapper.map(question, QuestionEntity.class)).orElseThrow(MappingDataException::new);
-        var updated = Optional.of(questionRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
-        return Optional.of(modelMapper.map(updated,Question.class));
+    public Optional<Metier> createOrUpdateMetier(Metier metier) {
+        var ques = Optional.of(modelMapper.map(metier, MetierEntity.class)).orElseThrow(MappingDataException::new);
+        var updated = Optional.of(metierRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
+        return Optional.of(modelMapper.map(updated,Metier.class));
     }
 
     @Override
-    public Optional<Object> deleteQuestion(Integer quesId) {
-        questionRepo.deleteById(quesId);
+    public Optional<Object> deleteMetier(Integer quesId) {
+        metierRepo.deleteById(quesId);
         return Optional.empty();
     }
 }

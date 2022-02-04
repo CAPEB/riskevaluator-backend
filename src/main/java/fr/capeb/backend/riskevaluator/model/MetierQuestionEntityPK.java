@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -15,15 +16,14 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@Embeddable
 public class MetierQuestionEntityPK implements Serializable {
 
     @Column(name = "id_question")
-    @Id
     private Integer idQuestion;
 
 
     @Column(name = "id_metier")
-    @Id
     private Integer idMetier;
 
 }

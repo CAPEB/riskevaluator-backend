@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static fr.capeb.backend.riskevaluator.exceptions.ExceptionMsg.ID_CONFLICT;
 import static org.springframework.http.HttpStatus.*;
 
 @RestControllerAdvice
@@ -41,7 +42,7 @@ public class GlobalErrorHandler
 
             Map<String, Object> body = new LinkedHashMap<>();
             body.put("timestamp", LocalDateTime.now());
-            body.put("message", "Data you are trying to update or insert, resulted in conflict due to unique contraints  ");
+            body.put("message", ID_CONFLICT.value);
 
             return new ResponseEntity<>(body,CONFLICT);
         }
@@ -69,19 +70,15 @@ public class GlobalErrorHandler
             return new ResponseEntity(body, INTERNAL_SERVER_ERROR);
         }
 
-      /*  @ExceptionHandler({SQLIntegrityConstraintViolationException.class,
-                            DataIntegrityViolationException.class,
-                            ConstraintViolationException.class
-        })
-        public ResponseEntity<Object> handleSqlConflictException(
-                ConflictException ex, WebRequest request) {
+        @ExceptionHandler(DataIntegrityViolationException.class)
+        public ResponseEntity<Object> handleSqlConflictException(RuntimeException ex) {
 
             Map<String, Object> body = new LinkedHashMap<>();
             body.put("timestamp", LocalDateTime.now());
-            body.put("message", "Data you are trying to update or insert, violate database integrity  ");
+            body.put("message", "Data trying to insert doesn't respect integrity constraints \n ");
+            body.put("execption", ex.getMessage());
 
             return new ResponseEntity<>(body,CONFLICT);
         }
-        */
 
     }

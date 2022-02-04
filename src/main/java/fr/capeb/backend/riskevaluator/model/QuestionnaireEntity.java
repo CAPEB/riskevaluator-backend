@@ -20,6 +20,6 @@ public class QuestionnaireEntity {
     private Integer idQuestionnaire;
 
 
-    @Column(name = "thematique")
+    @Column(name = "thematique", nullable=false)
     private String thematique;
 }

@@ -11,6 +11,7 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,8 +25,11 @@ public class QuestionEntity implements Serializable {
     @Column(name = "id_question")
     private Integer idQuestion;
 
-    @Column(name = "id_categorie")
-    private Integer idCategorie;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_categorie", nullable=false)
+    private CategorieQuestionEntity idCategorie;
+
 
     @Enumerated(EnumType.STRING)
     @Column(name = "q_type")
@@ -34,8 +38,11 @@ public class QuestionEntity implements Serializable {
     @Column(name = "aide")
     private String aide;
 
-    @Column(name = "libelle_question")
+    @Column(name = "libelle_question",  columnDefinition="TEXT")
     private String libelleQuestion;
+
+    @OneToMany(mappedBy = "idQuestion", fetch = FetchType.LAZY)
+    private List<MetierQuestionEntity> metierQuestions;
 
 
 }

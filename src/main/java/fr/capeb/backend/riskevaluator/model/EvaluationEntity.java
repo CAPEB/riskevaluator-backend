@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,7 +19,12 @@ public class EvaluationEntity {
     @Column(name = "id_evaluation")
     private Integer idEvaluation;
 
-    @Column(name = "id_compte")
-    private Integer idCompte;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_compte", nullable=false)
+    private CompteEntity idCompte;
+
+    @OneToMany(mappedBy = "idEvaluation", fetch = FetchType.LAZY)
+    private List<ScoreCategoryEntity> scoreCategories;
+
 
 }
