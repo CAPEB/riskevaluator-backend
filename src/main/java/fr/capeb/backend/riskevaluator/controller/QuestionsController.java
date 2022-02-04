@@ -1,8 +1,10 @@
 package fr.capeb.backend.riskevaluator.controller;
 
 import fr.capeb.backend.riskevaluator.dto.Question;
+import fr.capeb.backend.riskevaluator.dto.Reponse;
 import fr.capeb.backend.riskevaluator.exceptions.model.ConflictException;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionService;
+import fr.capeb.backend.riskevaluator.service.interfaces.ReponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,8 @@ import javax.validation.Valid;
 public class QuestionsController {
     @Autowired
     public QuestionService questionService;
-
+    @Autowired
+    public ReponseService pResponseManager;
 
 
     @PostMapping("/")
@@ -34,4 +37,16 @@ public class QuestionsController {
 
         return ResponseEntity.of(questionService.createOrUpdateQuestion(question));
     }
+
+    @PostMapping("/{aIdQuestion}/reponses")
+    ResponseEntity addResponse(@Valid @PathVariable Integer aIdQuestion, @Valid @RequestBody Reponse aReponse){
+        var ques = questionService.getQuestionById(aIdQuestion);
+        if(ques.isEmpty())
+            return ResponseEntity.notFound().build();
+        if(aReponse.getIdReponse()!=null && pResponseManager.getReponseById(aReponse.getIdReponse()).isPresent()){
+            throw new ConflictException();
+        }
+        return ResponseEntity.of(pResponseManager.createOrUpdateReponse(aReponse));
+    }
+
 }
