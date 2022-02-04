@@ -8,4 +8,5 @@ public interface ReponseService {
     Set<Reponse> getAllReponses();
     Optional<Reponse> getReponseById(Integer aReponseId);
     Optional<Reponse> createOrUpdateReponse(Reponse aReponse);
+    Optional<Object> deleteReponse(Integer aReponseId);
 }

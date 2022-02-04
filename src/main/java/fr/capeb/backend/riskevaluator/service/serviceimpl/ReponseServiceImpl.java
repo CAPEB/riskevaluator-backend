@@ -48,4 +48,10 @@ public class ReponseServiceImpl implements ReponseService {
         Optional<ReponseEntity> wResponseEntityUpdated = Optional.of(pReponseRepository.save(wResponseEntity.get()));
         return Optional.of(modelMapper.map(wResponseEntityUpdated.get(),Reponse.class));
     }
+
+    @Override
+    public Optional<Object> deleteReponse(Integer aReponseId) {
+        pReponseRepository.deleteById(aReponseId);
+        return Optional.empty();
+    }
 }
