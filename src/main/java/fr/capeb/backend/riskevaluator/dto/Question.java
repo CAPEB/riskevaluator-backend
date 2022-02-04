@@ -7,20 +7,18 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter
 @Setter
-@Accessors(chain = true)
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
-@ToString
-@JsonInclude(value = JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Question {
 
     private Integer idQuestion;
+    @NotNull
     private Integer idCategorie;
     private QuestionType qType;
     private String  aide;

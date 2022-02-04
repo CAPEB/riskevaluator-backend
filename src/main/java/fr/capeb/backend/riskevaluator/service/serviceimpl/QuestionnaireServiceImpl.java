@@ -13,12 +13,14 @@ import fr.capeb.backend.riskevaluator.service.interfaces.QuestionnaireService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@Transactional
 public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Autowired
@@ -39,6 +41,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     public Optional<Questionnaire> getQuestionnaireById(Integer quesId) {
 
 
+        if(quesId == null) return Optional.empty();
+
         Optional<QuestionnaireEntity> questionnaire = questionnairesRepo.findById(quesId);
         if (questionnaire.isPresent()) {
             return Optional.of(modelMapper.map(questionnaire.get(),Questionnaire.class));
@@ -48,6 +52,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Override
     public Optional<Questionnaire> createOrUpdateQuestionnaire(Questionnaire questionnaire) {
+
+
         var isConflict = questionnairesRepo.findByThematique(questionnaire.getThematique()).isPresent();
         if(isConflict) throw new ConflictException();
 

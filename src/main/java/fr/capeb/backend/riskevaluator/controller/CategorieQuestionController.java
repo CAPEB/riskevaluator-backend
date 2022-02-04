@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -57,7 +58,7 @@ public class CategorieQuestionController {
     }
 
     @PutMapping("/")
-    ResponseEntity replaceCategorieQuestion(@RequestBody CategorieQuestion catQues)  {
+    ResponseEntity replaceCategorieQuestion(@Valid @RequestBody CategorieQuestion catQues)  {
         var ques = categorieQuestionService.categorieQuestionById(catQues.getIdCategorie());
         if(ques.isEmpty())
             return ResponseEntity.notFound().build();
@@ -66,7 +67,7 @@ public class CategorieQuestionController {
     }
 
     @PostMapping("/")
-    ResponseEntity createCategorieQuestion(@RequestBody CategorieQuestion catQues)  {
+    ResponseEntity createCategorieQuestion(@Valid  @RequestBody CategorieQuestion catQues)  {
         var isConflict = categorieQuestionService.categorieQuestionById(catQues.getIdCategorie()).isPresent();
         if(isConflict) throw new ConflictException();
 

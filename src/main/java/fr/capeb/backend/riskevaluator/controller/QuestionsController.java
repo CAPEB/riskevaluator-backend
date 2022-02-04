@@ -16,18 +16,11 @@ public class QuestionsController {
     public QuestionService questionService;
 
 
-   /* @PutMapping("/")
-    ResponseEntity replaceQuestionnaire(@RequestBody Questionnaire questionnaire)  {
-        var ques = questionService.getQuestionnaireById(questionnaire.getIdQuestionnaire());
-        if(ques.isEmpty())
-            return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(questionService.createOrUpdateQuestionnaire(questionnaire));
-    }
-*/
     @PostMapping("/")
-    ResponseEntity createQuestionnaire( @Valid @RequestBody Question question)  {
-        if(questionService.getQuestionById(question.getIdQuestion()).isPresent())
+    ResponseEntity createQuestion(@Valid @RequestBody Question question)  {
+        var ques = questionService.getQuestionById(question.getIdQuestion());
+        if(ques.isPresent())
             throw new ConflictException();
 
         return ResponseEntity.of(questionService.createOrUpdateQuestion(question));

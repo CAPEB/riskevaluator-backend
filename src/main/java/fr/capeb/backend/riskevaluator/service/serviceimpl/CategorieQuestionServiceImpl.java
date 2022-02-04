@@ -1,28 +1,27 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
 import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
-import fr.capeb.backend.riskevaluator.dto.ExceptionMsg;
-import fr.capeb.backend.riskevaluator.dto.Questionnaire;
+import fr.capeb.backend.riskevaluator.exceptions.ExceptionMsg;
 import fr.capeb.backend.riskevaluator.exceptions.model.ConflictException;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.CustomException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
 import fr.capeb.backend.riskevaluator.model.CategorieQuestionEntity;
-import fr.capeb.backend.riskevaluator.model.QuestionnaireEntity;
 import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.CategorieQuestionService;
-import fr.capeb.backend.riskevaluator.service.interfaces.QuestionnaireService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@Transactional
+
 public class CategorieQuestionServiceImpl implements CategorieQuestionService {
 
     @Autowired
@@ -45,6 +44,9 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
 
     @Override
     public Optional<CategorieQuestion> categorieQuestionById(Integer quesId) {
+
+        if(quesId == null) return Optional.empty();
+
         var questionnaire = questionCategorieRepo.findById(quesId);
         if (questionnaire.isPresent()) {
             return Optional.of(modelMapper.map(questionnaire.get(),CategorieQuestion.class));

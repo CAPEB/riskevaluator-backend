@@ -10,11 +10,14 @@ import fr.capeb.backend.riskevaluator.model.StatusEntity;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.repository.StatusRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionnaireService;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.rmi.NotBoundException;
 import java.util.Optional;
 
@@ -44,16 +47,16 @@ public class QuestionnairesController {
 
 
     @PostMapping("/")
-    ResponseEntity saveQuestionnaire(@RequestBody Questionnaire questionnaire) {
+    ResponseEntity saveQuestionnaire(@Valid @RequestBody Questionnaire questionnaire) {
         var ques = questionnairesService.getQuestionnaireById(questionnaire.getIdQuestionnaire());
         if(ques.isPresent())
-             throw new ConflictException();
+            throw new ConflictException();
 
         return ResponseEntity.ok(questionnairesService.createOrUpdateQuestionnaire(questionnaire));
     }
 
     @PutMapping("/")
-    ResponseEntity replaceQuestionnaire(@RequestBody Questionnaire questionnaire)  {
+    ResponseEntity replaceQuestionnaire(@Valid  @RequestBody Questionnaire questionnaire)  {
         var ques = questionnairesService.getQuestionnaireById(questionnaire.getIdQuestionnaire());
         if(ques.isEmpty())
             return ResponseEntity.notFound().build();
