@@ -20,6 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@Transactional
 public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Autowired
