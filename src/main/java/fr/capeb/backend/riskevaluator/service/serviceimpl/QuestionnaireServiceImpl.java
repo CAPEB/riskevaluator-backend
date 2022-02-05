@@ -20,7 +20,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-@Transactional
 public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Autowired
@@ -44,6 +43,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
         if(quesId == null) return Optional.empty();
 
         Optional<QuestionnaireEntity> questionnaire = questionnairesRepo.findById(quesId);
+
         if (questionnaire.isPresent()) {
             return Optional.of(modelMapper.map(questionnaire.get(),Questionnaire.class));
         }

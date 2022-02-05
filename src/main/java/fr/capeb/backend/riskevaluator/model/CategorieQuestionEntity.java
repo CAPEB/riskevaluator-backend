@@ -1,5 +1,6 @@
 package fr.capeb.backend.riskevaluator.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +22,7 @@ public class CategorieQuestionEntity {
 
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="id_questionnaire", nullable=false)
     public QuestionnaireEntity idQuestionnaire;
 

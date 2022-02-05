@@ -19,8 +19,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static fr.capeb.backend.riskevaluator.exceptions.ExceptionMsg.ID_NOT_FOUND;
+
 @Component
-@Transactional
 
 public class CategorieQuestionServiceImpl implements CategorieQuestionService {
 
@@ -61,11 +62,29 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
     }
 
     @Override
-    public Optional<CategorieQuestion> updateCategorieQuestion(CategorieQuestion obj) {
+    public Optional<CategorieQuestion> updateCategorieQuestion(CategorieQuestion aCategorieQuestion) {
 
-        CategorieQuestionEntity catQues = Optional.of(modelMapper.map(obj, CategorieQuestionEntity.class)).orElseThrow(MappingDataException::new);
-        var updated = Optional.of(questionCategorieRepo.save(catQues)).orElseThrow(CreateOrUpdateException::new);
-        return Optional.of(modelMapper.map(updated,CategorieQuestion.class));
+        var wQuestionnaireEntity =  questionnaireRepo.findById(aCategorieQuestion
+                .getIdQuestionnaire())
+                .orElseThrow(()-> new CustomException("Questionnaire"+ID_NOT_FOUND.value));
+
+        var wCategorieQuestionEntity = Optional
+                .of(modelMapper
+                        .map(aCategorieQuestion, CategorieQuestionEntity.class))
+                .orElseThrow(MappingDataException::new);
+
+
+        wCategorieQuestionEntity.setIdQuestionnaire(wQuestionnaireEntity);
+        var wCreatedCategorieQuestionEntity = Optional
+                .of(questionCategorieRepo
+                        .save(wCategorieQuestionEntity))
+                .orElseThrow(CreateOrUpdateException::new);
+
+
+        wQuestionnaireEntity.getCategorieQuestion().add(wCreatedCategorieQuestionEntity);
+
+
+        return Optional.of(modelMapper.map(wCreatedCategorieQuestionEntity,CategorieQuestion.class));
 
     }
 

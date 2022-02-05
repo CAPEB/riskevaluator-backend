@@ -20,4 +20,7 @@ public class CategorieQuestion {
 
     @NotNull
     public Integer idQuestionnaire;
+
+    @NotNull
+    public String libelle;
 }
