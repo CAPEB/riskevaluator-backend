@@ -1,13 +1,9 @@
 package fr.capeb.backend.riskevaluator.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-import lombok.experimental.Accessors;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import lombok.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Builder
 @Getter
@@ -17,10 +13,12 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode
 public class CategorieQuestion {
     public Integer idCategorie;
-
-    @NotNull
-    public Integer idQuestionnaire;
-
     @NotNull
     public String libelle;
+    @NotNull
+    public Questionnaire questionnaire;
+    public List<ScoreCategory> scoreEvaluations;
+    public List<Question> questions;
+    public List<PreconisationCategorie> preconisations;
+
 }

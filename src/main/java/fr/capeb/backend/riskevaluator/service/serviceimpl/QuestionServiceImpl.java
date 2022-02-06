@@ -1,9 +1,7 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
-import fr.capeb.backend.riskevaluator.exceptions.ExceptionMsg;
 import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
-import fr.capeb.backend.riskevaluator.exceptions.model.CustomException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
 import fr.capeb.backend.riskevaluator.model.QuestionEntity;
 import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;

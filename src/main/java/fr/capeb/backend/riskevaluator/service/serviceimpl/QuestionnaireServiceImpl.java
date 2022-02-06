@@ -1,11 +1,8 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
-import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
 import fr.capeb.backend.riskevaluator.dto.Questionnaire;
-import fr.capeb.backend.riskevaluator.exceptions.model.ConflictException;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
-import fr.capeb.backend.riskevaluator.model.CategorieQuestionEntity;
 import fr.capeb.backend.riskevaluator.model.QuestionnaireEntity;
 import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;

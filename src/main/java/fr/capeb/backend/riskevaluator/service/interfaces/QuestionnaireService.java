@@ -1,8 +1,6 @@
 package fr.capeb.backend.riskevaluator.service.interfaces;
 
-import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
 import fr.capeb.backend.riskevaluator.dto.Questionnaire;
-import fr.capeb.backend.riskevaluator.model.CategorieQuestionEntity;
 
 import java.util.Optional;
 import java.util.Set;

@@ -29,4 +29,7 @@ public class QuestionnaireEntity {
     @OneToMany(mappedBy = "idQuestionnaire", cascade  = CascadeType.ALL, fetch = FetchType.LAZY)
     private Collection<CategorieQuestionEntity> categorieQuestion = new ArrayList<>();
 
+    @OneToMany(mappedBy = "idQuestionnaire", cascade  = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Collection<PreconisationGlobaleEntity> PreconisationsGlobale = new ArrayList<>();
+
 }

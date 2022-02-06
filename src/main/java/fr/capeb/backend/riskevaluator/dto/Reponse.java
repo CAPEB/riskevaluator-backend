@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -17,7 +19,10 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Reponse {
     private Integer idReponse;
-    private Integer idQuestion;
+    @NotNull
+    private Question question;
+    @NotNull
     private Integer nbPoints;
+    @NotNull
     private String contenu;
 }

@@ -19,8 +19,12 @@ public class PreconisationCategorie {
     private Integer idPreconisation;
     @NotNull
     private Integer idCategorie;
+    @NotNull
     private String contenu;
+    @NotNull
     private Integer viewIfPourcentageScoreLessThan;
+    @NotNull
+    private CategorieQuestion categorieQuestion;
 
 
 }

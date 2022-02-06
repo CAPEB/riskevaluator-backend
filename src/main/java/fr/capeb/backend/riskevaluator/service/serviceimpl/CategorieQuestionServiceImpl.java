@@ -65,7 +65,7 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
     public Optional<CategorieQuestion> updateCategorieQuestion(CategorieQuestion aCategorieQuestion) {
 
         var wQuestionnaireEntity =  questionnaireRepo.findById(aCategorieQuestion
-                .getIdQuestionnaire())
+                .getQuestionnaire().getIdQuestionnaire())
                 .orElseThrow(()-> new CustomException("Questionnaire"+ID_NOT_FOUND.value));
 
         var wCategorieQuestionEntity = Optional

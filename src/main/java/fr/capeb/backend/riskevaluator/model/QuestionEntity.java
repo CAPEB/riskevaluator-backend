@@ -44,5 +44,8 @@ public class QuestionEntity implements Serializable {
     @OneToMany(mappedBy = "idQuestion", fetch = FetchType.LAZY)
     private List<MetierQuestionEntity> metierQuestions;
 
+    @OneToMany(mappedBy = "idQuestion", fetch = FetchType.LAZY)
+    private List<ReponseEntity> reponses;
+
 
 }

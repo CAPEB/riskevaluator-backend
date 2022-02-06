@@ -1,9 +1,7 @@
 package fr.capeb.backend.riskevaluator.dto;
 
-import fr.capeb.backend.riskevaluator.model.CategorieQuestionEntity;
-import fr.capeb.backend.riskevaluator.model.EvaluationEntity;
-import fr.capeb.backend.riskevaluator.model.ScoreCategoryEntityPK;
 import lombok.*;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter
@@ -13,9 +11,11 @@ import lombok.*;
 @EqualsAndHashCode
 
 public class ScoreCategory {
-
-    private Integer idEvaluation;
-    private Integer idCategorie;
+    @NotNull
+    private Evaluation evaluation;
+    @NotNull
+    private CategorieQuestion categorie;
+    @NotNull
     private Integer nbPoints;
 
 }

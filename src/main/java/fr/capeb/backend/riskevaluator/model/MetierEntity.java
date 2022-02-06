@@ -23,5 +23,5 @@ public class MetierEntity {
     private String nomMetier;
 
     @OneToMany(mappedBy = "idMetier",fetch = FetchType.LAZY)
-    private List<MetierQuestionEntity> metierQuestions;
+    private List<MetierQuestionEntity> questionsMetier;
 }

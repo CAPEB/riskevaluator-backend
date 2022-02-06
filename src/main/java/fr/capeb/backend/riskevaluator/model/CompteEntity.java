@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,10 +20,13 @@ public class CompteEntity {
     @Column(name = "id_compte")
     private Integer idCompte;
 
+    @OneToMany(mappedBy = "idCompte", fetch = FetchType.LAZY)
+    private List<EvaluationEntity> evaluations;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="noentreprise", nullable=false)
     private EntrepriseEntity noEntreprise;
+
 
     @Column(name = "is_admin")
     private Boolean isAdmin;

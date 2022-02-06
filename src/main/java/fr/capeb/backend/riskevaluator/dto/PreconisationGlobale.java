@@ -14,7 +14,9 @@ import javax.validation.constraints.NotNull;
 public class PreconisationGlobale {
     private Integer idPreconisationG;
     @NotNull
-    private Integer idQuestionnaire;
+    private Questionnaire questionnaire;
+    @NotNull
     private String contenu;
+    @NotNull
     private Integer viewIfPourcentageScoreLessThan;
 }

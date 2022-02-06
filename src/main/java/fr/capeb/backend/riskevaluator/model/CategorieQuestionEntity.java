@@ -32,4 +32,11 @@ public class CategorieQuestionEntity {
     @OneToMany(mappedBy = "idCategorie")
     private List<ScoreCategoryEntity> scoreCategories;
 
+    @OneToMany(mappedBy = "idCategorie")
+    private List<PreconisationCategorieEntity> preconisationsCategorie;
+
+    @OneToMany(mappedBy = "idCategorie")
+    private List<QuestionEntity> questions;
+
+
 }
