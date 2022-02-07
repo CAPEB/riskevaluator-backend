@@ -45,10 +45,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
         Optional<QuestionnaireEntity> questionnaire = questionnairesRepo.findById(quesId);
 
-        if (questionnaire.isPresent()) {
-            return Optional.of(modelMapper.map(questionnaire.get(),Questionnaire.class));
-        }
-        return Optional.empty();
+        if(questionnaire.isEmpty()) return Optional.empty();
+
+        return Optional.of(modelMapper.map(questionnaire.get(),Questionnaire.class));
     }
 
     @Override
