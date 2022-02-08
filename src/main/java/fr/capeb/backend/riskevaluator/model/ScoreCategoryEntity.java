@@ -18,16 +18,16 @@ public class ScoreCategoryEntity {
     private ScoreCategoryEntityPK key;
 
 
-    @MapsId(value = "id_evaluation")
+    @MapsId(value = "idEvaluation")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_evaluation", referencedColumnName = "id_evaluation")
-    private EvaluationEntity idEvaluation;
+    private EvaluationEntity evaluation;
 
 
-    @MapsId(value = "id_categorie")
+    @MapsId(value = "idCategorie")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categorie", referencedColumnName = "id_categorie")
-    private CategorieQuestionEntity idCategorie;
+    private CategorieQuestionEntity categorieQuestion;
 
     @Column(name = "nb_points")
     private Integer nbPoints;

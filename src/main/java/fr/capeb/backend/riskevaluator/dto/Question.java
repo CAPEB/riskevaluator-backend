@@ -1,27 +1,32 @@
 package fr.capeb.backend.riskevaluator.dto;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.capeb.backend.riskevaluator.model.enumeration.QuestionType;
 import lombok.*;
-import lombok.experimental.Accessors;
-
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+
 public class Question {
 
     private Integer idQuestion;
     @NotNull
-    private Integer idCategorie;
-    private QuestionType qType;
-    private String  aide;
+    private QuestionType typeQuestion;
+    @NotNull
     private String  libelleQuestion;
-
+    @NotNull
+    private String  aideQuestion;
+    @NotNull
+    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
+    private CategorieQuestion categorieQuestion;
+    @JsonIgnoreProperties("question")
+    private List<Reponse> reponses;
+    @JsonIgnoreProperties("questions")
+    private List<Metier> metiers;
 }

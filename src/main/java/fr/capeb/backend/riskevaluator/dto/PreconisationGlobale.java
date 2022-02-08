@@ -1,5 +1,7 @@
 package fr.capeb.backend.riskevaluator.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -14,7 +16,10 @@ import javax.validation.constraints.NotNull;
 public class PreconisationGlobale {
     private Integer idPreconisationG;
     @NotNull
-    private Integer idQuestionnaire;
+    @JsonIgnoreProperties({"categorieQuestions","preconisationGlobales"})
+    private Questionnaire questionnaire;
+    @NotNull
     private String contenu;
+    @NotNull
     private Integer viewIfPourcentageScoreLessThan;
 }

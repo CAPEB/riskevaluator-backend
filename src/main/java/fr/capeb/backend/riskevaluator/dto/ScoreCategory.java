@@ -1,9 +1,8 @@
 package fr.capeb.backend.riskevaluator.dto;
 
-import fr.capeb.backend.riskevaluator.model.CategorieQuestionEntity;
-import fr.capeb.backend.riskevaluator.model.EvaluationEntity;
-import fr.capeb.backend.riskevaluator.model.ScoreCategoryEntityPK;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter
@@ -13,9 +12,13 @@ import lombok.*;
 @EqualsAndHashCode
 
 public class ScoreCategory {
-
-    private Integer idEvaluation;
-    private Integer idCategorie;
+    @NotNull
+    @JsonIgnoreProperties({"scoreCategories","compte"})
+    private Evaluation evaluation;
+    @NotNull
+    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
+    private CategorieQuestion categorieQuestion;
+    @NotNull
     private Integer nbPoints;
 
 }

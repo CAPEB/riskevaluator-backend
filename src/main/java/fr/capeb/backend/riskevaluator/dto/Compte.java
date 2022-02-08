@@ -1,9 +1,6 @@
 package fr.capeb.backend.riskevaluator.dto;
 
-import fr.capeb.backend.riskevaluator.model.EntrepriseEntity;
 import lombok.*;
-
-import javax.persistence.*;
 import java.sql.Date;
 @Builder
 @Getter

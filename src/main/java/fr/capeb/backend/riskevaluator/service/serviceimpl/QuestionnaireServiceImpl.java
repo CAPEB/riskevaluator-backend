@@ -1,12 +1,14 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
 import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
+import fr.capeb.backend.riskevaluator.dto.PreconisationGlobale;
 import fr.capeb.backend.riskevaluator.dto.Questionnaire;
-import fr.capeb.backend.riskevaluator.exceptions.model.ConflictException;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
-import fr.capeb.backend.riskevaluator.model.CategorieQuestionEntity;
+import fr.capeb.backend.riskevaluator.model.PreconisationGlobaleEntity;
 import fr.capeb.backend.riskevaluator.model.QuestionnaireEntity;
+import fr.capeb.backend.riskevaluator.model.enumeration.QuestionType;
+import fr.capeb.backend.riskevaluator.repository.PreconisationGlobaleRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionnaireService;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,18 +27,50 @@ import java.util.stream.Collectors;
 public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Autowired
-    private QuestionnaireRepository questionnairesRepo ;
+    private QuestionnaireRepository questionnairesRepo;
+
     @Autowired
-    private QuestionCategorieRepository questionCategorieRepo;
+    private QuestionCategorieRepository pCategorieQuestionRepo;
+
+    @Autowired
+    private PreconisationGlobaleRepository pPreconisationGlobaleRepo;
 
     @Autowired
     private ModelMapper modelMapper;
 
-    public Set<Questionnaire> getAllQuestionnaires() {
-        return questionnairesRepo.findAll()
+    public List<Questionnaire> getAllQuestionnaires() {
+
+        var wQuestionaireEntitys=questionnairesRepo.findAll();
+        var wQuestionnaires=wQuestionaireEntitys
                 .stream()
                 .map(stop -> modelMapper.map(stop, Questionnaire.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
+//        wQuestionnaires.stream().forEach(questionnaire -> {
+//            var wCategorieQuestion=pCategorieQuestionRepo
+//                    .findByQuestionaire(questionnaire.getIdQuestionnaire()).stream()
+//                    .map(stop -> modelMapper.map(stop, CategorieQuestion.class))
+//                    .collect(Collectors.toList());
+//
+//            var wPreconisationGlobale=pPreconisationGlobaleRepo.findByQuestionaire(questionnaire.getIdQuestionnaire()).stream()
+//                    .map(stop -> modelMapper.map(stop, PreconisationGlobale.class))
+//                    .collect(Collectors.toList());
+//
+//
+//            if(!wCategorieQuestion.isEmpty()) {
+//                questionnaire
+//                        .getCategorieQuestions()
+//                        .addAll(wCategorieQuestion);
+//            }
+//            if(!wPreconisationGlobale.isEmpty()) {
+//                questionnaire
+//                        .getPreconisationGlobales()
+//                        .addAll(wPreconisationGlobale);
+//            }
+//        });
+
+        return wQuestionnaires;
+
+
     }
 
     public Optional<Questionnaire> getQuestionnaireById(Integer quesId) {

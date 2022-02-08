@@ -1,5 +1,7 @@
 package fr.capeb.backend.riskevaluator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
 import lombok.*;
 
@@ -26,7 +28,10 @@ public class QuestionnaireEntity {
     @Column(name = "thematique", nullable=false)
     private String thematique;
 
-    @OneToMany(mappedBy = "idQuestionnaire", cascade  = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Collection<CategorieQuestionEntity> categorieQuestion = new ArrayList<>();
+    @OneToMany(mappedBy = "questionnaire", fetch = FetchType.LAZY)
+    private List<CategorieQuestionEntity> categorieQuestions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "questionnaire", fetch = FetchType.LAZY)
+    private List<PreconisationGlobaleEntity> preconisationGlobales = new ArrayList<>();
 
 }

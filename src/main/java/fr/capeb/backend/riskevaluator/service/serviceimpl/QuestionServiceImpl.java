@@ -1,13 +1,12 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
-import fr.capeb.backend.riskevaluator.exceptions.ExceptionMsg;
 import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
-import fr.capeb.backend.riskevaluator.exceptions.model.CustomException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
 import fr.capeb.backend.riskevaluator.model.QuestionEntity;
 import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionRepository;
+import fr.capeb.backend.riskevaluator.repository.ReponseRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private ReponseRepository pReponseRepository;
 
 
 
@@ -59,6 +61,8 @@ public class QuestionServiceImpl implements QuestionService {
 
         var ques = Optional.of(modelMapper.map(question, QuestionEntity.class)).orElseThrow(MappingDataException::new);
         var updated = Optional.of(questionRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
+        pReponseRepository.saveAll(ques.getReponses());
+        updated.getReponses().addAll(ques.getReponses());
         return Optional.of(modelMapper.map(updated,Question.class));
     }
 

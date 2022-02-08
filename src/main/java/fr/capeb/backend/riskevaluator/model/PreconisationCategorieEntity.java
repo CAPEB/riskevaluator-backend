@@ -21,7 +21,7 @@ public class PreconisationCategorieEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_categorie", nullable=false)
-    private CategorieQuestionEntity idCategorie;
+    private CategorieQuestionEntity categorieQuestion;
 
 
     @Column(name = "contenu",  columnDefinition="TEXT")

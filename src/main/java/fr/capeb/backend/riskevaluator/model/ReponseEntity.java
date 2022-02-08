@@ -19,7 +19,7 @@ public class ReponseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_question", nullable=false)
-    private QuestionEntity idQuestion;
+    private QuestionEntity question;
 
 
     @Column(name = "nb_points")

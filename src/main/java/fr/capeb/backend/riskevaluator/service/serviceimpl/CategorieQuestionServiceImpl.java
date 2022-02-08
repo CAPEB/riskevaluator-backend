@@ -65,7 +65,7 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
     public Optional<CategorieQuestion> updateCategorieQuestion(CategorieQuestion aCategorieQuestion) {
 
         var wQuestionnaireEntity =  questionnaireRepo.findById(aCategorieQuestion
-                .getIdQuestionnaire())
+                .getQuestionnaire().getIdQuestionnaire())
                 .orElseThrow(()-> new CustomException("Questionnaire"+ID_NOT_FOUND.value));
 
         var wCategorieQuestionEntity = Optional
@@ -74,14 +74,14 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
                 .orElseThrow(MappingDataException::new);
 
 
-        wCategorieQuestionEntity.setIdQuestionnaire(wQuestionnaireEntity);
+        wCategorieQuestionEntity.setQuestionnaire(wQuestionnaireEntity);
         var wCreatedCategorieQuestionEntity = Optional
                 .of(questionCategorieRepo
                         .save(wCategorieQuestionEntity))
                 .orElseThrow(CreateOrUpdateException::new);
 
 
-        wQuestionnaireEntity.getCategorieQuestion().add(wCreatedCategorieQuestionEntity);
+        wQuestionnaireEntity.getCategorieQuestions().add(wCreatedCategorieQuestionEntity);
 
 
         return Optional.of(modelMapper.map(wCreatedCategorieQuestionEntity,CategorieQuestion.class));

@@ -1,5 +1,7 @@
 package fr.capeb.backend.riskevaluator.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +22,7 @@ public class PreconisationGlobaleEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_questionnaire", nullable=false)
-    private QuestionnaireEntity idQuestionnaire;
+    private QuestionnaireEntity questionnaire;
 
     @Column(name = "contenu", columnDefinition="TEXT")
     private String contenu;

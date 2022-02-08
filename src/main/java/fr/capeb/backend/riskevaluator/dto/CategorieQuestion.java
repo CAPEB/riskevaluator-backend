@@ -1,26 +1,30 @@
 package fr.capeb.backend.riskevaluator.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-import lombok.experimental.Accessors;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class CategorieQuestion {
     public Integer idCategorie;
-
-    @NotNull
-    public Integer idQuestionnaire;
-
     @NotNull
     public String libelle;
+    @NotNull
+    @JsonIgnoreProperties({"categorieQuestions","preconisationGlobales"})
+    public Questionnaire questionnaire;
+    @JsonIgnoreProperties({"categorieQuestion","evaluation"})
+    public List<ScoreCategory> scoreEvaluations= new ArrayList<>();
+    @JsonIgnoreProperties({"categorieQuestion","reponses","metiers"})
+    public List<Question> questions = new ArrayList<>();
+    @JsonIgnoreProperties("categorieQuestion")
+    public List<PreconisationCategorie> preconisationsCategorie= new ArrayList<>();
+
 }
