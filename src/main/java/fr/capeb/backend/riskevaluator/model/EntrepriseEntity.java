@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,14 +13,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "entreprise")
 public class EntrepriseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "noentreprise")
-    public Integer noEntreprise;
 
+    @Id
     @Basic
     @Column(name = "nosiret")
-    public String noSiret;
+    public Integer noSiret;
 
     @Basic
     @Column(name = "nom_entreprise")
@@ -28,10 +26,13 @@ public class EntrepriseEntity {
 
     @Basic
     @Column(name = "effectif")
-    public Integer effectif;
+    public Integer effectifEntreprise;
 
     @Basic
     @Column(name = "anneedecreation")
-    public Integer AnneeDeCreation;
+    public Integer anneeDeCreation;
+
+    @OneToMany(mappedBy = "entreprise",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<EvaluationEntity> evaluations;
 
 }
