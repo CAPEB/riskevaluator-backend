@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/reponses")
+@RequestMapping("/api/reponses/")
 public class ReponsesController {
     @Autowired
     public ReponseService pResponseManager;
