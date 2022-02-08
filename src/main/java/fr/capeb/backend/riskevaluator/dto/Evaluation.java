@@ -14,11 +14,14 @@ import java.util.List;
 public class Evaluation {
 
     private Integer idEvaluation;
-    @NotNull
+    @JsonIgnoreProperties({"evaluations"})
     private Compte compte;
     @NotNull
-    @JsonIgnoreProperties({"categorieQuestion","evaluation"})
+    @JsonIgnoreProperties({"evaluation","categorieQuestion"})
     private List<ScoreCategory> scoreCategories;
+    @NotNull
+    @JsonIgnoreProperties({"evaluations"})
+    private Entreprise entreprise;
 
 
 

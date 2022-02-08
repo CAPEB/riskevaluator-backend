@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 public class ScoreCategory {
     @NotNull
-    @JsonIgnoreProperties({"scoreCategories","compte"})
+    @JsonIgnoreProperties({"scoreCategories","compte","entreprise"})
     private Evaluation evaluation;
     @NotNull
     @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})

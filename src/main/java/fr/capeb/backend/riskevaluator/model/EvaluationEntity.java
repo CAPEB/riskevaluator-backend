@@ -23,8 +23,14 @@ public class EvaluationEntity {
     @JoinColumn(name="id_compte", nullable=false)
     private CompteEntity compte;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="nosiret", nullable=false)
+    private EntrepriseEntity entreprise;
+
     @OneToMany(mappedBy = "evaluation",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ScoreCategoryEntity> scoreCategories;
+
+
 
 
 
