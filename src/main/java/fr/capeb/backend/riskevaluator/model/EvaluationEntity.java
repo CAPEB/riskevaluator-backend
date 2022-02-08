@@ -23,7 +23,7 @@ public class EvaluationEntity {
     @JoinColumn(name="id_compte", nullable=false)
     private CompteEntity idCompte;
 
-    @OneToMany(mappedBy = "idEvaluation", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idEvaluation",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ScoreCategoryEntity> scoreCategories;
 
 

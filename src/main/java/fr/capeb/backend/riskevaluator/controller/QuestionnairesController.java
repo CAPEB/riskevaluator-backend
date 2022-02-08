@@ -28,7 +28,7 @@ public class QuestionnairesController {
         Optional<Questionnaire> questionnaire = questionnairesService.getQuestionnaireById(id);
 
         if(questionnaire.isPresent())
-            return ResponseEntity.ok(questionnairesService.getAllQuestionnaires());
+            return ResponseEntity.ok(questionnairesService.getQuestionnaireById(id));
 
         return ResponseEntity.notFound().build();
     }

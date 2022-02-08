@@ -11,18 +11,16 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Question {
 
     private Integer idQuestion;
     @NotNull
     private CategorieQuestion categorieQuestion;
-    @NotNull
     private QuestionType qType;
     private String  aide;
     @NotNull
     private String  libelleQuestion;
     private List<Reponse> reponses;
-    @NotNull
+
     private List<Metier> metiers;
 }

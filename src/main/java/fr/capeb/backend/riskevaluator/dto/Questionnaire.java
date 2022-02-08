@@ -1,5 +1,7 @@
 package fr.capeb.backend.riskevaluator.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.lang.Nullable;
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -15,15 +18,16 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 
 public class Questionnaire {
 
     private Integer idQuestionnaire;
     @NotNull
     private String thematique;
-    private List<PreconisationGlobale> preconisationGlobales;
-    private List<CategorieQuestion> categorieQuestions;
+    @JsonIgnoreProperties("questionnaire")
+    private List<PreconisationGlobale> preconisationGlobales=new ArrayList<PreconisationGlobale>();
+    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisations"})
+    private List<CategorieQuestion> categorieQuestions=new ArrayList<CategorieQuestion>();
 
 
 }

@@ -20,7 +20,7 @@ public class CompteEntity {
     @Column(name = "id_compte")
     private Integer idCompte;
 
-    @OneToMany(mappedBy = "idCompte", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idCompte",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<EvaluationEntity> evaluations;
 
     @ManyToOne(fetch = FetchType.LAZY)

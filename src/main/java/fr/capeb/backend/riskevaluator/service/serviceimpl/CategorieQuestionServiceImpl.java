@@ -74,14 +74,14 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
                 .orElseThrow(MappingDataException::new);
 
 
-        wCategorieQuestionEntity.setIdQuestionnaire(wQuestionnaireEntity);
+        wCategorieQuestionEntity.setQuestionnaire(wQuestionnaireEntity);
         var wCreatedCategorieQuestionEntity = Optional
                 .of(questionCategorieRepo
                         .save(wCategorieQuestionEntity))
                 .orElseThrow(CreateOrUpdateException::new);
 
 
-        wQuestionnaireEntity.getCategorieQuestion().add(wCreatedCategorieQuestionEntity);
+        wQuestionnaireEntity.getCategorieQuestions().add(wCreatedCategorieQuestionEntity);
 
 
         return Optional.of(modelMapper.map(wCreatedCategorieQuestionEntity,CategorieQuestion.class));
