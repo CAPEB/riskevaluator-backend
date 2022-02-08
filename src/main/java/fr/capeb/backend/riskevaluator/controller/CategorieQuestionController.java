@@ -31,7 +31,6 @@ public class CategorieQuestionController {
         return ResponseEntity.ok(categorieQuestionService.getAllCategorieQuestion());
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity getQuestionnaireById(@PathVariable Integer id) {
 
@@ -42,10 +41,6 @@ public class CategorieQuestionController {
 
         return ResponseEntity.notFound().build();
     }
-
-
-
-
 
     @DeleteMapping("/{id}")
     ResponseEntity deleteCategorieQuestion(@PathVariable Integer id)  {

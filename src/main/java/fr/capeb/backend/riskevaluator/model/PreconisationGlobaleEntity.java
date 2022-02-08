@@ -22,7 +22,6 @@ public class PreconisationGlobaleEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_questionnaire", nullable=false)
-    @JsonIgnoreProperties("preconisationGlobales")
     private QuestionnaireEntity questionnaire;
 
     @Column(name = "contenu", columnDefinition="TEXT")

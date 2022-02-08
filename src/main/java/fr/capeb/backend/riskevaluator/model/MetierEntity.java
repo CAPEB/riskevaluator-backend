@@ -22,6 +22,6 @@ public class MetierEntity {
     @Column(name = "nom_metier",nullable=false)
     private String nomMetier;
 
-    @OneToMany(mappedBy = "idMetier",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "metier",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<MetierQuestionEntity> questionsMetier;
 }

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 public class PreconisationGlobale {
     private Integer idPreconisationG;
     @NotNull
-    @JsonIgnoreProperties("preconisationGlobales")
+    @JsonIgnoreProperties({"categorieQuestions","preconisationGlobales"})
     private Questionnaire questionnaire;
     @NotNull
     private String contenu;

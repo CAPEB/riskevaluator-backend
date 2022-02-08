@@ -1,6 +1,7 @@
 package fr.capeb.backend.riskevaluator.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.capeb.backend.riskevaluator.model.enumeration.QuestionType;
 import lombok.*;
 import javax.validation.constraints.NotNull;
@@ -15,12 +16,18 @@ public class Question {
 
     private Integer idQuestion;
     @NotNull
+    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
     private CategorieQuestion categorieQuestion;
-    private QuestionType qType;
+
+    @NotNull
+    private QuestionType typeQUestion;
+
     private String  aide;
     @NotNull
     private String  libelleQuestion;
-    private List<Reponse> reponses;
 
+    @JsonIgnoreProperties("question")
+    private List<Reponse> reponses;
+    @JsonIgnoreProperties("questions")
     private List<Metier> metiers;
 }

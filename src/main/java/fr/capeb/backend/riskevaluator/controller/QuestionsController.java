@@ -20,6 +20,20 @@ public class QuestionsController {
     public ReponseService pResponseManager;
 
 
+    @GetMapping("/")
+    public ResponseEntity<Object> getAll() {
+        return ResponseEntity.ok(questionService.getAllQuestion());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getQuestionById(@PathVariable Integer id) {
+        var wQuestion = questionService.getQuestionById(id);
+
+        if(wQuestion.isPresent())
+            return ResponseEntity.ok(wQuestion.get());
+
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping("/")
     ResponseEntity createQuestion(@Valid @RequestBody Question question)  {
         var ques = questionService.getQuestionById(question.getIdQuestion());

@@ -18,11 +18,13 @@ public class CategorieQuestion {
     @NotNull
     public String libelle;
     @NotNull
-    @JsonIgnoreProperties("categorieQuestions")
+    @JsonIgnoreProperties({"categorieQuestions","preconisationGlobales"})
     public Questionnaire questionnaire;
-
+    @JsonIgnoreProperties({"categorieQuestion","evaluation"})
     public List<ScoreCategory> scoreEvaluations= new ArrayList<>();
+    @JsonIgnoreProperties({"categorieQuestion","reponses","metiers"})
     public List<Question> questions = new ArrayList<>();
-    public List<PreconisationCategorie> preconisations= new ArrayList<>();
+    @JsonIgnoreProperties("categorieQuestion")
+    public List<PreconisationCategorie> preconisationsCategorie= new ArrayList<>();
 
 }

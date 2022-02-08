@@ -1,7 +1,6 @@
 package fr.capeb.backend.riskevaluator.controller;
 
 import fr.capeb.backend.riskevaluator.dto.Metier;
-import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.exceptions.model.ConflictException;
 import fr.capeb.backend.riskevaluator.service.interfaces.MetierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,19 @@ public class MetiersController {
     @Autowired
     public MetierService metierService;
 
+    @GetMapping("/")
+    public ResponseEntity<Object> getAll() {
+        return ResponseEntity.ok(metierService.getAllMetier());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getMetierById(@PathVariable Integer id) {
+        var wMetier = metierService.getMetierById(id);
 
+        if(wMetier.isPresent())
+            return ResponseEntity.ok(wMetier.get());
+
+        return ResponseEntity.notFound().build();
+    }
 
     @PostMapping("/")
     ResponseEntity createQuestion(@Valid @RequestBody Metier metier)  {

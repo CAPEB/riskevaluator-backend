@@ -21,9 +21,9 @@ public class EvaluationEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_compte", nullable=false)
-    private CompteEntity idCompte;
+    private CompteEntity compte;
 
-    @OneToMany(mappedBy = "idEvaluation",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "evaluation",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ScoreCategoryEntity> scoreCategories;
 
 

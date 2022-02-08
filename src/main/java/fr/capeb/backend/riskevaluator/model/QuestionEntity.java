@@ -29,12 +29,12 @@ public class QuestionEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_categorie", nullable=false)
-    private CategorieQuestionEntity idCategorie;
+    private CategorieQuestionEntity categorieQuestion;
 
 
     @Enumerated(EnumType.STRING)
     @Column(name = "q_type")
-    private QuestionType qType;
+    private QuestionType typeQUestion;
 
     @Column(name = "aide")
     private String aide;
@@ -42,10 +42,10 @@ public class QuestionEntity implements Serializable {
     @Column(name = "libelle_question",  columnDefinition="TEXT")
     private String libelleQuestion;
 
-    @OneToMany(mappedBy = "idQuestion",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MetierQuestionEntity> metierQuestions= new ArrayList<MetierQuestionEntity>();
 
-    @OneToMany(mappedBy = "idQuestion",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ReponseEntity> reponses= new ArrayList<ReponseEntity>();
 
 

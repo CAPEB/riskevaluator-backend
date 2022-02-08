@@ -24,23 +24,19 @@ public class CategorieQuestionEntity {
     public Integer idCategorie;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("categorieQuestions")
     @JoinColumn(name="id_questionnaire", nullable=false)
     public QuestionnaireEntity questionnaire;
 
     @Column(name = "libelle", nullable=false)
     public String libelle;
 
-    @OneToMany(mappedBy = "idCategorie", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "categorieQuestion", fetch = FetchType.LAZY)
     private List<ScoreCategoryEntity> scoreEvaluations=new ArrayList<ScoreCategoryEntity>();
 
-    @OneToMany(mappedBy = "idCategorie", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "categorieQuestion", fetch = FetchType.LAZY)
     private List<PreconisationCategorieEntity> preconisationsCategorie= new ArrayList<PreconisationCategorieEntity>();
 
-    @OneToMany(mappedBy = "idCategorie", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "categorieQuestion", fetch = FetchType.LAZY)
     private List<QuestionEntity> questions= new ArrayList<QuestionEntity>();
 
 

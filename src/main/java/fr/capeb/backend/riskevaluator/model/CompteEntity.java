@@ -20,12 +20,12 @@ public class CompteEntity {
     @Column(name = "id_compte")
     private Integer idCompte;
 
-    @OneToMany(mappedBy = "idCompte",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "compte",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<EvaluationEntity> evaluations;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="noentreprise", nullable=false)
-    private EntrepriseEntity noEntreprise;
+    private EntrepriseEntity entreprise;
 
 
     @Column(name = "is_admin")

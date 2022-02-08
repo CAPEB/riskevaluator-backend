@@ -29,11 +29,9 @@ public class QuestionnaireEntity {
     private String thematique;
 
     @OneToMany(mappedBy = "questionnaire", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("questionnaire")
     private List<CategorieQuestionEntity> categorieQuestions = new ArrayList<>();
 
     @OneToMany(mappedBy = "questionnaire", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("questionnaire")
     private List<PreconisationGlobaleEntity> preconisationGlobales = new ArrayList<>();
 
 }

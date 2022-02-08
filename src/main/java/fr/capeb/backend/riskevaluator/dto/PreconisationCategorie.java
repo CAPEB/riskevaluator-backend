@@ -1,5 +1,6 @@
 package fr.capeb.backend.riskevaluator.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.capeb.backend.riskevaluator.model.CategorieQuestionEntity;
 import lombok.*;
 
@@ -18,12 +19,11 @@ import javax.validation.constraints.NotNull;
 public class PreconisationCategorie {
     private Integer idPreconisation;
     @NotNull
-    private Integer idCategorie;
-    @NotNull
     private String contenu;
     @NotNull
     private Integer viewIfPourcentageScoreLessThan;
     @NotNull
+    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
     private CategorieQuestion categorieQuestion;
 
 

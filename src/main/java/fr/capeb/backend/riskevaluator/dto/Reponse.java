@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 public class Reponse {
     private Integer idReponse;
     @NotNull
+    @JsonIgnoreProperties({"categorieQuestion","reponses","metiers"})
     private Question question;
     @NotNull
     private Integer nbPoints;
