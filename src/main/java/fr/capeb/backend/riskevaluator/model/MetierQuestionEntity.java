@@ -17,13 +17,13 @@ public class MetierQuestionEntity {
     private MetierQuestionEntityPK key;
 
     @MapsId(value = "idQuestion")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_question", referencedColumnName = "id_question")
     private QuestionEntity question;
 
 
     @MapsId(value = "idMetier")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_metier", referencedColumnName = "id_metier")
     private MetierEntity metier;
 }

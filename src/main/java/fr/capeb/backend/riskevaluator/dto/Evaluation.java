@@ -21,4 +21,6 @@ public class Evaluation {
     private List<ScoreCategory> scoreCategories;
 
 
+
+
 }

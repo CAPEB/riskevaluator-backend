@@ -12,20 +12,19 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Question {
 
     private Integer idQuestion;
     @NotNull
-    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
-    private CategorieQuestion categorieQuestion;
-
-    @NotNull
-    private QuestionType typeQUestion;
-
-    private String  aide;
+    private QuestionType typeQuestion;
     @NotNull
     private String  libelleQuestion;
-
+    @NotNull
+    private String  aideQuestion;
+    @NotNull
+    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
+    private CategorieQuestion categorieQuestion;
     @JsonIgnoreProperties("question")
     private List<Reponse> reponses;
     @JsonIgnoreProperties("questions")

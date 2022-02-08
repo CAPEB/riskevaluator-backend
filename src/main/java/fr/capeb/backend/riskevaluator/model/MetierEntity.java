@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,6 @@ public class MetierEntity {
     @Column(name = "nom_metier",nullable=false)
     private String nomMetier;
 
-    @OneToMany(mappedBy = "metier",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<MetierQuestionEntity> questions;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "metier", cascade = CascadeType.ALL)
+    private List<MetierQuestionEntity> questions = new ArrayList<>();
 }

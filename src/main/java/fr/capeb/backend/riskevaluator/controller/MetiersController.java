@@ -17,8 +17,10 @@ public class MetiersController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getAll() {
+
         return ResponseEntity.ok(metierService.getAllMetier());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> getMetierById(@PathVariable Integer id) {
         var wMetier = metierService.getMetierById(id);

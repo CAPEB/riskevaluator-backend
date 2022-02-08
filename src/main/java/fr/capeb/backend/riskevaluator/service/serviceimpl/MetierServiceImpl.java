@@ -1,16 +1,13 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.capeb.backend.riskevaluator.dto.Metier;
 import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
 import fr.capeb.backend.riskevaluator.model.MetierEntity;
-import fr.capeb.backend.riskevaluator.model.QuestionEntity;
 import fr.capeb.backend.riskevaluator.repository.MetierRepository;
-import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
-import fr.capeb.backend.riskevaluator.repository.QuestionRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.MetierService;
-import fr.capeb.backend.riskevaluator.service.interfaces.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,7 +29,7 @@ public class MetierServiceImpl implements MetierService {
 
     @Override
     public Set<Metier> getAllMetier() {
-        return metierRepo.findAll()
+            return metierRepo.findAll()
                 .stream()
                 .map(stop -> modelMapper.map(stop, Metier.class))
                 .collect(Collectors.toSet());

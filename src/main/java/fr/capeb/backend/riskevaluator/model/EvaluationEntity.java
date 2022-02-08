@@ -27,4 +27,5 @@ public class EvaluationEntity {
     private List<ScoreCategoryEntity> scoreCategories;
 
 
+
 }

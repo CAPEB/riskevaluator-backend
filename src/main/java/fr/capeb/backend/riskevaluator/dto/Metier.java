@@ -1,6 +1,8 @@
 package fr.capeb.backend.riskevaluator.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.*;
 import org.hibernate.validator.constraints.UniqueElements;
 
@@ -13,7 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+
 
 public class Metier {
     private Integer idMetier;
