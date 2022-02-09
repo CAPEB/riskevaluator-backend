@@ -1,5 +1,6 @@
 package fr.capeb.backend.riskevaluator.service.interfaces;
 
+import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
 import fr.capeb.backend.riskevaluator.dto.Metier;
 import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.dto.Questionnaire;
@@ -13,6 +14,6 @@ public interface QuestionnaireService {
      Optional<Questionnaire> createOrUpdateQuestionnaire(Questionnaire questionnaire);
      Optional<Object> deleteQuestionnaire(Integer quesId);
      List<Metier> getMetiersByQuestionnaireId(Integer aQuestionnaireId);
-     List<Question> getQuestionsByQuestionnaireIdAndMetiers(Integer aQuestionnaireId, List<Integer> metierIds);
+     List<CategorieQuestion> getQuestionsByQuestionnaireIdAndMetiers(Integer aQuestionnaireId, List<Integer> metierIds);
 
 }

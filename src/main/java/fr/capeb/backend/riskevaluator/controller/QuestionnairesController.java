@@ -1,5 +1,6 @@
 package fr.capeb.backend.riskevaluator.controller;
 
+import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
 import fr.capeb.backend.riskevaluator.dto.Metier;
 import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.dto.Questionnaire;
@@ -84,7 +85,7 @@ public class QuestionnairesController {
     public ResponseEntity getQuestionsByQuestionnaireIdAndMetiers(@PathVariable Integer aQuestionnaireId,@RequestParam(value="metierId") List<Integer> metierIds) {
 
         Optional<Questionnaire> questionnaire = questionnairesService.getQuestionnaireById(aQuestionnaireId);
-        List<Question> wQuestions= questionnairesService.getQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId,metierIds);
+        List<CategorieQuestion> wQuestions= questionnairesService.getQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId,metierIds);
         if(questionnaire.isPresent()&&!wQuestions.isEmpty())
             return ResponseEntity.ok(wQuestions);
 

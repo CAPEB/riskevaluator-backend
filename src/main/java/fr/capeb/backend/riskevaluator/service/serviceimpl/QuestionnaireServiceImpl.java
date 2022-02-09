@@ -1,5 +1,6 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
+import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
 import fr.capeb.backend.riskevaluator.dto.Metier;
 import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.dto.Questionnaire;
@@ -106,11 +107,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
-    public List<Question> getQuestionsByQuestionnaireIdAndMetiers(Integer aQuestionnaireId, List<Integer> metierIds) {
+    public List<CategorieQuestion> getQuestionsByQuestionnaireIdAndMetiers(Integer aQuestionnaireId, List<Integer> metierIds) {
 
         return  pQuestionRepository.getQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId, metierIds)
                 .stream()
-                .map(stop -> modelMapper.map(stop, Question.class))
+                .map(stop -> modelMapper.map(stop, CategorieQuestion.class))
                 .collect(Collectors.toList());
     }
 
