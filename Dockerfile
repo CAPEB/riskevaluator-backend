@@ -7,7 +7,7 @@
 
 
 
-FROM openjdk:13-jdk-alpine
+FROM openjdk:17-jdk-alpine
 
 ARG A_HOST
 ARG A_PORT
