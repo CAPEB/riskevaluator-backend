@@ -20,8 +20,8 @@ public class Question {
     private QuestionType typeQuestion;
     @NotNull
     private String  libelleQuestion;
-    @NotNull
-    private String  aideQuestion;
+
+    private Integer scoreMaxPossibleQuestion;
     @NotNull
     @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
     private CategorieQuestion categorieQuestion;

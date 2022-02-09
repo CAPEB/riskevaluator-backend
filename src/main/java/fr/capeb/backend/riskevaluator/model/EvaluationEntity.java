@@ -19,6 +19,9 @@ public class EvaluationEntity {
     @Column(name = "id_evaluation")
     private Integer idEvaluation;
 
+    @Column(name = "ScoreGenerale")
+    private Integer ScoreGeneraleEvaluation;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_compte", nullable=false)
     private CompteEntity compte;
