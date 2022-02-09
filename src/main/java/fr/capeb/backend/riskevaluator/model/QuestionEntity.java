@@ -27,9 +27,8 @@ public class QuestionEntity implements Serializable {
     @Column(name = "q_type")
     private QuestionType typeQuestion;
 
-    @NotNull
-    @Column(name = "aide_question", columnDefinition = "TEXT")
-    private String aideQuestion;
+    @Column(name = "score_max_possible", columnDefinition = "integer default 0")
+    private Integer scoreMaxPossibleQuestion;
 
     @NotNull
     @Column(name = "libelle_question",  columnDefinition="TEXT")

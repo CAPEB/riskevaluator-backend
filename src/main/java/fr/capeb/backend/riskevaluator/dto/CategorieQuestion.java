@@ -22,7 +22,7 @@ public class CategorieQuestion {
     public Questionnaire questionnaire;
     @JsonIgnoreProperties({"categorieQuestion","evaluation"})
     public List<ScoreCategory> scoreEvaluations= new ArrayList<>();
-    @JsonIgnoreProperties({"categorieQuestion","reponses","metiers"})
+    @JsonIgnoreProperties({"categorieQuestion","metiers"})
     public List<Question> questions = new ArrayList<>();
     @JsonIgnoreProperties("categorieQuestion")
     public List<PreconisationCategorie> preconisationsCategorie= new ArrayList<>();
