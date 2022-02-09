@@ -21,7 +21,7 @@ public class Question {
     @NotNull
     private String  libelleQuestion;
 
-    private Integer scoreMaxPossible;
+    private Integer scoreMaxPossibleQuestion;
     @NotNull
     @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
     private CategorieQuestion categorieQuestion;

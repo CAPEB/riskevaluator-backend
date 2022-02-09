@@ -28,7 +28,7 @@ public class QuestionEntity implements Serializable {
     private QuestionType typeQuestion;
 
     @Column(name = "score_max_possible", columnDefinition = "integer default 0")
-    private Integer scoreMaxPossible;
+    private Integer scoreMaxPossibleQuestion;
 
     @NotNull
     @Column(name = "libelle_question",  columnDefinition="TEXT")
