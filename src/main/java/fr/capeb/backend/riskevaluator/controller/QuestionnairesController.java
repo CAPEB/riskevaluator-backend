@@ -1,12 +1,16 @@
 package fr.capeb.backend.riskevaluator.controller;
 
+import fr.capeb.backend.riskevaluator.dto.Metier;
+import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.dto.Questionnaire;
 import fr.capeb.backend.riskevaluator.exceptions.model.ConflictException;
+import fr.capeb.backend.riskevaluator.service.interfaces.MetierService;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -14,6 +18,9 @@ import java.util.Optional;
 public class QuestionnairesController {
     @Autowired
     public QuestionnaireService questionnairesService;
+
+    @Autowired
+    private MetierService pMetierManager;
 
     //{idQuestionnaire}/categoriesQuestion
     @GetMapping("/")
@@ -61,6 +68,26 @@ public class QuestionnairesController {
 
         return ResponseEntity.ok(questionnairesService.deleteQuestionnaire(id));
     }
+    @GetMapping("/{aQuestionnaireId}/metiers")
+    public ResponseEntity getMetierByQuestionnaireId(@PathVariable Integer aQuestionnaireId) {
+
+        Optional<Questionnaire> questionnaire = questionnairesService.getQuestionnaireById(aQuestionnaireId);
+        List<Metier> wMetiers= questionnairesService.getMetiersByQuestionnaireId(aQuestionnaireId);
+        if(questionnaire.isPresent()&&!wMetiers.isEmpty())
+            return ResponseEntity.ok(wMetiers);
+
+        return ResponseEntity.notFound().build();
+    }
 
 
+    @GetMapping("/{aQuestionnaireId}/questions")
+    public ResponseEntity getQuestionsByQuestionnaireIdAndMetiers(@PathVariable Integer aQuestionnaireId,@RequestParam(value="metierId") List<Integer> metierIds) {
+
+        Optional<Questionnaire> questionnaire = questionnairesService.getQuestionnaireById(aQuestionnaireId);
+        List<Question> wQuestions= questionnairesService.getQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId,metierIds);
+        if(questionnaire.isPresent()&&!wQuestions.isEmpty())
+            return ResponseEntity.ok(wQuestions);
+
+        return ResponseEntity.notFound().build();
+    }
 }
