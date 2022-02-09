@@ -26,3 +26,5 @@ ARG  JAR_FILE=target/*.jar
 RUN mkdir -p /apps
 COPY ${JAR_FILE} /apps/app.jar
 ENTRYPOINT ["java","-jar","/apps/app.jar"]
+
+CMD [ "sh", "-c", "java -Xmx300m -Xss512k -XX:CICompilerCount=2 -Dfile.encoding=UTF-8 -XX:+UseContainerSupport -jar /apps/app.jar" ]
