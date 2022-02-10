@@ -14,15 +14,15 @@ import javax.persistence.*;
 public class MetierQuestionEntity {
 
     @EmbeddedId
-    private MetierQuestionEntityPK key;
+    private MetierQuestionEntityPK key = new MetierQuestionEntityPK();
 
-    @MapsId(value = "idQuestion")
+    @MapsId(value = "questionId")
     @ManyToOne
     @JoinColumn(name = "id_question", referencedColumnName = "id_question")
     private QuestionEntity question;
 
 
-    @MapsId(value = "idMetier")
+    @MapsId(value = "metierId")
     @ManyToOne
     @JoinColumn(name = "id_metier", referencedColumnName = "id_metier")
     private MetierEntity metier;

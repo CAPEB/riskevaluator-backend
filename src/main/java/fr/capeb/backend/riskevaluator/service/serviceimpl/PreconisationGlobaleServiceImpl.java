@@ -1,15 +1,10 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
-import fr.capeb.backend.riskevaluator.dto.PreconisationCategorie;
 import fr.capeb.backend.riskevaluator.dto.PreconisationGlobale;
-import fr.capeb.backend.riskevaluator.exceptions.ExceptionMsg;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
-import fr.capeb.backend.riskevaluator.exceptions.model.CustomException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
-import fr.capeb.backend.riskevaluator.model.PreconisationCategorieEntity;
 import fr.capeb.backend.riskevaluator.model.PreconisationGlobaleEntity;
 import fr.capeb.backend.riskevaluator.repository.PreconisationGlobaleRepository;
-import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.PreconisationGlobaleService;
 import org.modelmapper.ModelMapper;

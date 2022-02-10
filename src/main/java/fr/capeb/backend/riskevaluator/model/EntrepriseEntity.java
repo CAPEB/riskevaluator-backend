@@ -32,7 +32,7 @@ public class EntrepriseEntity {
     @Column(name = "anneedecreation")
     public Integer anneeDeCreation;
 
-    @OneToMany(mappedBy = "entreprise",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "entreprise",cascade = CascadeType.ALL)
     private List<EvaluationEntity> evaluations;
 
 }

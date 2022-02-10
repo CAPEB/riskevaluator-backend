@@ -1,6 +1,5 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
-import fr.capeb.backend.riskevaluator.dto.Questionnaire;
 import fr.capeb.backend.riskevaluator.dto.Reponse;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
 import fr.capeb.backend.riskevaluator.model.ReponseEntity;
@@ -8,7 +7,6 @@ import fr.capeb.backend.riskevaluator.repository.ReponseRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.ReponseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

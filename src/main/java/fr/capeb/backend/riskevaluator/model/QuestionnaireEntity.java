@@ -28,10 +28,10 @@ public class QuestionnaireEntity {
     @Column(name = "thematique", nullable=false)
     private String thematique;
 
-    @OneToMany(mappedBy = "questionnaire", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "questionnaire", cascade = CascadeType.ALL)
     private List<CategorieQuestionEntity> categorieQuestions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "questionnaire", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "questionnaire", cascade = CascadeType.ALL)
     private List<PreconisationGlobaleEntity> preconisationGlobales = new ArrayList<>();
 
 }

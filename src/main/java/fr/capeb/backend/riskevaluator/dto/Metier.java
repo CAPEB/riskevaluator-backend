@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -23,5 +24,5 @@ public class Metier {
     private String nomMetier;
 
     @JsonIgnoreProperties({"categorieQuestion","reponses","metiers"})
-    private List<Question> questions;
+    private List<Question> questions=new ArrayList<>();
 }
