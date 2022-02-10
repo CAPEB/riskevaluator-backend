@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
+
 public class EvaluationServiceImpl implements EvaluationService {
     @Autowired
     private EvaluationRepository pEvaluationRepository;

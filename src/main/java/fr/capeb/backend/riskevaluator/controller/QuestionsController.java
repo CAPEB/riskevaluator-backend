@@ -63,7 +63,7 @@ public class QuestionsController {
         return ResponseEntity.of(pResponseManager.createOrUpdateReponse(aReponse));
     }
 
-    @GetMapping("/{aQuestionId}")
+    @DeleteMapping("/{aQuestionId}")
     public ResponseEntity<Object> deleteQuestionById(@PathVariable Integer aQuestionId) {
         var wQuestion = pQuestionManager.getQuestionById(aQuestionId);
 
