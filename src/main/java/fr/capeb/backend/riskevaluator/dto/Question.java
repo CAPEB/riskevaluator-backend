@@ -27,6 +27,7 @@ public class Question {
     private CategorieQuestion categorieQuestion;
     @JsonIgnoreProperties("question")
     private List<Reponse> reponses;
+    @NotNull
     @JsonIgnoreProperties("questions")
     private List<Metier> metiers;
 }
