@@ -55,7 +55,7 @@ public class MetierServiceImpl implements MetierService {
     }
 
     @Override
-    public Optional<Object> deleteMetier(Integer quesId) {
+    public Optional<Object> deleteMetierById(Integer quesId) {
         metierRepo.deleteById(quesId);
         return Optional.empty();
     }

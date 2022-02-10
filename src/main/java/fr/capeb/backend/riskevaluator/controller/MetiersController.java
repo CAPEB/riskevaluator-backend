@@ -13,17 +13,17 @@ import javax.validation.Valid;
 @RequestMapping("/api/metiers")
 public class MetiersController {
     @Autowired
-    public MetierService metierService;
+    public MetierService pMetierManager;
 
     @GetMapping("/")
     public ResponseEntity<Object> getAll() {
 
-        return ResponseEntity.ok(metierService.getAllMetier());
+        return ResponseEntity.ok(pMetierManager.getAllMetier());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getMetierById(@PathVariable Integer id) {
-        var wMetier = metierService.getMetierById(id);
+    @GetMapping("/{aMetierId}")
+    public ResponseEntity<Object> getMetierById(@PathVariable Integer aMetierId) {
+        var wMetier = pMetierManager.getMetierById(aMetierId);
 
         if(wMetier.isPresent())
             return ResponseEntity.ok(wMetier.get());
@@ -33,19 +33,30 @@ public class MetiersController {
 
     @PostMapping("/")
     ResponseEntity saveQuestion(@Valid @RequestBody Metier metier)  {
-        var met = metierService.getMetierById(metier.getIdMetier());
+        var met = pMetierManager.getMetierById(metier.getIdMetier());
         if(met.isPresent())
             throw new ConflictException();
 
-        return ResponseEntity.of(metierService.createOrUpdateMetier(metier));
+        return ResponseEntity.of(pMetierManager.createOrUpdateMetier(metier));
     }
 
     @PutMapping("/")
     ResponseEntity updateQuestion( @Valid @RequestBody Metier metier)  {
-        var met = metierService.getMetierById(metier.getIdMetier());
+        var met = pMetierManager.getMetierById(metier.getIdMetier());
         if(met.isEmpty())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.of(metierService.createOrUpdateMetier(metier));
+        return ResponseEntity.of(pMetierManager.createOrUpdateMetier(metier));
     }
+
+    @DeleteMapping("/{aMetierId}")
+    public ResponseEntity<Object> deleteMetierById(@PathVariable Integer aMetierId) {
+        var wMetier = pMetierManager.getMetierById(aMetierId);
+
+        if(wMetier.isPresent())
+            return ResponseEntity.ok(pMetierManager.deleteMetierById(aMetierId));
+
+        return ResponseEntity.notFound().build();
+    }
+
 }
