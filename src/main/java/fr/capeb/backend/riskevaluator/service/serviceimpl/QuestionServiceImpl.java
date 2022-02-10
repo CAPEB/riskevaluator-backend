@@ -61,13 +61,15 @@ public class QuestionServiceImpl implements QuestionService {
 
         var ques = Optional.of(modelMapper.map(question, QuestionEntity.class)).orElseThrow(MappingDataException::new);
         var updated = Optional.of(questionRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
-        pReponseRepository.saveAll(ques.getReponses());
-        updated.getReponses().addAll(ques.getReponses());
+        if(ques.getReponses()!=null && !ques.getReponses().isEmpty() ) {
+            pReponseRepository.saveAll(ques.getReponses());
+            updated.getReponses().addAll(ques.getReponses());
+        }
         return Optional.of(modelMapper.map(updated,Question.class));
     }
 
     @Override
-    public Optional<Object> deleteQuestion(Integer quesId) {
+    public Optional<Object> deleteQuestionById(Integer quesId) {
         questionRepo.deleteById(quesId);
         return Optional.empty();
     }

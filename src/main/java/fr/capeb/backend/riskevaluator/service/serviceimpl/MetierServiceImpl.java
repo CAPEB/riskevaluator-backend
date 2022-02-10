@@ -3,16 +3,19 @@ package fr.capeb.backend.riskevaluator.service.serviceimpl;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.capeb.backend.riskevaluator.dto.Metier;
 import fr.capeb.backend.riskevaluator.dto.Question;
+import fr.capeb.backend.riskevaluator.dto.Questionnaire;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
 import fr.capeb.backend.riskevaluator.model.MetierEntity;
 import fr.capeb.backend.riskevaluator.repository.MetierRepository;
+import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.MetierService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,6 +27,8 @@ public class MetierServiceImpl implements MetierService {
     @Autowired
     private MetierRepository metierRepo ;
 
+    @Autowired
+    private QuestionnaireRepository pQuestionnaireRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -55,8 +60,15 @@ public class MetierServiceImpl implements MetierService {
     }
 
     @Override
-    public Optional<Object> deleteMetier(Integer quesId) {
+    public Optional<Object> deleteMetierById(Integer quesId) {
         metierRepo.deleteById(quesId);
         return Optional.empty();
+    }
+
+    @Override
+    public List<Questionnaire> getQuestionnaireByListMetierId(List<Integer> aMetierIds) {
+        return pQuestionnaireRepository.getQuestionnaireByMetiersIds(aMetierIds)
+                .stream().map(wQuestionnaireEntity -> modelMapper.map(wQuestionnaireEntity,Questionnaire.class))
+                .collect(Collectors.toList());
     }
 }
