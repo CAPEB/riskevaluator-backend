@@ -62,7 +62,7 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
     }
 
     @Override
-    public Optional<CategorieQuestion> updateCategorieQuestion(CategorieQuestion aCategorieQuestion) {
+    public Optional<CategorieQuestion> createOrUpdateCategorieQuestion(CategorieQuestion aCategorieQuestion) {
 
         var wQuestionnaireEntity =  questionnaireRepo.findById(aCategorieQuestion
                 .getQuestionnaire().getIdQuestionnaire())

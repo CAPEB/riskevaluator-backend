@@ -32,7 +32,7 @@ public class MetiersController {
     }
 
     @PostMapping("/")
-    ResponseEntity createQuestion(@Valid @RequestBody Metier metier)  {
+    ResponseEntity saveQuestion(@Valid @RequestBody Metier metier)  {
         var met = metierService.getMetierById(metier.getIdMetier());
         if(met.isPresent())
             throw new ConflictException();
