@@ -57,14 +57,13 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public Optional<Question> createOrUpdateQuestion(Question question) {
+    public Optional<Question> createOrUpdateQuestion(Question aQuestion) {
+        aQuestion.getReponses().stream().forEach(wReponse ->wReponse.setQuestion(aQuestion));
+        var ques = Optional.of(modelMapper.map(aQuestion, QuestionEntity.class)).orElseThrow(MappingDataException::new);
+        ques.getMetiers().stream().forEach(wMetier ->
+                wMetier.setQuestion(modelMapper.map(aQuestion, QuestionEntity.class)));
 
-        var ques = Optional.of(modelMapper.map(question, QuestionEntity.class)).orElseThrow(MappingDataException::new);
         var updated = Optional.of(questionRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
-        if(ques.getReponses()!=null && !ques.getReponses().isEmpty() ) {
-            pReponseRepository.saveAll(ques.getReponses());
-            updated.getReponses().addAll(ques.getReponses());
-        }
         return Optional.of(modelMapper.map(updated,Question.class));
     }
 

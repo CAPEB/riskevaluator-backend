@@ -3,6 +3,7 @@ package fr.capeb.backend.riskevaluator.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -19,7 +20,7 @@ public class Evaluation {
     private Compte compte;
     @NotNull
     @JsonIgnoreProperties({"evaluation","categorieQuestion"})
-    private List<ScoreCategory> scoreCategories;
+    private List<ScoreCategory> scoreCategories=new ArrayList<>();
     @NotNull
     @JsonIgnoreProperties({"evaluations"})
     private Entreprise entreprise;

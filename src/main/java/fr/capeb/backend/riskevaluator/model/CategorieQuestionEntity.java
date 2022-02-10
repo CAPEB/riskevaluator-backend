@@ -30,13 +30,13 @@ public class CategorieQuestionEntity {
     @Column(name = "libelle", nullable=false)
     public String libelle;
 
-    @OneToMany(mappedBy = "categorieQuestion", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "categorieQuestion",cascade = CascadeType.ALL)
     private List<ScoreCategoryEntity> scoreEvaluations=new ArrayList<ScoreCategoryEntity>();
 
-    @OneToMany(mappedBy = "categorieQuestion", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "categorieQuestion",cascade = CascadeType.ALL)
     private List<PreconisationCategorieEntity> preconisationsCategorie= new ArrayList<PreconisationCategorieEntity>();
 
-    @OneToMany(mappedBy = "categorieQuestion", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "categorieQuestion", cascade = CascadeType.ALL)
     private List<QuestionEntity> questions= new ArrayList<QuestionEntity>();
 
 

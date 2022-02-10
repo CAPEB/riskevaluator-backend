@@ -1,8 +1,6 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
 import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
-import fr.capeb.backend.riskevaluator.exceptions.ExceptionMsg;
-import fr.capeb.backend.riskevaluator.exceptions.model.ConflictException;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.CustomException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
@@ -13,7 +11,6 @@ import fr.capeb.backend.riskevaluator.service.interfaces.CategorieQuestionServic
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.Set;

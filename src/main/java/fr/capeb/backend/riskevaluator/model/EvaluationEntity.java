@@ -30,7 +30,7 @@ public class EvaluationEntity {
     @JoinColumn(name="nosiret", nullable=false)
     private EntrepriseEntity entreprise;
 
-    @OneToMany(mappedBy = "evaluation",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "evaluation",cascade = CascadeType.ALL)
     private List<ScoreCategoryEntity> scoreCategories;
 
 

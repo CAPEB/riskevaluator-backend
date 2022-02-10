@@ -3,6 +3,7 @@ package fr.capeb.backend.riskevaluator.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -15,7 +16,7 @@ import java.util.List;
 public class Compte {
     private Integer idCompte;
     @JsonIgnoreProperties({"scoreCategories","compte","entreprise"})
-    private List<Evaluation> evaluations;
+    private List<Evaluation> evaluations=new ArrayList<>();
     private Boolean isAdmin;
     private String mail;
     private String pwd;

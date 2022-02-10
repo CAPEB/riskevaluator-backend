@@ -20,10 +20,10 @@ import java.io.Serializable;
 public class MetierQuestionEntityPK implements Serializable {
 
     @Column(name = "id_question")
-    private Integer idQuestion;
+    private Integer questionId;
 
 
     @Column(name = "id_metier")
-    private Integer idMetier;
+    private Integer metierId;
 
 }

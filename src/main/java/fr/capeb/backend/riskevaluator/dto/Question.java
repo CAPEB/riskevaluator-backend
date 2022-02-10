@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.capeb.backend.riskevaluator.model.enumeration.QuestionType;
 import lombok.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -26,8 +27,8 @@ public class Question {
     @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
     private CategorieQuestion categorieQuestion;
     @JsonIgnoreProperties("question")
-    private List<Reponse> reponses;
+    private List<Reponse> reponses=new ArrayList<>();
     @NotNull
     @JsonIgnoreProperties("questions")
-    private List<Metier> metiers;
+    private List<Metier> metiers=new ArrayList<>();
 }
