@@ -69,7 +69,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Optional<Object> deleteQuestion(Integer quesId) {
+    public Optional<Object> deleteQuestionById(Integer quesId) {
         questionRepo.deleteById(quesId);
         return Optional.empty();
     }

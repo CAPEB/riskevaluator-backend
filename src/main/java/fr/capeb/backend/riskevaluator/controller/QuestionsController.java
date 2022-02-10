@@ -15,18 +15,18 @@ import javax.validation.Valid;
 @RequestMapping("/api/questions")
 public class QuestionsController {
     @Autowired
-    public QuestionService questionService;
+    public QuestionService pQuestionManager;
     @Autowired
     public ReponseService pResponseManager;
 
 
     @GetMapping("/")
     public ResponseEntity<Object> getAll() {
-        return ResponseEntity.ok(questionService.getAllQuestion());
+        return ResponseEntity.ok(pQuestionManager.getAllQuestion());
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getQuestionById(@PathVariable Integer id) {
-        var wQuestion = questionService.getQuestionById(id);
+    @GetMapping("/{aQuestionId}")
+    public ResponseEntity<Object> getQuestionById(@PathVariable Integer aQuestionId) {
+        var wQuestion = pQuestionManager.getQuestionById(aQuestionId);
 
         if(wQuestion.isPresent())
             return ResponseEntity.ok(wQuestion.get());
@@ -36,31 +36,41 @@ public class QuestionsController {
 
     @PostMapping("/")
     ResponseEntity createQuestion(@Valid @RequestBody Question question)  {
-        var ques = questionService.getQuestionById(question.getIdQuestion());
+        var ques = pQuestionManager.getQuestionById(question.getIdQuestion());
         if(ques.isPresent())
             throw new ConflictException();
 
-        return ResponseEntity.of(questionService.createOrUpdateQuestion(question));
+        return ResponseEntity.of(pQuestionManager.createOrUpdateQuestion(question));
     }
 
     @PutMapping("/")
     ResponseEntity updateQuestion( @Valid @RequestBody Question question)  {
-        var ques = questionService.getQuestionById(question.getIdQuestion());
+        var ques = pQuestionManager.getQuestionById(question.getIdQuestion());
         if(ques.isEmpty())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.of(questionService.createOrUpdateQuestion(question));
+        return ResponseEntity.of(pQuestionManager.createOrUpdateQuestion(question));
     }
 
     @PostMapping("/{aIdQuestion}/reponses")
     ResponseEntity addResponse(@Valid @PathVariable Integer aIdQuestion, @Valid @RequestBody Reponse aReponse){
-        var ques = questionService.getQuestionById(aIdQuestion);
+        var ques = pQuestionManager.getQuestionById(aIdQuestion);
         if(ques.isEmpty())
             return ResponseEntity.notFound().build();
         if(aReponse.getIdReponse()!=null && pResponseManager.getReponseById(aReponse.getIdReponse()).isPresent()){
             throw new ConflictException();
         }
         return ResponseEntity.of(pResponseManager.createOrUpdateReponse(aReponse));
+    }
+
+    @GetMapping("/{aQuestionId}")
+    public ResponseEntity<Object> deleteQuestionById(@PathVariable Integer aQuestionId) {
+        var wQuestion = pQuestionManager.getQuestionById(aQuestionId);
+
+        if(wQuestion.isPresent())
+            return ResponseEntity.ok(pQuestionManager.deleteQuestionById(aQuestionId));
+
+        return ResponseEntity.notFound().build();
     }
 
 }
