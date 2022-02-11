@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -26,8 +27,8 @@ public class PreconisationGlobaleEntity {
 
     @Column(name = "contenu", columnDefinition="TEXT")
     private String contenu;
-
-    @Column(name = "viewIfPourcentageScoreLessThan")
+    @NotNull
+    @Column(name = "viewifpourcentagescorelessthan")
     private Integer viewIfPourcentageScoreLessThan;
 
 }
