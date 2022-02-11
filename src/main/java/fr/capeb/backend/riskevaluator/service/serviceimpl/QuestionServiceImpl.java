@@ -64,8 +64,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Optional<Question> createOrUpdateQuestion(Question aQuestion) {
         aQuestion.getReponses().stream().forEach(wReponse ->wReponse.setQuestion(aQuestion));
-
         var wQuestion=questionRepo.findById(aQuestion.getIdQuestion());
+        var wMetierIds=aQuestion.getMetiers().stream().map(wMetier->wMetier.getIdMetier()).collect(Collectors.toList());
 
         var ques = Optional.of(modelMapper.map(aQuestion, QuestionEntity.class)).orElseThrow(MappingDataException::new);
         ques.setMetiers(ques.getMetiers().stream().map(wMetier ->{
@@ -75,14 +75,18 @@ public class QuestionServiceImpl implements QuestionService {
                     }
 
                     wMetier.setMetier(pMetierRepo.getById(wMetier.getMetier().getIdMetier()));
-                    if (wQuestion.isPresent()) {
-                        wMetier.setQuestion(wQuestion.get());
-                    } else {
-                        wMetier.setQuestion(ques);
-                    }
+
+                    wMetier.setQuestion(ques);
+
                     return wMetier;
                 }).collect(Collectors.toSet()));
-
+        if(wQuestion.isPresent()){
+            wQuestion.get().getMetiers().stream().forEach(wMetierQuestion->{
+                if(!wMetierIds.contains(wMetierQuestion.getMetier().getIdMetier())){
+                    pMetierQuestionRepository.deleteById(wMetierQuestion.getQuestion().getIdQuestion(),wMetierQuestion.getMetier().getIdMetier());
+                }
+            });
+        }
 
         var updated = Optional.of(questionRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
         return Optional.of(modelMapper.map(updated,Question.class));
