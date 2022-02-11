@@ -26,4 +26,13 @@ public class MetierQuestionEntity {
     @ManyToOne
     @JoinColumn(name = "id_metier", referencedColumnName = "id_metier")
     private MetierEntity metier;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MetierQuestionEntity that = (MetierQuestionEntity) o;
+        return question.getIdQuestion()==that.question.getIdQuestion() && metier.getIdMetier()== that.metier.getIdMetier();
+    }
+
 }
