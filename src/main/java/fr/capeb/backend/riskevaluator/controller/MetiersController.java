@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/metiers")
@@ -60,9 +61,5 @@ public class MetiersController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/questionnaires")
-    public ResponseEntity<Object> getQuestionnairesByMetiers(@RequestParam(value="metierId") List<Integer> aMetierIds) {
 
-        return ResponseEntity.ok(pMetierManager.getQuestionnaireByListMetierId(aMetierIds));
-    }
 }

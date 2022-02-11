@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/questionnaires")
@@ -73,7 +74,7 @@ public class QuestionnairesController {
     public ResponseEntity getMetierByQuestionnaireId(@PathVariable Integer aQuestionnaireId) {
 
         Optional<Questionnaire> questionnaire = questionnairesService.getQuestionnaireById(aQuestionnaireId);
-        List<Metier> wMetiers= questionnairesService.getMetiersByQuestionnaireId(aQuestionnaireId);
+        Set<Metier> wMetiers= questionnairesService.getMetiersByQuestionnaireId(aQuestionnaireId);
         if(questionnaire.isPresent()&&!wMetiers.isEmpty())
             return ResponseEntity.ok(wMetiers);
 
@@ -82,13 +83,18 @@ public class QuestionnairesController {
 
 
     @GetMapping("/{aQuestionnaireId}/questions")
-    public ResponseEntity getQuestionsByQuestionnaireIdAndMetiers(@PathVariable Integer aQuestionnaireId,@RequestParam(value="metierId") List<Integer> metierIds) {
+    public ResponseEntity getQuestionsByQuestionnaireIdAndMetiers(@PathVariable Integer aQuestionnaireId,@RequestParam(value="metierId") Set<Integer> metierIds) {
 
         Optional<Questionnaire> questionnaire = questionnairesService.getQuestionnaireById(aQuestionnaireId);
-        List<CategorieQuestion> wQuestions= questionnairesService.getQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId,metierIds);
+        Set<CategorieQuestion> wQuestions= questionnairesService.getQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId,metierIds);
         if(questionnaire.isPresent()&&!wQuestions.isEmpty())
             return ResponseEntity.ok(wQuestions);
 
         return ResponseEntity.notFound().build();
+    }
+    @GetMapping("/bymetierids")
+    public ResponseEntity<Object> getQuestionnairesByMetiers(@RequestParam(value="metierId") Set<Integer> aMetierIds) {
+
+        return ResponseEntity.ok(pMetierManager.getQuestionnaireByListMetierId(aMetierIds));
     }
 }

@@ -13,5 +13,5 @@ public interface MetierService {
      Optional<Metier> getMetierById(Integer quesId);
      Optional<Metier> createOrUpdateMetier(Metier metier);
      Optional<Object> deleteMetierById(Integer quesId);
-     List<Questionnaire> getQuestionnaireByListMetierId(List<Integer> aMetierIds);
+     Set<Questionnaire> getQuestionnaireByListMetierId(Set<Integer> aMetierIds);
 }

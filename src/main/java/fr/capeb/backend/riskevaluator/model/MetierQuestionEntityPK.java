@@ -18,12 +18,17 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Embeddable
 public class MetierQuestionEntityPK implements Serializable {
-
+    @EqualsAndHashCode.Include
     @Column(name = "id_question")
     private Integer questionId;
 
-
+    @EqualsAndHashCode.Include
     @Column(name = "id_metier")
     private Integer metierId;
+
+    public MetierQuestionEntityPK(Integer questionId,Integer metierId){
+        this.questionId = questionId;
+        this.metierId = metierId;
+    }
 
 }

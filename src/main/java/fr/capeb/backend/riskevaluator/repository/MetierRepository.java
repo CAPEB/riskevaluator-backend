@@ -8,10 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface MetierRepository extends JpaRepository<MetierEntity, Integer> {
 
     @Query("select distinct metierQuestion.metier from  MetierQuestionEntity metierQuestion where metierQuestion.question.categorieQuestion.questionnaire.idQuestionnaire = :aQuestionnaireId")
-    List<MetierEntity> getMetiersByQuestionnaireId(@Param("aQuestionnaireId") Integer aQuestionnaireId);
+    Set<MetierEntity> getMetiersByQuestionnaireId(@Param("aQuestionnaireId") Integer aQuestionnaireId);
 }

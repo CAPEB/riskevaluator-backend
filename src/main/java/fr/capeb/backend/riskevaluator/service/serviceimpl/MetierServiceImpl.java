@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -64,9 +63,9 @@ public class MetierServiceImpl implements MetierService {
     }
 
     @Override
-    public List<Questionnaire> getQuestionnaireByListMetierId(List<Integer> aMetierIds) {
+    public Set<Questionnaire> getQuestionnaireByListMetierId(Set<Integer> aMetierIds) {
         return pQuestionnaireRepository.getQuestionnaireByMetiersIds(aMetierIds)
                 .stream().map(wQuestionnaireEntity -> modelMapper.map(wQuestionnaireEntity,Questionnaire.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 }
