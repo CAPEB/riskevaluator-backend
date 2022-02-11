@@ -81,4 +81,14 @@ public class GlobalErrorHandler
             return new ResponseEntity<>(body,CONFLICT);
         }
 
+        @ExceptionHandler(RuntimeException.class)
+        public ResponseEntity defaultExceptionHandler(RuntimeException ex) {
+
+            Map<String, Object> body = new LinkedHashMap<>();
+            body.put("timestamp", LocalDateTime.now());
+            body.put("execption", ex.getMessage());
+
+            return new ResponseEntity<>(body,INTERNAL_SERVER_ERROR);
+        }
+
     }
