@@ -38,6 +38,5 @@ RiskevaluatorApplicationTests.java
 application-dev.properties
 application-local.properties
 application-prod.properties
-*.properties
 
 *.DS_Store
