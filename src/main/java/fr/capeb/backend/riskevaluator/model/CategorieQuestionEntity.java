@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -28,13 +30,13 @@ public class CategorieQuestionEntity {
     public String libelle;
 
     @OneToMany(mappedBy = "categorieQuestion",cascade = CascadeType.ALL)
-    private List<ScoreCategoryEntity> scoreEvaluations=new ArrayList<ScoreCategoryEntity>();
+    private Set<ScoreCategoryEntity> scoreEvaluations=new HashSet<>();
 
     @OneToMany(mappedBy = "categorieQuestion",cascade = CascadeType.ALL)
-    private List<PreconisationCategorieEntity> preconisationsCategorie= new ArrayList<PreconisationCategorieEntity>();
+    private Set<PreconisationCategorieEntity> preconisationsCategorie= new HashSet<>();
 
     @OneToMany(mappedBy = "categorieQuestion", cascade = CascadeType.ALL)
-    private List<QuestionEntity> questions= new ArrayList<QuestionEntity>();
+    private Set<QuestionEntity> questions= new HashSet<>();
 
 
 }

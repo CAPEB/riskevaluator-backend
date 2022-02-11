@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -25,5 +27,5 @@ public class MetierEntity {
     private String nomMetier;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "metier", cascade = CascadeType.ALL)
-    private List<MetierQuestionEntity> questions = new ArrayList<>();
+    private Set<MetierQuestionEntity> questions = new HashSet<>();
 }

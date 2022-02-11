@@ -10,7 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -39,10 +41,10 @@ public class QuestionEntity implements Serializable {
     private CategorieQuestionEntity categorieQuestion;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL)
-    private List<MetierQuestionEntity> metiers = new ArrayList<>();
+    private Set<MetierQuestionEntity> metiers = new HashSet<>();
 
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ReponseEntity> reponses= new ArrayList<ReponseEntity>();
+    private Set<ReponseEntity> reponses= new HashSet<>();
 
 
 }

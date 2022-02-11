@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -21,7 +23,7 @@ public class CompteEntity {
     private Integer idCompte;
 
     @OneToMany(mappedBy = "entreprise",cascade = CascadeType.ALL)
-    private List<EvaluationEntity> evaluations;
+    private Set<EvaluationEntity> evaluations=new HashSet<>();
 
     @Column(name = "is_admin")
     private Boolean isAdmin;

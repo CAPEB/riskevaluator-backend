@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface QuestionnaireRepository extends JpaRepository<QuestionnaireEntity, Integer> {
@@ -21,7 +22,7 @@ public interface QuestionnaireRepository extends JpaRepository<QuestionnaireEnti
     @Query("select distinct categorieQuestion.questionnaire from  MetierQuestionEntity metierQuestion join CategorieQuestionEntity categorieQuestion " +
             "on metierQuestion.question.categorieQuestion.idCategorie=categorieQuestion.idCategorie " +
             "where metierQuestion.metier.idMetier in (:metierIds)")
-    List<QuestionnaireEntity> getQuestionnaireByMetiersIds( @Param("metierIds") List<Integer> metierIds);
+    Set<QuestionnaireEntity> getQuestionnaireByMetiersIds(@Param("metierIds") Set<Integer> metierIds);
 
 
 }

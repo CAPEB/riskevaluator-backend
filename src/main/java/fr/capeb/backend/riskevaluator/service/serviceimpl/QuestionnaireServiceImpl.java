@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -35,13 +35,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<Questionnaire> getAllQuestionnaires() {
+    public Set<Questionnaire> getAllQuestionnaires() {
 
         var wQuestionaireEntitys=questionnairesRepo.findAll();
         var wQuestionnaires=wQuestionaireEntitys
                 .stream()
                 .map(stop -> modelMapper.map(stop, Questionnaire.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 //        wQuestionnaires.stream().forEach(questionnaire -> {
 //            var wCategorieQuestion=pCategorieQuestionRepo
 //                    .findByQuestionaire(questionnaire.getIdQuestionnaire()).stream()
@@ -98,20 +98,20 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
-    public List<Metier> getMetiersByQuestionnaireId(Integer aQuestionnaireId) {
+    public Set<Metier> getMetiersByQuestionnaireId(Integer aQuestionnaireId) {
 
         return pMetierRepository.getMetiersByQuestionnaireId(aQuestionnaireId).stream()
                 .map(stop -> modelMapper.map(stop, Metier.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     @Override
-    public List<CategorieQuestion> getQuestionsByQuestionnaireIdAndMetiers(Integer aQuestionnaireId, List<Integer> metierIds) {
+    public Set<CategorieQuestion> getQuestionsByQuestionnaireIdAndMetiers(Integer aQuestionnaireId, Set<Integer> metierIds) {
 
         return  pQuestionRepository.getQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId, metierIds)
                 .stream()
                 .map(stop -> modelMapper.map(stop, CategorieQuestion.class))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
 

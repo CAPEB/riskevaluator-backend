@@ -6,9 +6,7 @@ import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -29,9 +27,9 @@ public class QuestionnaireEntity {
     private String thematique;
 
     @OneToMany(mappedBy = "questionnaire", cascade = CascadeType.ALL)
-    private List<CategorieQuestionEntity> categorieQuestions = new ArrayList<>();
+    private Set<CategorieQuestionEntity> categorieQuestions = new HashSet<>();
 
     @OneToMany(mappedBy = "questionnaire", cascade = CascadeType.ALL)
-    private List<PreconisationGlobaleEntity> preconisationGlobales = new ArrayList<>();
+    private Set<PreconisationGlobaleEntity> preconisationGlobales = new HashSet<>();
 
 }

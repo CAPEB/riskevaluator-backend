@@ -3,10 +3,9 @@ package fr.capeb.backend.riskevaluator.service.serviceimpl;
 import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
+import fr.capeb.backend.riskevaluator.model.MetierQuestionEntityPK;
 import fr.capeb.backend.riskevaluator.model.QuestionEntity;
-import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
-import fr.capeb.backend.riskevaluator.repository.QuestionRepository;
-import fr.capeb.backend.riskevaluator.repository.ReponseRepository;
+import fr.capeb.backend.riskevaluator.repository.*;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,12 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionRepository questionRepo ;
     @Autowired
     private QuestionCategorieRepository questionCategorieRepo;
+
+    @Autowired
+    private MetierRepository pMetierRepo;
+
+    @Autowired
+    private MetierQuestionRepository pMetierQuestionRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -59,9 +64,24 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Optional<Question> createOrUpdateQuestion(Question aQuestion) {
         aQuestion.getReponses().stream().forEach(wReponse ->wReponse.setQuestion(aQuestion));
+
+        var wQuestion=questionRepo.findById(aQuestion.getIdQuestion());
+
         var ques = Optional.of(modelMapper.map(aQuestion, QuestionEntity.class)).orElseThrow(MappingDataException::new);
-        ques.getMetiers().stream().forEach(wMetier ->
-                wMetier.setQuestion(modelMapper.map(aQuestion, QuestionEntity.class)));
+        ques.getMetiers().stream().forEach(wMetier ->{
+                    var wQuestionMetier = pMetierQuestionRepository.findById(new MetierQuestionEntityPK(aQuestion.getIdQuestion(),wMetier.getMetier().getIdMetier()));
+                    if(wQuestionMetier.isPresent() ){
+                        wMetier=wQuestionMetier.get();
+                    }else {
+                        wMetier.setMetier(pMetierRepo.getById(wMetier.getMetier().getIdMetier()));
+                        if (wQuestion.isPresent()) {
+                            wMetier.setQuestion(wQuestion.get());
+                        } else {
+                            wMetier.setQuestion(ques);
+                        }
+                    }
+                });
+
 
         var updated = Optional.of(questionRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
         return Optional.of(modelMapper.map(updated,Question.class));
