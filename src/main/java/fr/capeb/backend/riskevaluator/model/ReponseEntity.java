@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "reponse")
@@ -21,10 +22,11 @@ public class ReponseEntity {
     @JoinColumn(name="id_question", nullable=false)
     private QuestionEntity question;
 
-
+    @NotNull
     @Column(name = "nb_points")
     private Integer nbPoints;
 
+    @NotNull
     @Column(name = "contenu", columnDefinition="TEXT")
     private String contenu;
 

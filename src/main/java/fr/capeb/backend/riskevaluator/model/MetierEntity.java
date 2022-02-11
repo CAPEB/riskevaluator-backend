@@ -20,7 +20,8 @@ public class MetierEntity {
     @Column(name = "id_metier")
     private Integer idMetier;
 
-    @Column(name = "nom_metier",nullable=false)
+
+    @Column(name = "nom_metier", nullable = false, unique = true)
     private String nomMetier;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "metier", cascade = CascadeType.ALL)
