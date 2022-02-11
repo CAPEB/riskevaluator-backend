@@ -68,19 +68,20 @@ public class QuestionServiceImpl implements QuestionService {
         var wQuestion=questionRepo.findById(aQuestion.getIdQuestion());
 
         var ques = Optional.of(modelMapper.map(aQuestion, QuestionEntity.class)).orElseThrow(MappingDataException::new);
-        ques.getMetiers().stream().forEach(wMetier ->{
+        ques.setMetiers(ques.getMetiers().stream().map(wMetier ->{
                     var wQuestionMetier = pMetierQuestionRepository.findById(new MetierQuestionEntityPK(aQuestion.getIdQuestion(),wMetier.getMetier().getIdMetier()));
                     if(wQuestionMetier.isPresent() ){
-                        wMetier=wQuestionMetier.get();
-                    }else {
-                        wMetier.setMetier(pMetierRepo.getById(wMetier.getMetier().getIdMetier()));
-                        if (wQuestion.isPresent()) {
-                            wMetier.setQuestion(wQuestion.get());
-                        } else {
-                            wMetier.setQuestion(ques);
-                        }
+                        return wQuestionMetier.get();
                     }
-                });
+
+                    wMetier.setMetier(pMetierRepo.getById(wMetier.getMetier().getIdMetier()));
+                    if (wQuestion.isPresent()) {
+                        wMetier.setQuestion(wQuestion.get());
+                    } else {
+                        wMetier.setQuestion(ques);
+                    }
+                    return wMetier;
+                }).collect(Collectors.toSet()));
 
 
         var updated = Optional.of(questionRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
