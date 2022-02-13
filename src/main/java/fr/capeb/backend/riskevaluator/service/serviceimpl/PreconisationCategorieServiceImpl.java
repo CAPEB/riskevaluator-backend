@@ -53,10 +53,12 @@ public class PreconisationCategorieServiceImpl implements PreconisationCategorie
         var updated = Optional.of(preCatRepo.save(prec)).orElseThrow(CreateOrUpdateException::new);
         return Optional.of(modelMapper.map(updated, PreconisationCategorie.class));
     }
-
+    @Transactional
     @Override
     public Optional<Object> deletePreconisationCategorie(Integer quesId) {
-        preCatRepo.deleteById(quesId);
+        var wPreconisationCategorie=preCatRepo.getById(quesId);
+        wPreconisationCategorie.getCategorieQuestion().getPreconisationsCategorie().remove(wPreconisationCategorie);
+        preCatRepo.delete(wPreconisationCategorie);
         return Optional.empty();
     }
 }
