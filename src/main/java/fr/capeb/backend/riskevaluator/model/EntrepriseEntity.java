@@ -19,7 +19,7 @@ public class EntrepriseEntity {
     @Id
     @Basic
     @Column(name = "nosiret")
-    public Integer noSiret;
+    public Long noSiret;
 
     @Basic
     @Column(name = "nom_entreprise")

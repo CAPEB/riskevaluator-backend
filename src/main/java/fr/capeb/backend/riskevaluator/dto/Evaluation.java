@@ -16,6 +16,7 @@ public class Evaluation {
 
     private Integer idEvaluation;
     private Integer ScoreGeneraleEvaluation;
+
     @JsonIgnoreProperties({"evaluations"})
     private Compte compte;
     @NotNull
