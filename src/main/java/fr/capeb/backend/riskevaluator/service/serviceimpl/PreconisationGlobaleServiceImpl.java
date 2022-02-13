@@ -56,7 +56,9 @@ public class PreconisationGlobaleServiceImpl implements PreconisationGlobaleServ
 
     @Override
     public Optional<Object> deletePreconisationGlobale(Integer quesId) {
-        preGlobRepo.deleteById(quesId);
+        var wPreconisationGlobale=preGlobRepo.getById(quesId);
+        wPreconisationGlobale.getQuestionnaire().getPreconisationGlobales().remove(wPreconisationGlobale);
+        preGlobRepo.delete(wPreconisationGlobale);
         return Optional.empty();
     }
 }
