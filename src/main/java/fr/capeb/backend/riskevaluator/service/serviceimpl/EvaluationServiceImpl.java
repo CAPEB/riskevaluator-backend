@@ -32,6 +32,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     @Override
     public Optional<Evaluation> getEvaluationById(Integer aEvaluationId) {
+        if(aEvaluationId == null) return Optional.empty();
         var aEvaluationEntity=pEvaluationRepository.findById(aEvaluationId);
         if(aEvaluationEntity.isPresent()){
             return Optional.of(pModelMapper.map(aEvaluationEntity,Evaluation.class));
@@ -51,7 +52,8 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     @Override
     public Optional<Evaluation> SaveEvaluation(Evaluation aEvaluation) {
-        var wEvaluationEntity=pEvaluationRepository.save(pModelMapper.map(aEvaluation, EvaluationEntity.class));
+        var xEvaluationEntity = pModelMapper.map(aEvaluation, EvaluationEntity.class);
+        var wEvaluationEntity=pEvaluationRepository.save(xEvaluationEntity);
         return Optional.of(pModelMapper.map(wEvaluationEntity,Evaluation.class));
     }
 

@@ -26,7 +26,7 @@ public class Questionnaire {
     private String thematique;
     @JsonIgnoreProperties("questionnaire")
     private List<PreconisationGlobale> preconisationGlobales=new ArrayList<PreconisationGlobale>();
-    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
+    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","preconisationsCategorie"})
     private List<CategorieQuestion> categorieQuestions=new ArrayList<CategorieQuestion>();
 
 

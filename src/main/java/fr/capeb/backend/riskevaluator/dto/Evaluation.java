@@ -2,7 +2,10 @@ package fr.capeb.backend.riskevaluator.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import org.springframework.lang.Nullable;
+
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import java.util.List;
 @EqualsAndHashCode
 public class Evaluation {
 
+    @Nullable
     private Integer idEvaluation;
     private Integer ScoreGeneraleEvaluation;
 
