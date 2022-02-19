@@ -5,6 +5,7 @@ import fr.capeb.backend.riskevaluator.dto.Questionnaire;
 import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
 import fr.capeb.backend.riskevaluator.model.MetierEntity;
+import fr.capeb.backend.riskevaluator.repository.MetierQuestionRepository;
 import fr.capeb.backend.riskevaluator.repository.MetierRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.MetierService;
@@ -26,6 +27,10 @@ public class MetierServiceImpl implements MetierService {
 
     @Autowired
     private QuestionnaireRepository pQuestionnaireRepository;
+
+    @Autowired
+    private MetierQuestionRepository pMetierQuestionRepository;
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -50,15 +55,24 @@ public class MetierServiceImpl implements MetierService {
     }
 
     @Override
-    public Optional<Metier> createOrUpdateMetier(Metier metier) {
-        var ques = Optional.of(modelMapper.map(metier, MetierEntity.class)).orElseThrow(MappingDataException::new);
-        var updated = Optional.of(metierRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
-        return Optional.of(modelMapper.map(updated,Metier.class));
+    public Optional<Metier> createOrUpdateMetier(Metier aMetier) {
+        MetierEntity wMetierEntity;
+        if(metierRepo.findById(aMetier.getIdMetier()).isPresent()) {
+             wMetierEntity = metierRepo.getById(aMetier.getIdMetier());
+            wMetierEntity.setNomMetier(aMetier.getNomMetier());
+        } else {
+            wMetierEntity = Optional.of(modelMapper.map(aMetier, MetierEntity.class)).orElseThrow(MappingDataException::new);
+        }
+        var updated = Optional.of(metierRepo.save(wMetierEntity)).orElseThrow(CreateOrUpdateException::new);
+        return Optional.of(modelMapper.map(updated, Metier.class));
     }
 
     @Override
-    public Optional<Object> deleteMetierById(Integer quesId) {
-        metierRepo.deleteById(quesId);
+    public Optional<Object> deleteMetierById(Metier aMetier) {
+        var wMetierEntity=metierRepo.getById(aMetier.getIdMetier());
+        wMetierEntity.getQuestions().forEach(wMetierQuestionEntity->wMetierQuestionEntity.getQuestion().getMetiers().removeAll(wMetierEntity.getQuestions()));
+        wMetierEntity.getQuestions().removeAll(wMetierEntity.getQuestions());
+        metierRepo.delete(wMetierEntity);
         return Optional.empty();
     }
 

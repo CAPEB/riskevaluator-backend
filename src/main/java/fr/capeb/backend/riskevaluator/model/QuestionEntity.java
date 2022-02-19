@@ -9,10 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -40,8 +37,8 @@ public class QuestionEntity implements Serializable {
     @JoinColumn(name="id_categorie", nullable=false)
     private CategorieQuestionEntity categorieQuestion;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL)
-    private Set<MetierQuestionEntity> metiers = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MetierQuestionEntity> metiers = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ReponseEntity> reponses= new HashSet<>();

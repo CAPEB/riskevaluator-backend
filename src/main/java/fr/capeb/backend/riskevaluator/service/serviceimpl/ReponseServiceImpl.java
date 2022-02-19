@@ -39,6 +39,7 @@ public class  ReponseServiceImpl implements ReponseService {
 
     @Override
     public Optional<Reponse> createOrUpdateReponse(Reponse aReponse) {
+
         Optional<ReponseEntity> wResponseEntity = Optional.of(modelMapper.map(aReponse,ReponseEntity.class));
         if(wResponseEntity.isEmpty()){
             throw new MappingDataException();
@@ -49,7 +50,9 @@ public class  ReponseServiceImpl implements ReponseService {
 
     @Override
     public Optional<Object> deleteReponse(Integer aReponseId) {
-        pReponseRepository.deleteById(aReponseId);
+        var wReponseEntity=pReponseRepository.getById(aReponseId);
+        wReponseEntity.getQuestion().getReponses().remove(wReponseEntity);
+        pReponseRepository.delete(wReponseEntity);
         return Optional.empty();
     }
 }

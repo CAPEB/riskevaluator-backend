@@ -35,6 +35,7 @@ public class MetiersController {
 
     @PostMapping("/")
     ResponseEntity saveQuestion(@Valid @RequestBody Metier metier)  {
+
         var met = pMetierManager.getMetierById(metier.getIdMetier());
         if(met.isPresent())
             throw new ConflictException();
@@ -56,10 +57,9 @@ public class MetiersController {
         var wMetier = pMetierManager.getMetierById(aMetierId);
 
         if(wMetier.isPresent())
-            return ResponseEntity.ok(pMetierManager.deleteMetierById(aMetierId));
+            return ResponseEntity.ok(pMetierManager.deleteMetierById(wMetier.get()));
 
         return ResponseEntity.notFound().build();
     }
-
 
 }

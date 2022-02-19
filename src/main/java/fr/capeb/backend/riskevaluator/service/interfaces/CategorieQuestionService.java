@@ -9,5 +9,6 @@ public interface CategorieQuestionService {
      Set<CategorieQuestion> getAllCategorieQuestion();
      Optional<CategorieQuestion> categorieQuestionById(Integer quesId);
      Optional<Object> deleteCategorieQuestion(Integer id);
-     Optional<CategorieQuestion> createOrUpdateCategorieQuestion(CategorieQuestion obj);
+     Optional<CategorieQuestion> createCategorieQuestion(CategorieQuestion obj);
+     Optional<CategorieQuestion> updateCategorieQuestion(CategorieQuestion aCategorieQuestion);
 }

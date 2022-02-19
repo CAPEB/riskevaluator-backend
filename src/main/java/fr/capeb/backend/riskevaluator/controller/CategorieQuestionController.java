@@ -53,7 +53,7 @@ public class CategorieQuestionController {
         if(ques.isEmpty())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(categorieQuestionService.createOrUpdateCategorieQuestion(catQues));
+        return ResponseEntity.ok(categorieQuestionService.updateCategorieQuestion(catQues));
     }
 
     @PostMapping("/")
@@ -61,7 +61,7 @@ public class CategorieQuestionController {
         var isConflict = categorieQuestionService.categorieQuestionById(catQues.getIdCategorie()).isPresent();
         if(isConflict) throw new ConflictException();
 
-        return ResponseEntity.of(categorieQuestionService.createOrUpdateCategorieQuestion(catQues));
+        return ResponseEntity.of(categorieQuestionService.createCategorieQuestion(catQues));
     }
 
 

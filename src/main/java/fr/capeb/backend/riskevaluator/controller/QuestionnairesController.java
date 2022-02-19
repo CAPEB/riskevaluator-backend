@@ -2,7 +2,6 @@ package fr.capeb.backend.riskevaluator.controller;
 
 import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
 import fr.capeb.backend.riskevaluator.dto.Metier;
-import fr.capeb.backend.riskevaluator.dto.Question;
 import fr.capeb.backend.riskevaluator.dto.Questionnaire;
 import fr.capeb.backend.riskevaluator.exceptions.model.ConflictException;
 import fr.capeb.backend.riskevaluator.service.interfaces.MetierService;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -49,7 +47,7 @@ public class QuestionnairesController {
         if(ques.isPresent())
             throw new ConflictException();
 
-        return ResponseEntity.ok(questionnairesService.createOrUpdateQuestionnaire(questionnaire));
+        return ResponseEntity.ok(questionnairesService.createQuestionnaire(questionnaire));
     }
 
     @PutMapping("/")
@@ -58,7 +56,7 @@ public class QuestionnairesController {
         if(ques.isEmpty())
             return ResponseEntity.notFound().build();
 
-        return ResponseEntity.ok(questionnairesService.createOrUpdateQuestionnaire(questionnaire));
+        return ResponseEntity.ok(questionnairesService.UpdateQuestionnaire(questionnaire));
     }
 
     @DeleteMapping("/{id}")

@@ -7,6 +7,7 @@ import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
 import fr.capeb.backend.riskevaluator.model.QuestionnaireEntity;
 import fr.capeb.backend.riskevaluator.repository.MetierRepository;
+import fr.capeb.backend.riskevaluator.repository.PreconisationGlobaleRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionnaireService;
@@ -31,6 +32,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Autowired
     private QuestionRepository pQuestionRepository;
+
+    @Autowired
+    private PreconisationGlobaleRepository pPreconisationGlobaleRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -83,9 +87,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
-    public Optional<Questionnaire> createOrUpdateQuestionnaire(Questionnaire questionnaire) {
+    public Optional<Questionnaire> createQuestionnaire(Questionnaire questionnaire) {
 
         var ques = Optional.of(modelMapper.map(questionnaire, QuestionnaireEntity.class)).orElseThrow(MappingDataException::new);
+        var updated = Optional.of(questionnairesRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
+        return Optional.of(modelMapper.map(updated,Questionnaire.class));
+
+    }
+    @Override
+    public Optional<Questionnaire> UpdateQuestionnaire(Questionnaire questionnaire) {
+
+        var ques = questionnairesRepo.getById(questionnaire.getIdQuestionnaire());
+        ques.setThematique(questionnaire.getThematique());
         var updated = Optional.of(questionnairesRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
         return Optional.of(modelMapper.map(updated,Questionnaire.class));
 
@@ -93,7 +106,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Override
     public Optional<Object> deleteQuestionnaire(Integer quesId) {
-        questionnairesRepo.deleteById(quesId);
+        var wQuestionnaireEntity=questionnairesRepo.getById(quesId);
+        pPreconisationGlobaleRepository.deleteAll(wQuestionnaireEntity.getPreconisationGlobales());
+        wQuestionnaireEntity.getPreconisationGlobales().removeAll(wQuestionnaireEntity.getPreconisationGlobales());
+        questionnairesRepo.delete(wQuestionnaireEntity);
         return Optional.empty();
     }
 
