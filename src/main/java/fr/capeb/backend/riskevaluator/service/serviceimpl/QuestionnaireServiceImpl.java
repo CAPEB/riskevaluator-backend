@@ -10,6 +10,8 @@ import fr.capeb.backend.riskevaluator.repository.MetierRepository;
 import fr.capeb.backend.riskevaluator.repository.PreconisationGlobaleRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
+import fr.capeb.backend.riskevaluator.service.interfaces.CategorieQuestionService;
+import fr.capeb.backend.riskevaluator.service.interfaces.PreconisationGlobaleService;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionnaireService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     private QuestionRepository pQuestionRepository;
 
     @Autowired
-    private PreconisationGlobaleRepository pPreconisationGlobaleRepository;
+    private CategorieQuestionService pCategorieQuestionManager;
+
+    @Autowired
+    private PreconisationGlobaleService pPreconisationGlobaleManager;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -107,8 +112,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Override
     public Optional<Object> deleteQuestionnaire(Integer quesId) {
         var wQuestionnaireEntity=questionnairesRepo.getById(quesId);
-        pPreconisationGlobaleRepository.deleteAll(wQuestionnaireEntity.getPreconisationGlobales());
-        wQuestionnaireEntity.getPreconisationGlobales().removeAll(wQuestionnaireEntity.getPreconisationGlobales());
+        var wCategorieQuestionIdsToRemove=wQuestionnaireEntity.getCategorieQuestions().stream().map(wCategorieQuestion->wCategorieQuestion.getIdCategorie()).collect(Collectors.toList());
+        wCategorieQuestionIdsToRemove.forEach(wCategorieQuestionIdToRemove->pCategorieQuestionManager.deleteCategorieQuestion(wCategorieQuestionIdToRemove));
+        var wPreconisationGlobaleIdsToRemove= wQuestionnaireEntity.getPreconisationGlobales().stream().map(wPreconisationGlobale->wPreconisationGlobale.getIdPreconisationG()).collect(Collectors.toList());
+        wPreconisationGlobaleIdsToRemove.forEach(wPreconisationGlobaleIdToRemove->pPreconisationGlobaleManager.deletePreconisationGlobale(wPreconisationGlobaleIdToRemove));
         questionnairesRepo.delete(wQuestionnaireEntity);
         return Optional.empty();
     }

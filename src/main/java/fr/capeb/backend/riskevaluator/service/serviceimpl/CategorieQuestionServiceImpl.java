@@ -8,6 +8,8 @@ import fr.capeb.backend.riskevaluator.model.CategorieQuestionEntity;
 import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.CategorieQuestionService;
+import fr.capeb.backend.riskevaluator.service.interfaces.PreconisationCategorieService;
+import fr.capeb.backend.riskevaluator.service.interfaces.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,12 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
 
     @Autowired
     private QuestionnaireRepository questionnaireRepo;
+
+    @Autowired
+    private QuestionService pQuestionManager;
+
+    @Autowired
+    private PreconisationCategorieService pPreconisationCategorieManager;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -53,8 +61,14 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
     }
 
     @Override
-    public Optional<Object> deleteCategorieQuestion(Integer id) {
-        questionCategorieRepo.deleteById(id);
+    public Optional<Object> deleteCategorieQuestion(Integer aCategorieQuestionId) {
+        var wCategorieQuestionEntity = questionCategorieRepo.getById(aCategorieQuestionId);
+        var wPreconisationIdList=wCategorieQuestionEntity.getPreconisationsCategorie().stream().map(wPreconisationCategorie->wPreconisationCategorie.getIdPreconisation()).collect(Collectors.toList());
+        wPreconisationIdList.forEach(wPreconisationId->pPreconisationCategorieManager.deletePreconisationCategorie(wPreconisationId));
+        wCategorieQuestionEntity.getQuestionnaire().getCategorieQuestions().remove(wCategorieQuestionEntity);
+        var wQuestionIdsToRemove=wCategorieQuestionEntity.getQuestions().stream().map(wQuestion->wQuestion.getIdQuestion()).collect(Collectors.toList());
+        wQuestionIdsToRemove.forEach(wQuestionId->pQuestionManager.deleteQuestionById(wQuestionId));
+        questionCategorieRepo.delete(wCategorieQuestionEntity);
         return Optional.empty();
     }
 
