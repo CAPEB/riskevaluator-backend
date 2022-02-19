@@ -86,11 +86,8 @@ public class QuestionServiceImpl implements QuestionService {
                     if(wQuestionMetier.isPresent() ){
                         return wQuestionMetier.get();
                     }
-
                     wMetier.setMetier(pMetierRepo.getById(wMetier.getMetier().getIdMetier()));
-
                     wMetier.setQuestion(ques);
-
                     return wMetier;
                 }).collect(Collectors.toSet()));
         if(wQuestion.isPresent()){
@@ -106,16 +103,14 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Optional<Object> deleteQuestionById(Integer quesId) {
+
         var wQuestionEntity=questionRepo.getById(quesId);
         var wMetierQuestionEntityList=wQuestionEntity.getMetiers();
         wMetierQuestionEntityList.forEach(wMetierQuestionEntity->wMetierQuestionEntity.getMetier().getQuestions().removeAll(wMetierQuestionEntityList));
         var test=wQuestionEntity.getCategorieQuestion().getQuestions();
         wQuestionEntity.getCategorieQuestion().getQuestions().remove(wQuestionEntity);
         var wResponseIdsToRemove=wQuestionEntity.getReponses().stream().map(wResponseEntity->wResponseEntity.getIdReponse()).collect(Collectors.toList());
-        wResponseIdsToRemove.forEach(wReponseId->
-                pReponseManager.deleteReponse(wReponseId)
-        );
-
+        wResponseIdsToRemove.forEach(wReponseId->pReponseManager.deleteReponse(wReponseId));
         questionRepo.delete(wQuestionEntity);
 
 
