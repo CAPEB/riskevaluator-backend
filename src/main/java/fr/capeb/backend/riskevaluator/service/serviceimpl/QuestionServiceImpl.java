@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -67,12 +68,14 @@ public class QuestionServiceImpl implements QuestionService {
         aQuestion.getReponses().stream().forEach(wReponse ->wReponse.setQuestion(aQuestion));
         var wQuestion=questionRepo.findById(aQuestion.getIdQuestion());
         var wQuestionIdList=aQuestion.getReponses().stream().map(wReponse->wReponse.getIdReponse()).collect(Collectors.toList());
-
         if(wQuestion.isPresent()){
-            wQuestion.get().getReponses().forEach(wReponse->{
-                if(!wQuestionIdList.contains(wReponse.getIdReponse())){
-                    pReponseManager.getReponseById(wReponse.getIdReponse());
-                }
+            var wResponseToRemove=wQuestion.get().getReponses();
+            var ques = Optional.of(modelMapper.map(aQuestion, QuestionEntity.class)).orElseThrow(MappingDataException::new);
+            wResponseToRemove.removeAll(ques.getReponses());
+
+            wResponseToRemove.forEach(wReponse->{
+                pReponseManager.deleteReponse(wReponse.getIdReponse());
+
             });
         }
         var wMetierIds=aQuestion.getMetiers().stream().map(wMetier->wMetier.getIdMetier()).collect(Collectors.toList());
