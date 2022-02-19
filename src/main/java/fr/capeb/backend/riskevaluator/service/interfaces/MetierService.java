@@ -10,8 +10,8 @@ import java.util.Set;
 
 public interface MetierService {
      Set<Metier> getAllMetier();
-     Optional<Metier> getMetierById(Integer quesId);
-     Optional<Metier> createOrUpdateMetier(Metier metier);
-     Optional<Object> deleteMetierById(Integer quesId);
+     Optional<Metier> getMetierById(Integer aMetierId);
+     Optional<Metier> createOrUpdateMetier(Metier aMetier);
+     Optional<Object> deleteMetierById(Metier aMetier);
      Set<Questionnaire> getQuestionnaireByListMetierId(Set<Integer> aMetierIds);
 }

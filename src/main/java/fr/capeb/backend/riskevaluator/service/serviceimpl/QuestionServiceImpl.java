@@ -7,6 +7,7 @@ import fr.capeb.backend.riskevaluator.model.MetierQuestionEntityPK;
 import fr.capeb.backend.riskevaluator.model.QuestionEntity;
 import fr.capeb.backend.riskevaluator.repository.*;
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionService;
+import fr.capeb.backend.riskevaluator.service.interfaces.ReponseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,7 +36,7 @@ public class QuestionServiceImpl implements QuestionService {
     private ModelMapper modelMapper;
 
     @Autowired
-    private ReponseRepository pReponseRepository;
+    private ReponseService pReponseManager;
 
 
 
@@ -65,6 +66,15 @@ public class QuestionServiceImpl implements QuestionService {
     public Optional<Question> createOrUpdateQuestion(Question aQuestion) {
         aQuestion.getReponses().stream().forEach(wReponse ->wReponse.setQuestion(aQuestion));
         var wQuestion=questionRepo.findById(aQuestion.getIdQuestion());
+        var wQuestionIdList=aQuestion.getReponses().stream().map(wReponse->wReponse.getIdReponse()).collect(Collectors.toList());
+
+        if(wQuestion.isPresent()){
+            wQuestion.get().getReponses().forEach(wReponse->{
+                if(!wQuestionIdList.contains(wReponse.getIdReponse())){
+                    pReponseManager.getReponseById(wReponse.getIdReponse());
+                }
+            });
+        }
         var wMetierIds=aQuestion.getMetiers().stream().map(wMetier->wMetier.getIdMetier()).collect(Collectors.toList());
 
         var ques = Optional.of(modelMapper.map(aQuestion, QuestionEntity.class)).orElseThrow(MappingDataException::new);
@@ -87,14 +97,20 @@ public class QuestionServiceImpl implements QuestionService {
                 }
             });
         }
-
         var updated = Optional.of(questionRepo.save(ques)).orElseThrow(CreateOrUpdateException::new);
         return Optional.of(modelMapper.map(updated,Question.class));
     }
 
     @Override
     public Optional<Object> deleteQuestionById(Integer quesId) {
-        questionRepo.deleteById(quesId);
+        var wQuestionEntity=questionRepo.getById(quesId);
+        var wMetierQuestionEntityList=wQuestionEntity.getMetiers();
+        wMetierQuestionEntityList.forEach(wMetierQuestionEntity->wMetierQuestionEntity.getMetier().getQuestions().removeAll(wMetierQuestionEntityList));
+        wQuestionEntity.getMetiers().removeAll(wMetierQuestionEntityList);
+        wQuestionEntity.getReponses().forEach(wReponseEntity->pReponseManager.deleteReponse(wReponseEntity.getIdReponse()));
+        questionRepo.delete(wQuestionEntity);
+
+
         return Optional.empty();
     }
 }
