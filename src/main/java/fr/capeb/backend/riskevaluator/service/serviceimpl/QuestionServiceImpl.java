@@ -109,8 +109,13 @@ public class QuestionServiceImpl implements QuestionService {
         var wQuestionEntity=questionRepo.getById(quesId);
         var wMetierQuestionEntityList=wQuestionEntity.getMetiers();
         wMetierQuestionEntityList.forEach(wMetierQuestionEntity->wMetierQuestionEntity.getMetier().getQuestions().removeAll(wMetierQuestionEntityList));
-        wQuestionEntity.getMetiers().removeAll(wMetierQuestionEntityList);
-        wQuestionEntity.getReponses().forEach(wReponseEntity->pReponseManager.deleteReponse(wReponseEntity.getIdReponse()));
+        var test=wQuestionEntity.getCategorieQuestion().getQuestions();
+        wQuestionEntity.getCategorieQuestion().getQuestions().remove(wQuestionEntity);
+        var wResponseIdsToRemove=wQuestionEntity.getReponses().stream().map(wResponseEntity->wResponseEntity.getIdReponse()).collect(Collectors.toList());
+        wResponseIdsToRemove.forEach(wReponseId->
+                pReponseManager.deleteReponse(wReponseId)
+        );
+
         questionRepo.delete(wQuestionEntity);
 
 
