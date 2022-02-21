@@ -7,33 +7,44 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table(name = "reponse")
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 public class ReponseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_reponse")
-    @EqualsAndHashCode.Include
     private Integer idReponse;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_question", nullable=false)
-    @EqualsAndHashCode.Exclude
     private QuestionEntity question;
 
     @NotNull
     @Column(name = "nb_points")
-    @EqualsAndHashCode.Exclude
     private Integer nbPoints;
 
     @NotNull
     @Column(name = "contenu", columnDefinition="TEXT")
-    @EqualsAndHashCode.Exclude
     private String contenu;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReponseEntity that = (ReponseEntity) o;
+        if(that.getIdReponse()==null ||that.getIdReponse()==0||idReponse==0||idReponse==null) return false;
+        return idReponse.equals(that.idReponse);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idReponse);
+    }
+
 
 }

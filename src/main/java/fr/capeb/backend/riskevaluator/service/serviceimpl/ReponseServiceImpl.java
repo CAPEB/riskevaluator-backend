@@ -44,14 +44,25 @@ public class  ReponseServiceImpl implements ReponseService {
         if(wResponseEntity.isEmpty()){
             throw new MappingDataException();
         }
+        wResponseEntity.get().getQuestion().getReponses().add(wResponseEntity.get());
         Optional<ReponseEntity> wResponseEntityUpdated = Optional.of(pReponseRepository.save(wResponseEntity.get()));
         return Optional.of(modelMapper.map(wResponseEntityUpdated.get(),Reponse.class));
     }
 
     @Override
+    public Optional<Reponse> createReponse(Reponse aReponse) {
+
+        Optional<ReponseEntity> wResponseEntity = Optional.of(modelMapper.map(aReponse,ReponseEntity.class));
+        if(wResponseEntity.isEmpty()){
+            throw new MappingDataException();
+        }
+        wResponseEntity.get().getQuestion().getReponses().add(wResponseEntity.get());
+        return Optional.of(modelMapper.map(wResponseEntity.get(),Reponse.class));
+    }
+
+    @Override
     public Optional<Object> deleteReponse(Integer aReponseId) {
         var wReponseEntity=pReponseRepository.getById(aReponseId);
-        wReponseEntity.getQuestion().getReponses().remove(wReponseEntity);
         pReponseRepository.delete(wReponseEntity);
         return Optional.empty();
     }
