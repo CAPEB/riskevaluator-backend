@@ -9,9 +9,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface MetierService {
-     Set<Metier> getAllMetier();
+     List<Metier> getAllMetier();
      Optional<Metier> getMetierById(Integer aMetierId);
      Optional<Metier> createOrUpdateMetier(Metier aMetier);
      Optional<Object> deleteMetierById(Metier aMetier);
-     Set<Questionnaire> getQuestionnaireByListMetierId(Set<Integer> aMetierIds);
+     List<Questionnaire> getQuestionnaireByListMetierId(Set<Integer> aMetierIds);
 }

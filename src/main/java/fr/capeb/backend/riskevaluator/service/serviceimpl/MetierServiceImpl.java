@@ -11,9 +11,11 @@ import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.MetierService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,11 +37,11 @@ public class MetierServiceImpl implements MetierService {
     private ModelMapper modelMapper;
 
     @Override
-    public Set<Metier> getAllMetier() {
-            return metierRepo.findAll()
+    public List<Metier> getAllMetier() {
+            return metierRepo.findAll(Sort.by(Sort.Direction.ASC,"nom_metier"))
                 .stream()
                 .map(stop -> modelMapper.map(stop, Metier.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -77,9 +79,9 @@ public class MetierServiceImpl implements MetierService {
     }
 
     @Override
-    public Set<Questionnaire> getQuestionnaireByListMetierId(Set<Integer> aMetierIds) {
+    public List<Questionnaire> getQuestionnaireByListMetierId(Set<Integer> aMetierIds) {
         return pQuestionnaireRepository.getQuestionnaireByMetiersIds(aMetierIds)
                 .stream().map(wQuestionnaireEntity -> modelMapper.map(wQuestionnaireEntity,Questionnaire.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 }

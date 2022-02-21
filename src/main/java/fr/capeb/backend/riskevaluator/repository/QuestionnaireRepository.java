@@ -21,8 +21,9 @@ public interface QuestionnaireRepository extends JpaRepository<QuestionnaireEnti
     Optional<QuestionnaireEntity> findByThematique(@Param("tm") String tm);
     @Query("select distinct categorieQuestion.questionnaire from  MetierQuestionEntity metierQuestion join CategorieQuestionEntity categorieQuestion " +
             "on metierQuestion.question.categorieQuestion.idCategorie=categorieQuestion.idCategorie " +
-            "where metierQuestion.metier.idMetier in (:metierIds)")
-    Set<QuestionnaireEntity> getQuestionnaireByMetiersIds(@Param("metierIds") Set<Integer> metierIds);
+            "where metierQuestion.metier.idMetier in (:metierIds)" +
+            "order by categorieQuestion.libelle")
+    List<QuestionnaireEntity> getQuestionnaireByMetiersIds(@Param("metierIds") Set<Integer> metierIds);
 
 
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -72,7 +73,7 @@ public class QuestionnairesController {
     public ResponseEntity getMetierByQuestionnaireId(@PathVariable Integer aQuestionnaireId) {
 
         Optional<Questionnaire> questionnaire = questionnairesService.getQuestionnaireById(aQuestionnaireId);
-        Set<Metier> wMetiers= questionnairesService.getMetiersByQuestionnaireId(aQuestionnaireId);
+        List<Metier> wMetiers= questionnairesService.getMetiersByQuestionnaireId(aQuestionnaireId);
         if(questionnaire.isPresent()&&!wMetiers.isEmpty())
             return ResponseEntity.ok(wMetiers);
 
@@ -84,7 +85,7 @@ public class QuestionnairesController {
     public ResponseEntity getQuestionsByQuestionnaireIdAndMetiers(@PathVariable Integer aQuestionnaireId,@RequestParam(value="metierId") Set<Integer> metierIds) {
 
         Optional<Questionnaire> questionnaire = questionnairesService.getQuestionnaireById(aQuestionnaireId);
-        Set<CategorieQuestion> wQuestions= questionnairesService.getQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId,metierIds);
+        List<CategorieQuestion> wQuestions= questionnairesService.getCategorieQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId,metierIds);
         if(questionnaire.isPresent()&&!wQuestions.isEmpty())
             return ResponseEntity.ok(wQuestions);
 

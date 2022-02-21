@@ -9,9 +9,11 @@ import fr.capeb.backend.riskevaluator.repository.QuestionCategorieRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.PreconisationCategorieService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,11 +30,11 @@ public class PreconisationCategorieServiceImpl implements PreconisationCategorie
     private QuestionCategorieRepository questionCategorieRepo;
 
     @Override
-    public Set<PreconisationCategorie> getAllPreconisationCategorie() {
-        return preCatRepo.findAll()
+    public List<PreconisationCategorie> getAllPreconisationCategorie() {
+        return preCatRepo.findAll(Sort.by(Sort.Direction.ASC,"contenu"))
                 .stream()
                 .map(stop -> modelMapper.map(stop, PreconisationCategorie.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override

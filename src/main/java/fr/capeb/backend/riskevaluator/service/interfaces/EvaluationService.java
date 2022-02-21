@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface EvaluationService {
-    Set<Evaluation> getAllEvaluation();
+    List<Evaluation> getAllEvaluation();
     Optional<Evaluation> getEvaluationById(Integer aEvaluationId);
     Optional<Object> deleteEvaluation(Integer aEvaluationId);
     Optional<Evaluation> SaveEvaluation(Evaluation aEvaluation);

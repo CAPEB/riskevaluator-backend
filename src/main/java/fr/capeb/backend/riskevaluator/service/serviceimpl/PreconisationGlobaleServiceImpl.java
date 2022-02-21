@@ -9,9 +9,11 @@ import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.PreconisationGlobaleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,11 +30,11 @@ public class PreconisationGlobaleServiceImpl implements PreconisationGlobaleServ
     private QuestionnaireRepository questionnaireRepo;
 
     @Override
-    public Set<PreconisationGlobale> getAllPreconisationGlobale() {
-        return preGlobRepo.findAll()
+    public List<PreconisationGlobale> getAllPreconisationGlobale() {
+        return preGlobRepo.findAll(Sort.by(Sort.Direction.ASC,"contenu"))
                 .stream()
                 .map(stop -> modelMapper.map(stop, PreconisationGlobale.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override

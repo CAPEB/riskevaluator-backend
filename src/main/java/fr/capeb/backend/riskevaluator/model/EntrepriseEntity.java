@@ -33,7 +33,7 @@ public class EntrepriseEntity {
     @Basic
     @Column(name = "anneedecreation")
     public Integer anneeDeCreation;
-
+    @OrderBy("idEvaluation")
     @OneToMany(mappedBy = "entreprise",cascade = CascadeType.ALL)
     private Set<EvaluationEntity> evaluations=new HashSet<>();
 

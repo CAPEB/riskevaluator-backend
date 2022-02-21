@@ -40,6 +40,7 @@ public class QuestionEntity implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MetierQuestionEntity> metiers = new LinkedHashSet<>();
 
+    @OrderBy("contenu")
     @OneToMany(mappedBy = "question",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ReponseEntity> reponses= new HashSet<>();
 

@@ -7,7 +7,6 @@ import fr.capeb.backend.riskevaluator.exceptions.model.CreateOrUpdateException;
 import fr.capeb.backend.riskevaluator.exceptions.model.MappingDataException;
 import fr.capeb.backend.riskevaluator.model.QuestionnaireEntity;
 import fr.capeb.backend.riskevaluator.repository.MetierRepository;
-import fr.capeb.backend.riskevaluator.repository.PreconisationGlobaleRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionRepository;
 import fr.capeb.backend.riskevaluator.repository.QuestionnaireRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.CategorieQuestionService;
@@ -15,9 +14,11 @@ import fr.capeb.backend.riskevaluator.service.interfaces.PreconisationGlobaleSer
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionnaireService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,13 +45,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Set<Questionnaire> getAllQuestionnaires() {
+    public List<Questionnaire> getAllQuestionnaires() {
 
-        var wQuestionaireEntitys=questionnairesRepo.findAll();
+        var wQuestionaireEntitys=questionnairesRepo.findAll(Sort.by(Sort.Direction.ASC,"thematique"));
         var wQuestionnaires=wQuestionaireEntitys
                 .stream()
                 .map(stop -> modelMapper.map(stop, Questionnaire.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 //        wQuestionnaires.stream().forEach(questionnaire -> {
 //            var wCategorieQuestion=pCategorieQuestionRepo
 //                    .findByQuestionaire(questionnaire.getIdQuestionnaire()).stream()
@@ -121,20 +122,20 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     }
 
     @Override
-    public Set<Metier> getMetiersByQuestionnaireId(Integer aQuestionnaireId) {
+    public List<Metier> getMetiersByQuestionnaireId(Integer aQuestionnaireId) {
 
         return pMetierRepository.getMetiersByQuestionnaireId(aQuestionnaireId).stream()
                 .map(stop -> modelMapper.map(stop, Metier.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Set<CategorieQuestion> getQuestionsByQuestionnaireIdAndMetiers(Integer aQuestionnaireId, Set<Integer> metierIds) {
+    public List<CategorieQuestion> getCategorieQuestionsByQuestionnaireIdAndMetiers(Integer aQuestionnaireId, Set<Integer> metierIds) {
 
-        return  pQuestionRepository.getQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId, metierIds)
+        return  pQuestionRepository.getCategorieQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId, metierIds)
                 .stream()
                 .map(stop -> modelMapper.map(stop, CategorieQuestion.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
 

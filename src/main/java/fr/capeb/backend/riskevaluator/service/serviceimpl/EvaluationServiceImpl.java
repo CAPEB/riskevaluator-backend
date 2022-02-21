@@ -6,9 +6,11 @@ import fr.capeb.backend.riskevaluator.repository.EvaluationRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.EvaluationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.webjars.NotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,10 +25,10 @@ public class EvaluationServiceImpl implements EvaluationService {
     private ModelMapper pModelMapper;
 
     @Override
-    public Set<Evaluation> getAllEvaluation() {
-        return pEvaluationRepository.findAll().stream()
+    public List<Evaluation> getAllEvaluation() {
+        return pEvaluationRepository.findAll(Sort.by(Sort.Direction.ASC,"id_evaluation")).stream()
                 .map(aEvaluationEntity -> pModelMapper.map(aEvaluationEntity,Evaluation.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
 
     }
 

@@ -3,6 +3,7 @@ package fr.capeb.backend.riskevaluator.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SortNatural;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,12 +30,15 @@ public class CategorieQuestionEntity {
     @Column(name = "libelle", nullable=false)
     public String libelle;
 
+
     @OneToMany(mappedBy = "categorieQuestion",cascade = CascadeType.ALL)
     private Set<ScoreCategoryEntity> scoreEvaluations=new HashSet<>();
 
+    @OrderBy("contenu")
     @OneToMany(mappedBy = "categorieQuestion",cascade = CascadeType.ALL)
     private Set<PreconisationCategorieEntity> preconisationsCategorie= new HashSet<>();
 
+    @OrderBy("libelleQuestion")
     @OneToMany(mappedBy = "categorieQuestion", cascade = CascadeType.ALL)
     private Set<QuestionEntity> questions= new HashSet<>();
 
