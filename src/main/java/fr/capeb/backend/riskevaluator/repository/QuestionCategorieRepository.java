@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -15,6 +16,6 @@ public interface QuestionCategorieRepository extends JpaRepository<CategorieQues
 
 
     @Query("select cq from CategorieQuestionEntity cq where cq.questionnaire.idQuestionnaire = :idQ")
-    Set<CategorieQuestionEntity> findByQuestionaire(@Param("idQ") Integer idQ);
+    List<CategorieQuestionEntity> findByQuestionaire(@Param("idQ") Integer idQ);
 
 }

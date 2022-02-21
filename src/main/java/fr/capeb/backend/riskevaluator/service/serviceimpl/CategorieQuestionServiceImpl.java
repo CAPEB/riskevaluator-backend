@@ -12,10 +12,11 @@ import fr.capeb.backend.riskevaluator.service.interfaces.PreconisationCategorieS
 import fr.capeb.backend.riskevaluator.service.interfaces.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static fr.capeb.backend.riskevaluator.exceptions.ExceptionMsg.ID_NOT_FOUND;
@@ -39,11 +40,11 @@ public class CategorieQuestionServiceImpl implements CategorieQuestionService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Set<CategorieQuestion> getAllCategorieQuestion() {
-        return questionCategorieRepo.findAll()
+    public List<CategorieQuestion> getAllCategorieQuestion() {
+        return questionCategorieRepo.findAll(Sort.by(Sort.Direction.ASC,"libelle"))
                 .stream()
                 .map(stop -> modelMapper.map(stop, CategorieQuestion.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
 

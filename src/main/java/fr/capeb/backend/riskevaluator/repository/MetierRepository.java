@@ -13,6 +13,6 @@ import java.util.Set;
 @Repository
 public interface MetierRepository extends JpaRepository<MetierEntity, Integer> {
 
-    @Query("select distinct metierQuestion.metier from  MetierQuestionEntity metierQuestion where metierQuestion.question.categorieQuestion.questionnaire.idQuestionnaire = :aQuestionnaireId")
-    Set<MetierEntity> getMetiersByQuestionnaireId(@Param("aQuestionnaireId") Integer aQuestionnaireId);
+    @Query("select distinct metierQuestion.metier from  MetierQuestionEntity metierQuestion where metierQuestion.question.categorieQuestion.questionnaire.idQuestionnaire = :aQuestionnaireId order by metierQuestion.metier.nomMetier")
+    List<MetierEntity> getMetiersByQuestionnaireId(@Param("aQuestionnaireId") Integer aQuestionnaireId);
 }

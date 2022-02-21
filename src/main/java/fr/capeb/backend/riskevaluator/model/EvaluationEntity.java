@@ -31,7 +31,7 @@ public class EvaluationEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="nosiret", nullable=false)
     private EntrepriseEntity entreprise;
-
+    @OrderBy("categorieQuestion.libelle")
     @OneToMany(mappedBy = "evaluation",cascade = CascadeType.ALL)
     private Set<ScoreCategoryEntity> scoreCategories=new HashSet<>();
 

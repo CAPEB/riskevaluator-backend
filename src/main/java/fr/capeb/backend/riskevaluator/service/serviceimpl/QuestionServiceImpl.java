@@ -10,6 +10,7 @@ import fr.capeb.backend.riskevaluator.service.interfaces.QuestionService;
 import fr.capeb.backend.riskevaluator.service.interfaces.ReponseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,11 +43,11 @@ public class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public Set<Question> getAllQuestion() {
-        return questionRepo.findAll()
+    public List<Question> getAllQuestion() {
+        return questionRepo.findAll(Sort.by(Sort.Direction.ASC,"libelle_question"))
                 .stream()
                 .map(stop -> modelMapper.map(stop, Question.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override

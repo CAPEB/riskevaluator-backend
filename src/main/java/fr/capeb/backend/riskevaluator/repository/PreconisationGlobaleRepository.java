@@ -9,11 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Repository
 public interface PreconisationGlobaleRepository extends JpaRepository<PreconisationGlobaleEntity, Integer> {
 
     @Query("select pg from PreconisationGlobaleEntity pg where pg.questionnaire.idQuestionnaire = :idQ")
-    Set<PreconisationGlobaleEntity> findByQuestionaire(@Param("idQ") Integer idQ);
+    List<PreconisationGlobaleEntity> findByQuestionaire(@Param("idQ") Integer idQ);
 }

@@ -7,8 +7,10 @@ import fr.capeb.backend.riskevaluator.repository.ReponseRepository;
 import fr.capeb.backend.riskevaluator.service.interfaces.ReponseService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,11 +23,11 @@ public class  ReponseServiceImpl implements ReponseService {
     private ModelMapper modelMapper;
 
     @Override
-    public Set<Reponse> getAllReponses() {
-        return pReponseRepository.findAll()
+    public List<Reponse> getAllReponses() {
+        return pReponseRepository.findAll(Sort.by(Sort.Direction.ASC,"contenu"))
                 .stream()
                 .map(stop -> modelMapper.map(stop, Reponse.class))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Override
