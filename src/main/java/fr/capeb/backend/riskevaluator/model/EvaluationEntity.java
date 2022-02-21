@@ -21,8 +21,8 @@ public class EvaluationEntity {
     @Column(name = "id_evaluation")
     private Integer idEvaluation;
 
-    @Column(name = "ScoreGenerale")
-    private Integer ScoreGeneraleEvaluation;
+    @Column(name = "score_generale")
+    private Integer scoreGeneraleEvaluation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_compte", nullable=false)
