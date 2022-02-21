@@ -26,7 +26,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     @Override
     public List<Evaluation> getAllEvaluation() {
-        return pEvaluationRepository.findAll(Sort.by(Sort.Direction.ASC,"id_evaluation")).stream()
+        return pEvaluationRepository.findAll(Sort.by(Sort.Direction.ASC,"idEvaluation")).stream()
                 .map(aEvaluationEntity -> pModelMapper.map(aEvaluationEntity,Evaluation.class))
                 .collect(Collectors.toList());
 

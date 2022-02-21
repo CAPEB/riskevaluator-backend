@@ -38,7 +38,7 @@ public class MetierServiceImpl implements MetierService {
 
     @Override
     public List<Metier> getAllMetier() {
-            return metierRepo.findAll(Sort.by(Sort.Direction.ASC,"nom_metier"))
+            return metierRepo.findAll(Sort.by(Sort.Direction.ASC,"nomMetier"))
                 .stream()
                 .map(stop -> modelMapper.map(stop, Metier.class))
                 .collect(Collectors.toList());
