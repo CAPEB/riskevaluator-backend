@@ -44,7 +44,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> getAllQuestion() {
-        return questionRepo.findAll(Sort.by(Sort.Direction.ASC,"libelle_question"))
+        return questionRepo.findAll(Sort.by(Sort.Direction.ASC,"libelleQuestion"))
                 .stream()
                 .map(stop -> modelMapper.map(stop, Question.class))
                 .collect(Collectors.toList());
