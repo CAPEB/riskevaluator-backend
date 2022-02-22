@@ -85,9 +85,9 @@ public class QuestionnairesController {
     public ResponseEntity getQuestionsByQuestionnaireIdAndMetiers(@PathVariable Integer aQuestionnaireId,@RequestParam(value="metierId") Set<Integer> metierIds) {
 
         Optional<Questionnaire> questionnaire = questionnairesService.getQuestionnaireById(aQuestionnaireId);
-        List<CategorieQuestion> wQuestions= questionnairesService.getCategorieQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId,metierIds);
-        if(questionnaire.isPresent()&&!wQuestions.isEmpty())
-            return ResponseEntity.ok(wQuestions);
+        List<CategorieQuestion> wCategorieQuestions= questionnairesService.getCategorieQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId,metierIds);
+        if(questionnaire.isPresent()&&!wCategorieQuestions.isEmpty())
+            return ResponseEntity.ok(wCategorieQuestions);
 
         return ResponseEntity.notFound().build();
     }
