@@ -72,8 +72,13 @@ public class MetierServiceImpl implements MetierService {
     @Override
     public Optional<Object> deleteMetierById(Metier aMetier) {
         var wMetierEntity=metierRepo.getById(aMetier.getIdMetier());
-        wMetierEntity.getQuestions().forEach(wMetierQuestionEntity->wMetierQuestionEntity.getQuestion().getMetiers().removeAll(wMetierEntity.getQuestions()));
+        wMetierEntity.getQuestions().forEach(
+                wMetierQuestionEntity
+                ->wMetierQuestionEntity
+                        .getQuestion().getMetiers().removeAll(wMetierEntity.getQuestions()));
         wMetierEntity.getQuestions().removeAll(wMetierEntity.getQuestions());
+        pMetierQuestionRepository.deleteAll(wMetierEntity.getQuestions());
+        pMetierQuestionRepository.flush();
         metierRepo.delete(wMetierEntity);
         return Optional.empty();
     }
