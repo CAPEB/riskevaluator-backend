@@ -85,10 +85,20 @@ public class MetierServiceImpl implements MetierService {
 
     @Override
     public List<Questionnaire> getQuestionnaireByListMetierId(Set<Integer> aMetierIds) {
+        var wMetiers=metierRepo.findAllById(aMetierIds).stream().map(metier->modelMapper.map(metier,Metier.class)).collect(Collectors.toList());
+
         var wQuestionnaireList=pQuestionnaireRepository.getQuestionnaireByMetiersIds(aMetierIds)
                 .stream().map(wQuestionnaireEntity -> modelMapper.map(wQuestionnaireEntity,Questionnaire.class))
                 .collect(Collectors.toList());
-        wQuestionnaireList.forEach(questionnaire->questionnaire.setCategorieQuestions(questionnaire.getCategorieQuestions().stream().filter(categorieQuestion -> categorieQuestion.getQuestions().size()>0).collect(Collectors.toList())));
+        wQuestionnaireList.forEach(questionnaire->questionnaire.setCategorieQuestions(questionnaire.getCategorieQuestions().stream().filter(wCategorieQuestion -> {
+            wCategorieQuestion.setQuestions(
+                    wCategorieQuestion.getQuestions().stream().filter(
+                            question ->{
+                               var ret= question.getMetiers().containsAll(wMetiers);
+                               return ret;
+                            } ).collect(Collectors.toList()));
+            return wCategorieQuestion.getQuestions().size()>0;
+        }).collect(Collectors.toList())));
 
         return wQuestionnaireList;
     }

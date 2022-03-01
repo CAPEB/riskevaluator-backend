@@ -1,12 +1,8 @@
 package fr.capeb.backend.riskevaluator.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +12,15 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-
+@EqualsAndHashCode
 public class Metier {
+    @EqualsAndHashCode.Include
     private Integer idMetier;
     @NotNull
+    @EqualsAndHashCode.Exclude
     private String nomMetier;
 
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties({"categorieQuestion","reponses","metiers"})
     private List<Question> questions=new ArrayList<>();
 }

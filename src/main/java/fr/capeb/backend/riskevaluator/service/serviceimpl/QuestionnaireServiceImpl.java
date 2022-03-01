@@ -131,10 +131,14 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     @Override
     public List<CategorieQuestion> getCategorieQuestionsByQuestionnaireIdAndMetiers(Integer aQuestionnaireId, Set<Integer> metierIds) {
-
+        var wMetiers=pMetierRepository.findAllById(metierIds).stream().map(metier->modelMapper.map(metier,Metier.class)).collect(Collectors.toList());
         return  pQuestionRepository.getCategorieQuestionsByQuestionnaireIdAndMetiers(aQuestionnaireId, metierIds)
                 .stream()
-                .map(stop -> modelMapper.map(stop, CategorieQuestion.class))
+                .map(categorieQuestion -> {
+                    var wCategorieQuestion=modelMapper.map(categorieQuestion, CategorieQuestion.class);
+                    wCategorieQuestion.setQuestions(wCategorieQuestion.getQuestions().stream().filter(question -> question.getMetiers().containsAll(wMetiers)).collect(Collectors.toList()));
+                    return wCategorieQuestion;
+                })
                 .collect(Collectors.toList());
     }
 
