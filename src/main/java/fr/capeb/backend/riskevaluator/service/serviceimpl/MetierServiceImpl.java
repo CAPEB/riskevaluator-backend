@@ -91,12 +91,11 @@ public class MetierServiceImpl implements MetierService {
                 .stream().map(wQuestionnaireEntity -> modelMapper.map(wQuestionnaireEntity,Questionnaire.class))
                 .collect(Collectors.toList());
         wQuestionnaireList.forEach(questionnaire->questionnaire.setCategorieQuestions(questionnaire.getCategorieQuestions().stream().filter(wCategorieQuestion -> {
-            wCategorieQuestion.setQuestions(
-                    wCategorieQuestion.getQuestions().stream().filter(
-                            question ->{
-                               var ret= question.getMetiers().containsAll(wMetiers);
-                               return ret;
-                            } ).collect(Collectors.toList()));
+            wCategorieQuestion.setQuestions(wCategorieQuestion.getQuestions().stream().filter(question -> question
+                    .getMetiers()
+                    .stream()
+                    .anyMatch(elem->wMetiers.contains(elem))
+            ).collect(Collectors.toList()));
             return wCategorieQuestion.getQuestions().size()>0;
         }).collect(Collectors.toList())));
 

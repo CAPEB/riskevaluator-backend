@@ -77,7 +77,7 @@ public class QuestionServiceImpl implements QuestionService {
             wResponseToRemove.forEach(wReponse->{
                 pReponseManager.deleteReponse(wReponse.getIdReponse());
 
-            });
+            }); 
         }
         var wMetierIds=aQuestion.getMetiers().stream().map(wMetier->wMetier.getIdMetier()).collect(Collectors.toList());
 
