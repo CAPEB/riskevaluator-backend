@@ -1,6 +1,7 @@
 package fr.capeb.backend.riskevaluator.model;
 
-import fr.capeb.backend.riskevaluator.dto.CategorieQuestion;
+
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,24 +12,26 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "score_category")
 public class ScoreCategoryEntity {
-
+    @EqualsAndHashCode.Include
     @EmbeddedId
-    private ScoreCategoryEntityPK key;
+    private ScoreCategoryEntityPK key = new ScoreCategoryEntityPK();
 
-
+    @EqualsAndHashCode.Exclude
     @MapsId(value = "idEvaluation")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_evaluation", referencedColumnName = "id_evaluation")
     private EvaluationEntity evaluation;
 
-
+    @EqualsAndHashCode.Exclude
     @MapsId(value = "idCategorie")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_categorie", referencedColumnName = "id_categorie")
     private CategorieQuestionEntity categorieQuestion;
 
+    @EqualsAndHashCode.Exclude
     @Column(name = "nb_points")
     private Integer nbPoints;
 

@@ -3,6 +3,7 @@ package fr.capeb.backend.riskevaluator.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -25,13 +26,13 @@ public class EvaluationEntity {
     private Integer scoreGeneraleEvaluation;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_compte", nullable=false)
+    @JoinColumn(name="id_compte")
     private CompteEntity compte;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="nosiret", nullable=false)
     private EntrepriseEntity entreprise;
-    @OrderBy("categorieQuestion.libelle")
+
     @OneToMany(mappedBy = "evaluation",cascade = CascadeType.ALL)
     private Set<ScoreCategoryEntity> scoreCategories=new HashSet<>();
 

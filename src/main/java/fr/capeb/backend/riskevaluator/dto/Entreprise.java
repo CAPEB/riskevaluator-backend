@@ -16,7 +16,7 @@ public class Entreprise {
 
     private Long noSiret;
     private String nomEntreprise;
-    private String effectifEntreprise;
+    private Integer effectifEntreprise;
     private Integer anneeDeCreation;
     @JsonIgnoreProperties({"scoreCategories","compte","entreprise"})
     private List<Evaluation> evaluations=new ArrayList<>();

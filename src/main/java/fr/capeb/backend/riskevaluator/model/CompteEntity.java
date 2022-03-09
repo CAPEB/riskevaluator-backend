@@ -21,8 +21,9 @@ public class CompteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_compte")
     private Integer idCompte;
+
     @OrderBy("idEvaluation")
-    @OneToMany(mappedBy = "entreprise",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "compte",cascade = CascadeType.ALL)
     private Set<EvaluationEntity> evaluations=new HashSet<>();
 
     @Column(name = "is_admin")

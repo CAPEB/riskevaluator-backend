@@ -1,8 +1,12 @@
 package fr.capeb.backend.riskevaluator.service.serviceimpl;
 
+import fr.capeb.backend.riskevaluator.dto.Entreprise;
 import fr.capeb.backend.riskevaluator.dto.Evaluation;
-import fr.capeb.backend.riskevaluator.model.EvaluationEntity;
+import fr.capeb.backend.riskevaluator.model.*;
+import fr.capeb.backend.riskevaluator.repository.EntrepriseRepository;
 import fr.capeb.backend.riskevaluator.repository.EvaluationRepository;
+import fr.capeb.backend.riskevaluator.repository.ScoreCategorieRepository;
+import fr.capeb.backend.riskevaluator.service.interfaces.CategorieQuestionService;
 import fr.capeb.backend.riskevaluator.service.interfaces.EvaluationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.webjars.NotFoundException;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -20,6 +25,15 @@ import java.util.stream.Collectors;
 public class EvaluationServiceImpl implements EvaluationService {
     @Autowired
     private EvaluationRepository pEvaluationRepository;
+
+    @Autowired
+    private CategorieQuestionService pCategorieQuestionManager;
+
+    @Autowired
+    private ScoreCategorieRepository pScoreCategorieRepository;
+
+    @Autowired
+    private EntrepriseRepository pEntrepriseRepository;
 
     @Autowired
     private ModelMapper pModelMapper;
@@ -54,9 +68,32 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     @Override
     public Optional<Evaluation> SaveEvaluation(Evaluation aEvaluation) {
-        var xEvaluationEntity = pModelMapper.map(aEvaluation, EvaluationEntity.class);
-        var wEvaluationEntity=pEvaluationRepository.save(xEvaluationEntity);
-        return Optional.of(pModelMapper.map(wEvaluationEntity,Evaluation.class));
+        aEvaluation.setIdEvaluation(-1);
+        var aEntrepriseEntity=pEntrepriseRepository.findById(aEvaluation.getEntreprise().getNoSiret());
+        EntrepriseEntity wEntrepriseEntity;
+        if(aEntrepriseEntity.isPresent()){
+            wEntrepriseEntity=aEntrepriseEntity.get();
+        }
+        else{
+            wEntrepriseEntity = pEntrepriseRepository.saveAndFlush(pModelMapper.map(aEvaluation.getEntreprise(), EntrepriseEntity.class));
+        }
+
+
+        var wEvaluationEntity = pModelMapper.map(aEvaluation, EvaluationEntity.class);
+        wEvaluationEntity.setEntreprise(wEntrepriseEntity);
+        wEvaluationEntity.setScoreCategories(new HashSet<>());
+        var wEvaluationSavedEntity=pEvaluationRepository.saveAndFlush(wEvaluationEntity);
+
+        aEvaluation.getScoreCategories().forEach(scoreCategory -> {
+            var wScoreCategoryEntity=pModelMapper.map(scoreCategory, ScoreCategoryEntity.class);
+            wScoreCategoryEntity.setEvaluation(wEvaluationSavedEntity);
+            wScoreCategoryEntity.setKey(new ScoreCategoryEntityPK(wEvaluationEntity.getIdEvaluation(),scoreCategory.getCategorieQuestion().getIdCategorie()));
+            wEvaluationSavedEntity.getScoreCategories().add(wScoreCategoryEntity);
+            wEvaluationEntity.getScoreCategories().add(wScoreCategoryEntity);
+
+        });
+        var wEvaluationUpdatedEntity=pEvaluationRepository.saveAndFlush(wEvaluationSavedEntity);
+        return Optional.of(pModelMapper.map(wEvaluationUpdatedEntity,Evaluation.class));
     }
 
 }

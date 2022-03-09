@@ -21,11 +21,14 @@ public class Evaluation {
     private Integer idEvaluation;
     private Integer ScoreGeneraleEvaluation;
 
+    @Nullable
     @JsonIgnoreProperties({"evaluations"})
     private Compte compte;
+
     @NotNull
-    @JsonIgnoreProperties({"evaluation","categorieQuestion"})
+    @JsonIgnoreProperties({"evaluation"})
     private List<ScoreCategory> scoreCategories=new ArrayList<>();
+
     @NotNull
     @JsonIgnoreProperties({"evaluations"})
     private Entreprise entreprise;

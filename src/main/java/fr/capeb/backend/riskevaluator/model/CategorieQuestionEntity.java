@@ -16,7 +16,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "categorie_question")
-
 public class CategorieQuestionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
