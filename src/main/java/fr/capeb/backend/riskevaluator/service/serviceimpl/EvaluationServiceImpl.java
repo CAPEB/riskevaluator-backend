@@ -51,7 +51,7 @@ public class EvaluationServiceImpl implements EvaluationService {
         if(aEvaluationId == null) return Optional.empty();
         var aEvaluationEntity=pEvaluationRepository.findById(aEvaluationId);
         if(aEvaluationEntity.isPresent()){
-            return Optional.of(pModelMapper.map(aEvaluationEntity,Evaluation.class));
+            return Optional.of(pModelMapper.map(aEvaluationEntity.get(),Evaluation.class));
         }
         return Optional.empty();
     }
