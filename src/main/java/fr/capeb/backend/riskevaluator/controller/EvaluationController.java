@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/evaluations")
@@ -17,7 +18,16 @@ public class EvaluationController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getAll(){
-        return ResponseEntity.ok(pEvaluationService.getAllEvaluation());
+        var wEvaluationList=pEvaluationService.getAllEvaluation();
+        wEvaluationList.forEach(wEvaluation->{
+            wEvaluation.getScoreCategories().forEach(scoreCategory -> {
+                scoreCategory.getCategorieQuestion().setQuestions(new ArrayList<>());
+                scoreCategory.getCategorieQuestion().setPreconisationsCategorie(new ArrayList<>());
+                scoreCategory.getCategorieQuestion().getQuestionnaire().setPreconisationGlobales(new ArrayList<>());
+
+            });
+        });
+        return ResponseEntity.ok(wEvaluationList);
     }
 
     @GetMapping("/{aEvaluationId}")

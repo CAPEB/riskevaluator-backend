@@ -16,7 +16,7 @@ public class ScoreCategory {
     @JsonIgnoreProperties({"scoreCategories","compte","entreprise"})
     private Evaluation evaluation;
     @NotNull
-    @JsonIgnoreProperties({"questionnaire","scoreEvaluations","questions","preconisationsCategorie"})
+    @JsonIgnoreProperties({"scoreEvaluations","questions"})
     private CategorieQuestion categorieQuestion;
     @NotNull
     private Integer nbPoints;
