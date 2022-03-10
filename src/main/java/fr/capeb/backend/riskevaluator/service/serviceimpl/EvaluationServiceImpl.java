@@ -73,6 +73,9 @@ public class EvaluationServiceImpl implements EvaluationService {
         EntrepriseEntity wEntrepriseEntity;
         if(aEntrepriseEntity.isPresent()){
             wEntrepriseEntity=aEntrepriseEntity.get();
+            wEntrepriseEntity.setEffectifEntreprise(aEvaluation.getEntreprise().getEffectifEntreprise());
+            wEntrepriseEntity.setNomEntreprise(aEvaluation.getEntreprise().getNomEntreprise());
+            wEntrepriseEntity.setAnneeDeCreation(aEvaluation.getEntreprise().getAnneeDeCreation());
         }
         else{
             wEntrepriseEntity = pEntrepriseRepository.saveAndFlush(pModelMapper.map(aEvaluation.getEntreprise(), EntrepriseEntity.class));
