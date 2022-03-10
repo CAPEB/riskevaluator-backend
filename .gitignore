@@ -34,3 +34,9 @@ build/
 
 ### Local Setup ###
 *.bat
+RiskevaluatorApplicationTests.java
+application-dev.properties
+application-local.properties
+application-prod.properties
+
+*.DS_Store
