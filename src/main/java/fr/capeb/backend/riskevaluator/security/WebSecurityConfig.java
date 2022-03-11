@@ -85,6 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"https://riskevaluator-frontend-dev2.herokuapp.com/",
 						"https://riskevaluator-frontend-dev.herokuapp.com/",
 						"https://capeb-riskeval.herokuapp.com/",
+						"http://capeb-riskeval.herokuapp.com/",
 						"http://localhost:4200/"));
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));
 		config.setAllowCredentials(true);
