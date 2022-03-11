@@ -13,7 +13,7 @@ on:
 env:
   DOCKER_USERNAME: thedoorknobster
   REPO: capeb2/riskevaluator-backend
-  VERSION : "v1.0.0-prerelease0"
+  VERSION : "v1.0.0"
 jobs:
   release:
     environment: PROD
